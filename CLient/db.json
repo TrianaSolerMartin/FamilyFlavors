@@ -1,570 +1,605 @@
 {
-    "recipes": [
-      {
-        "id": 1,
-        "name": "Classic Cheeseburger",
-        "description": "Juicy beef patty topped with cheese, lettuce, tomato, and pickles on a sesame seed bun.",
-        "ingredients": [
-          "1/2 lb ground beef",
-          "1 hamburger bun",
-          "1 slice cheddar cheese",
-          "Lettuce, tomato, pickles",
-          "Salt and pepper to taste"
-        ],
-        "instructions": [
-          "Form ground beef into a patty and season with salt and pepper.",
-          "Grill or fry patty until cooked to desired doneness.",
-          "Toast hamburger bun on the grill.",
-          "Assemble burger with cheese, lettuce, tomato, and pickles.",
-          "Serve hot."
-        ]
-      },
-      {
-        "id": 2,
-        "name": "Margherita Pizza",
-        "description": "Traditional Italian pizza with tomato sauce, mozzarella cheese, and fresh basil leaves.",
-        "ingredients": [
-          "1 pizza dough",
-          "1/2 cup tomato sauce",
-          "1 cup shredded mozzarella cheese",
-          "Fresh basil leaves",
-          "Olive oil, salt, and pepper"
-        ],
-        "instructions": [
-          "Preheat oven to 450°F (230°C).",
-          "Roll out pizza dough and place on a baking sheet.",
-          "Spread tomato sauce evenly over the dough.",
-          "Sprinkle mozzarella cheese on top.",
-          "Drizzle with olive oil and season with salt and pepper.",
-          "Bake for 12-15 minutes until crust is golden and cheese is melted.",
-          "Top with fresh basil leaves before serving."
-        ]
-      },
-      {
-        "id": 3,
-        "name": "Chicken Alfredo Pasta",
-        "description": "Creamy pasta dish with grilled chicken, Alfredo sauce, and Parmesan cheese.",
-        "ingredients": [
-          "8 oz fettuccine pasta",
-          "2 chicken breasts, grilled and sliced",
-          "1 cup Alfredo sauce",
-          "1/2 cup grated Parmesan cheese",
-          "Fresh parsley for garnish"
-        ],
-        "instructions": [
-          "Cook fettuccine pasta in boiling salted water until al dente.",
-          "In a saucepan, heat Alfredo sauce until warm.",
-          "Add grilled chicken slices to the sauce and simmer for 2-3 minutes.",
-          "Drain pasta and toss with Alfredo sauce.",
-          "Serve hot garnished with grated Parmesan cheese and fresh parsley."
-        ]
-      },
-      {
-        "id": 4,
-        "name": "Grilled Salmon with Asparagus",
-        "description": "Healthy and flavorful grilled salmon fillet served with roasted asparagus.",
-        "ingredients": [
-          "2 salmon fillets",
-          "1 bunch asparagus",
-          "1 lemon, sliced",
-          "Olive oil, salt, and pepper"
-        ],
-        "instructions": [
-          "Preheat grill to medium-high heat.",
-          "Brush salmon fillets and asparagus with olive oil.",
-          "Season with salt and pepper.",
-          "Grill salmon for 4-5 minutes per side until cooked through.",
-          "Grill asparagus for 2-3 minutes until tender.",
-          "Serve salmon and asparagus hot with lemon slices."
-        ]
-      },
-      {
-        "id": 5,
-        "name": "Caprese Salad",
-        "description": "Simple and refreshing salad with fresh tomatoes, mozzarella cheese, and basil.",
-        "ingredients": [
-          "2 large tomatoes, sliced",
-          "8 oz fresh mozzarella cheese, sliced",
-          "Fresh basil leaves",
-          "Balsamic glaze, olive oil, salt, and pepper"
-        ],
-        "instructions": [
-          "Arrange tomato and mozzarella slices on a plate.",
-          "Layer with fresh basil leaves.",
-          "Drizzle with balsamic glaze and olive oil.",
-          "Season with salt and pepper to taste.",
-          "Serve immediately as a side dish or appetizer."
-        ]
-      },
-      {
-        "id": 6,
-        "name": "Chocolate Chip Cookies",
-        "description": "Homemade cookies with gooey chocolate chips, perfect for dessert or snack.",
-        "ingredients": [
-          "1 cup unsalted butter, softened",
-          "1 cup granulated sugar",
-          "1 cup packed brown sugar",
-          "2 eggs",
-          "2 tsp vanilla extract",
-          "3 cups all-purpose flour",
-          "1 tsp baking soda",
-          "1/2 tsp salt",
-          "2 cups semisweet chocolate chips"
-        ],
-        "instructions": [
-          "Preheat oven to 350°F (175°C).",
-          "In a large bowl, cream together butter, granulated sugar, and brown sugar until smooth.",
-          "Beat in eggs one at a time, then stir in vanilla.",
-          "Combine flour, baking soda, and salt; gradually stir into the creamed mixture.",
-          "Fold in chocolate chips.",
-          "Drop by rounded spoonfuls onto ungreased baking sheets.",
-          "Bake for 10-12 minutes until edges are golden brown.",
-          "Allow cookies to cool on baking sheet for 5 minutes before transferring to a wire rack to cool completely."
-        ]
-      },
-      {
-        "id": 7,
-        "name": "Beef Tacos",
-        "description": "Mexican street food classic with seasoned beef, salsa, lettuce, and cheese.",
-        "ingredients": [
-          "1 lb ground beef",
-          "1 packet taco seasoning",
-          "8 taco shells",
-          "1 cup shredded lettuce",
-          "1 cup shredded cheddar cheese",
-          "1 cup salsa"
-        ],
-        "instructions": [
-          "In a skillet, brown ground beef over medium-high heat until no longer pink.",
-          "Add taco seasoning and water according to package instructions.",
-          "Simmer until sauce thickens.",
-          "Heat taco shells in the oven according to package instructions.",
-          "Fill taco shells with seasoned beef, lettuce, cheese, and salsa.",
-          "Serve hot with additional toppings if desired."
-        ]
-      },
-      {
-        "id": 8,
-        "name": "Pasta Primavera",
-        "description": "Delicious pasta dish with assorted vegetables and creamy Alfredo sauce.",
-        "ingredients": [
-          "8 oz penne pasta",
-          "1 cup broccoli florets",
-          "1 cup sliced bell peppers",
-          "1 cup sliced mushrooms",
-          "1 cup cherry tomatoes, halved",
-          "1 cup Alfredo sauce",
-          "Fresh basil leaves for garnish"
-        ],
-        "instructions": [
-          "Cook penne pasta in boiling salted water until al dente.",
-          "In a large skillet, sauté broccoli, bell peppers, mushrooms, and cherry tomatoes until tender-crisp.",
-          "Add cooked penne pasta and Alfredo sauce to the skillet.",
-          "Toss gently until pasta and vegetables are coated with sauce.",
-          "Serve hot garnished with fresh basil leaves."
-        ]
-      },
-      {
-        "id": 9,
-        "name": "Mango Sticky Rice",
-        "description": "Thai dessert with sweet sticky rice topped with ripe mango slices and coconut sauce.",
-        "ingredients": [
-          "1 cup glutinous rice",
-          "1 cup coconut milk",
-          "1/2 cup sugar",
-          "2 ripe mangoes, sliced",
-          "Toasted sesame seeds for garnish"
-        ],
-        "instructions": [
-          "Rinse glutinous rice until water runs clear. Drain well.",
-          "In a saucepan, combine coconut milk and sugar. Bring to a simmer over medium heat.",
-          "Add glutinous rice and stir. Reduce heat to low, cover, and cook for 20 minutes or until rice is tender and coconut milk is absorbed.",
-          "Remove from heat and let it sit covered for 10 minutes.",
-          "Serve sticky rice topped with mango slices and sprinkle with toasted sesame seeds."
-        ]
-      },
-      {
-        "id": 10,
-        "name": "Caesar Salad",
-        "description": "Classic salad with romaine lettuce, croutons, Parmesan cheese, and Caesar dressing.",
-        "ingredients": [
-          "1 head romaine lettuce, torn into bite-size pieces",
-          "1 cup croutons",
-          "1/2 cup grated Parmesan cheese",
-          "1/2 cup Caesar dressing",
-          "Salt and black pepper to taste"
-        ],
-        "instructions": [
-          "In a large bowl, toss romaine lettuce with Caesar dressing until evenly coated.",
-          "Add croutons and Parmesan cheese.",
-          "Season with salt and pepper to taste.",
-          "Serve immediately as a side dish or add grilled chicken for a main course."
-        ]
-      },
-      {
-        "id": 11,
-        "name": "Homemade Pizza Margherita",
-        "description": "Classic Italian pizza with tomato sauce, fresh mozzarella, and basil leaves.",
-        "ingredients": [
-          "1 pizza dough",
-          "1/2 cup tomato sauce",
-          "8 oz fresh mozzarella cheese, sliced",
-          "Fresh basil leaves",
-          "Olive oil, salt, and pepper"
-        ],
-        "instructions": [
-          "Preheat oven to 475°F (245°C).",
-          "Roll out pizza dough and place on a pizza stone or baking sheet.",
-          "Spread tomato sauce evenly over the dough, leaving a border for the crust.",
-          "Arrange mozzarella cheese slices over the sauce.",
-          "Drizzle olive oil over the pizza and season with salt and pepper.",
-          "Bake for 10-12 minutes until crust is golden and cheese is bubbly.",
-          "Top with fresh basil leaves before serving."
-        ]
-      },
-      {
-        "id": 12,
-        "name": "Shrimp Scampi",
-        "description": "Garlicky shrimp sautéed in butter and white wine sauce, served over pasta.",
-        "ingredients": [
-          "8 oz linguine pasta",
-          "1 lb large shrimp, peeled and deveined",
-          "4 cloves garlic, minced",
-          "1/4 cup white wine",
-          "1/4 cup fresh lemon juice",
-          "1/4 cup chopped parsley",
-          "Salt and black pepper to taste"
-        ],
-        "instructions": [
-          "Cook linguine pasta in boiling salted water until al dente.",
-          "In a large skillet, melt butter over medium heat. Add minced garlic and sauté until fragrant.",
-          "Add shrimp to the skillet and cook until pink, about 2 minutes per side.",
-          "Pour in white wine and lemon juice. Bring to a simmer and cook for 2-3 minutes.",
-          "Stir in chopped parsley and season with salt and pepper.",
-          "Serve shrimp and sauce over cooked linguine."
-        ]
-      },
-      {
-        "id": 13,
-        "name": "Beef Stir Fry",
-        "description": "Quick and flavorful beef stir fry with vegetables in a savory soy sauce.",
-        "ingredients": [
-          "1 lb beef sirloin, thinly sliced",
-          "2 cups mixed vegetables (bell peppers, broccoli, carrots)",
-          "1/4 cup soy sauce",
-          "2 tbsp oyster sauce",
-          "2 cloves garlic, minced",
-          "1 tbsp cornstarch",
-          "1/4 cup water",
-          "Cooked rice for serving"
-        ],
-        "instructions": [
-          "In a small bowl, mix soy sauce, oyster sauce, garlic, cornstarch, and water to make the sauce.",
-          "Heat oil in a large skillet or wok over high heat.",
-          "Add beef slices and stir fry until browned. Remove from skillet.",
-          "Stir fry vegetables until crisp-tender.",
-          "Return beef to skillet and pour sauce over the mixture.",
-          "Cook until sauce thickens and coats the beef and vegetables.",
-          "Serve hot over cooked rice."
-        ]
-      },
-      {
-        "id": 14,
-        "name": "Tiramisu",
-        "description": "Classic Italian dessert with layers of coffee-soaked ladyfingers and mascarpone cream.",
-        "ingredients": [
-          "1 cup brewed espresso, cooled",
-          "24 ladyfinger cookies",
-          "16 oz mascarpone cheese",
-          "1 cup heavy cream",
-          "1/2 cup granulated sugar",
-          "1/4 cup cocoa powder"
-        ],
-        "instructions": [
-          "In a mixing bowl, beat mascarpone cheese, heavy cream, and sugar until smooth.",
-          "Quickly dip each ladyfinger into the cooled espresso and arrange in a single layer in a serving dish.",
-          "Spread half of the mascarpone mixture over the ladyfingers.",
-          "Repeat with another layer of dipped ladyfingers and mascarpone mixture.",
-          "Cover and refrigerate tiramisu for at least 4 hours or overnight.",
-          "Before serving, dust with cocoa powder."
-        ]
-      },
-      {
-        "id": 15,
-        "name": "Vegetable Curry",
-        "description": "Spicy and aromatic vegetable curry with mixed vegetables in a coconut milk base.",
-        "ingredients": [
-          "2 cups mixed vegetables (potatoes, carrots, peas)",
-          "1 onion, chopped",
-          "2 cloves garlic, minced",
-          "1 can coconut milk",
-          "2 tbsp curry powder",
-          "1 tbsp vegetable oil",
-          "Salt and pepper to taste",
-          "Fresh cilantro for garnish"
-        ],
-        "instructions": [
-          "Heat oil in a large pot over medium heat.",
-          "Sauté onion and garlic until softened and fragrant.",
-          "Add mixed vegetables and curry powder. Cook for 5 minutes.",
-          "Pour in coconut milk and simmer until vegetables are tender and sauce thickens.",
-          "Season with salt and pepper to taste.",
-          "Garnish with fresh cilantro before serving.",
-          "Serve hot with rice or naan."
-        ]
-      },
-      {
-        "id": 16,
-        "name": "Chocolate Cake",
-        "description": "Moist and decadent chocolate cake with rich chocolate frosting.",
-        "ingredients": [
-          "1 3/4 cups all-purpose flour",
-          "1 1/2 cups granulated sugar",
-          "3/4 cup unsweetened cocoa powder",
-          "1 1/2 tsp baking powder",
-          "1 1/2 tsp baking soda",
-          "1 tsp salt",
-          "2 eggs",
-          "1 cup milk",
-          "1/2 cup vegetable oil",
-          "2 tsp vanilla extract",
-          "1 cup boiling water",
-          "For frosting: 1/2 cup unsalted butter, 2/3 cup cocoa powder, 3 cups powdered sugar, 1/3 cup milk, 1 tsp vanilla extract"
-        ],
-        "instructions": [
-          "Preheat oven to 350°F (175°C). Grease and flour two 9-inch round baking pans.",
-          "In a large bowl, combine flour, sugar, cocoa powder, baking powder, baking soda, and salt.",
-          "Add eggs, milk, oil, and vanilla extract. Beat on medium speed for 2 minutes.",
-          "Stir in boiling water (batter will be thin).",
-          "Pour batter into prepared pans.",
-          "Bake for 30-35 minutes until a toothpick inserted into the center comes out clean.",
-          "Cool cakes in pans for 10 minutes, then remove from pans and cool completely on wire racks.",
-          "For frosting: In a medium bowl, beat butter until creamy. Add cocoa powder, powdered sugar, milk, and vanilla extract. Beat until smooth and spreadable.",
-          "Frost and assemble cake layers. Enjoy!"
-        ]
-      },
-      {
-        "id": 17,
-        "name": "Sushi Rolls",
-        "description": "Japanese sushi rolls filled with fresh fish, avocado, cucumber, and sushi rice.",
-        "ingredients": [
-          "4 sheets nori (seaweed)",
-          "2 cups sushi rice, cooked and seasoned",
-          "1/2 lb sushi-grade fish (salmon, tuna, etc.), sliced into strips",
-          "1 avocado, sliced",
-          "1 cucumber, julienned",
-          "Soy sauce, wasabi, and pickled ginger for serving"
-        ],
-        "instructions": [
-          "Place a sheet of nori on a bamboo sushi mat.",
-          "Spread a thin layer of sushi rice over the nori, leaving a 1-inch border at the top.",
-          "Arrange fish, avocado, and cucumber along the bottom edge of the rice.",
-          "Roll the sushi tightly using the bamboo mat, sealing the edge with water.",
-          "Slice sushi roll into bite-size pieces with a sharp knife.",
-          "Serve with soy sauce, wasabi, and pickled ginger."
-        ]
-      },
-      {
-        "id": 18,
-        "name": "Greek Salad",
-        "description": "Refreshing salad with tomatoes, cucumbers, red onion, olives, and feta cheese in a lemon-oregano dressing.",
-        "ingredients": [
-          "2 tomatoes, chopped",
-          "1 cucumber, sliced",
-          "1/2 red onion, thinly sliced",
-          "1/2 cup Kalamata olives, pitted",
-          "1/2 cup crumbled feta cheese",
-          "Fresh oregano leaves for garnish",
-          "For dressing: 1/4 cup olive oil, 2 tbsp fresh lemon juice, 1 clove garlic, minced, 1 tsp dried oregano, Salt and pepper to taste"
-        ],
-        "instructions": [
-          "In a large bowl, combine tomatoes, cucumber, red onion, olives, and feta cheese.",
-          "In a small bowl, whisk together olive oil, lemon juice, garlic, dried oregano, salt, and pepper.",
-          "Pour dressing over the salad and toss gently to combine.",
-          "Garnish with fresh oregano leaves before serving.",
-          "Serve chilled as a side dish or light meal."
-        ]
-      },
-      {
-        "id": 19,
-        "name": "Beef Wellington",
-        "description": "Elegant British dish with tender beef filet, mushroom duxelles, and puff pastry.",
-        "ingredients": [
-          "1 lb beef tenderloin",
-          "8 oz mushrooms, finely chopped",
-          "1 shallot, minced",
-          "2 cloves garlic, minced",
-          "2 tbsp butter",
-          "1 sheet puff pastry, thawed",
-          "Dijon mustard, salt, and pepper"
-        ],
-        "instructions": [
-          "Preheat oven to 425°F (220°C).",
-          "Season beef tenderloin with salt and pepper. Sear on all sides until browned.",
-          "In a skillet, sauté mushrooms, shallot, and garlic in butter until mushrooms release their liquid and mixture is thickened.",
-          "Roll out puff pastry and spread with Dijon mustard.",
-          "Spread mushroom mixture over the pastry, leaving a border.",
-          "Place seared beef tenderloin in the center and wrap pastry around it, sealing edges.",
-          "Bake for 25-30 minutes until pastry is golden and beef is cooked to desired doneness.",
-          "Let beef Wellington rest before slicing and serving."
-        ]
-      },
-      {
-        "id": 20,
-        "name": "Ratatouille",
-        "description": "Provençal vegetable stew with tomatoes, eggplant, zucchini, bell peppers, and herbs.",
-        "ingredients": [
-          "2 tomatoes, sliced",
-          "1 eggplant, sliced",
-          "1 zucchini, sliced",
-          "1 yellow bell pepper, sliced",
-          "1 red bell pepper, sliced",
-          "1 onion, sliced",
-          "2 cloves garlic, minced",
-          "1/4 cup olive oil",
-          "1 tsp dried thyme",
-          "1 tsp dried basil",
-          "Salt and black pepper to taste"
-        ],
-        "instructions": [
-          "Preheat oven to 375°F (190°C).",
-          "In a large baking dish, layer sliced tomatoes, eggplant, zucchini, bell peppers, onion, and garlic.",
-          "Drizzle olive oil over the vegetables and sprinkle with dried thyme, dried basil, salt, and pepper.",
-          "Cover with foil and bake for 45 minutes.",
-          "Uncover and bake for an additional 15-20 minutes until vegetables are tender and lightly browned.",
-          "Serve hot as a side dish or with crusty bread."
-        ]
-      },
-      {
-        "id": 21,
-        "name": "Chicken Teriyaki",
-        "description": "Japanese chicken dish with sweet and savory teriyaki sauce, served with steamed rice.",
-        "ingredients": [
-          "4 boneless, skinless chicken breasts",
-          "1/2 cup soy sauce",
-          "1/4 cup mirin",
-          "1/4 cup sake or dry white wine",
-          "2 tbsp sugar",
-          "2 cloves garlic, minced",
-          "1 tbsp grated ginger",
-          "2 tbsp vegetable oil",
-          "Cooked rice and green onions for serving"
-        ],
-        "instructions": [
-          "In a bowl, combine soy sauce, mirin, sake, sugar, garlic, and ginger to make the teriyaki sauce.",
-          "Heat vegetable oil in a large skillet over medium-high heat.",
-          "Add chicken breasts and cook until browned on both sides.",
-          "Pour teriyaki sauce over the chicken and bring to a simmer.",
-          "Reduce heat to medium-low and cook until chicken is cooked through and sauce thickens.",
-          "Slice chicken and serve over cooked rice.",
-          "Garnish with sliced green onions."
-        ]
-      },
-      {
-        "id": 22,
-        "name": "Gazpacho",
-        "description": "Refreshing Spanish cold soup made with ripe tomatoes, cucumbers, bell peppers, and garlic.",
-        "ingredients": [
-          "4 ripe tomatoes, chopped",
-          "1 cucumber, peeled and chopped",
-          "1 bell pepper, chopped",
-          "1 small onion, chopped",
-          "2 cloves garlic, minced",
-          "1/4 cup olive oil",
-          "2 tbsp red wine vinegar",
-          "2 cups tomato juice",
-          "Salt and black pepper to taste",
-          "Fresh basil or parsley for garnish"
-        ],
-        "instructions": [
-          "In a blender, combine tomatoes, cucumber, bell pepper, onion, and garlic.",
-          "Add olive oil, red wine vinegar, and tomato juice.",
-          "Blend until smooth.",
-          "Season with salt and pepper to taste.",
-          "Chill gazpacho in the refrigerator for at least 1 hour before serving.",
-          "Serve cold garnished with fresh basil or parsley."
-        ]
-      },
-      {
-        "id": 23,
-        "name": "Pad Thai",
-        "description": "Thai stir-fried noodles with shrimp, tofu, peanuts, and a tangy tamarind sauce.",
-        "ingredients": [
-          "8 oz rice noodles",
-          "1/2 lb shrimp, peeled and deveined",
-          "1/2 cup firm tofu, cubed",
-          "1/4 cup peanuts, chopped",
-          "2 eggs, beaten",
-          "2 cloves garlic, minced",
-          "1 shallot, minced",
-          "1/4 cup tamarind paste",
-          "2 tbsp fish sauce",
-          "2 tbsp sugar",
-          "1/2 cup bean sprouts",
-          "2 green onions, chopped",
-          "Lime wedges for serving"
-        ],
-        "instructions": [
-          "Cook rice noodles according to package instructions.",
-          "In a large skillet, heat oil over medium-high heat.",
-          "Add shrimp, tofu, peanuts, garlic, and shallot. Stir fry until shrimp turns pink.",
-          "Push ingredients to one side of the skillet and pour beaten eggs into the other side.",
-          "Scramble eggs until cooked, then mix with other ingredients.",
-          "Add cooked rice noodles, tamarind paste, fish sauce, and sugar. Toss to combine.",
-          "Stir in bean sprouts and green onions.",
-          "Serve hot with lime wedges."
-        ]
-      },
-      {
-        "id": 24,
-        "name": "Steak Frites",
-        "description": "French bistro classic with grilled steak and crispy French fries.",
-        "ingredients": [
-          "2 ribeye steaks",
-          "4 large potatoes, cut into fries",
-          "2 tbsp olive oil",
-          "Salt and black pepper to taste",
-          "1/4 cup butter",
-          "Fresh parsley for garnish"
-        ],
-        "instructions": [
-          "Preheat oven to 425°F (220°C).",
-          "Toss potato fries with olive oil, salt, and pepper.",
-          "Spread fries in a single layer on a baking sheet and bake for 30-35 minutes until crispy.",
-          "Meanwhile, season steaks with salt and pepper.",
-          "Grill steaks over high heat for 3-4 minutes per side for medium-rare.",
-          "Let steaks rest for a few minutes before slicing.",
-          "Serve steak with crispy fries, topped with butter and fresh parsley."
-        ]
-      },
-      {
-        "id": 25,
-        "name": "Mushroom Risotto",
-        "description": "Creamy Italian rice dish with sautéed mushrooms, Parmesan cheese, and Arborio rice.",
-        "ingredients": [
-          "1 cup Arborio rice",
-          "1/2 lb mushrooms, sliced",
-          "1 onion, chopped",
-          "2 cloves garlic, minced",
-          "4 cups chicken or vegetable broth, warmed",
-          "1/2 cup dry white wine",
-          "1/2 cup grated Parmesan cheese",
-          "2 tbsp butter",
-          "2 tbsp olive oil",
-          "Salt and black pepper to taste",
-          "Fresh parsley for garnish"
-        ],
-        "instructions": [
-          "In a large skillet, heat olive oil over medium heat.",
-          "Sauté mushrooms until browned and tender. Remove from skillet and set aside.",
-          "In the same skillet, sauté onion and garlic until softened.",
-          "Add Arborio rice and cook for 2-3 minutes until translucent.",
-          "Pour in white wine and stir until absorbed.",
-          "Gradually add warmed broth, 1/2 cup at a time, stirring frequently until rice is creamy and tender, about 20 minutes.",
-          "Stir in sautéed mushrooms, Parmesan cheese, and butter.",
-          "Season with salt and pepper to taste.",
-          "Serve hot garnished with fresh parsley."
-        ]
-      }
-    ]
-  }
+  "recipes": [
+    {
+      "id": "1",
+      "name": "Classic Cheeseburger",
+      "description": "Juicy beef patty topped with cheese, lettuce, tomato, and pickles on a sesame seed bun.",
+      "ingredients": [
+        "1/2 lb ground beef",
+        "1 hamburger bun",
+        "1 slice cheddar cheese",
+        "Lettuce, tomato, pickles",
+        "Salt and pepper to taste"
+      ],
+      "instructions": [
+        "Form ground beef into a patty and season with salt and pepper.",
+        "Grill or fry patty until cooked to desired doneness.",
+        "Toast hamburger bun on the grill.",
+        "Assemble burger with cheese, lettuce, tomato, and pickles.",
+        "Serve hot."
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Margherita Pizza",
+      "description": "Traditional Italian pizza with tomato sauce, mozzarella cheese, and fresh basil leaves.",
+      "ingredients": [
+        "1 pizza dough",
+        "1/2 cup tomato sauce",
+        "1 cup shredded mozzarella cheese",
+        "Fresh basil leaves",
+        "Olive oil, salt, and pepper"
+      ],
+      "instructions": [
+        "Preheat oven to 450°F (230°C).",
+        "Roll out pizza dough and place on a baking sheet.",
+        "Spread tomato sauce evenly over the dough.",
+        "Sprinkle mozzarella cheese on top.",
+        "Drizzle with olive oil and season with salt and pepper.",
+        "Bake for 12-15 minutes until crust is golden and cheese is melted.",
+        "Top with fresh basil leaves before serving."
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Chicken Alfredo Pasta",
+      "description": "Creamy pasta dish with grilled chicken, Alfredo sauce, and Parmesan cheese.",
+      "ingredients": [
+        "8 oz fettuccine pasta",
+        "2 chicken breasts, grilled and sliced",
+        "1 cup Alfredo sauce",
+        "1/2 cup grated Parmesan cheese",
+        "Fresh parsley for garnish"
+      ],
+      "instructions": [
+        "Cook fettuccine pasta in boiling salted water until al dente.",
+        "In a saucepan, heat Alfredo sauce until warm.",
+        "Add grilled chicken slices to the sauce and simmer for 2-3 minutes.",
+        "Drain pasta and toss with Alfredo sauce.",
+        "Serve hot garnished with grated Parmesan cheese and fresh parsley."
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Grilled Salmon with Asparagus",
+      "description": "Healthy and flavorful grilled salmon fillet served with roasted asparagus.",
+      "ingredients": [
+        "2 salmon fillets",
+        "1 bunch asparagus",
+        "1 lemon, sliced",
+        "Olive oil, salt, and pepper"
+      ],
+      "instructions": [
+        "Preheat grill to medium-high heat.",
+        "Brush salmon fillets and asparagus with olive oil.",
+        "Season with salt and pepper.",
+        "Grill salmon for 4-5 minutes per side until cooked through.",
+        "Grill asparagus for 2-3 minutes until tender.",
+        "Serve salmon and asparagus hot with lemon slices."
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Caprese Salad",
+      "description": "Simple and refreshing salad with fresh tomatoes, mozzarella cheese, and basil.",
+      "ingredients": [
+        "2 large tomatoes, sliced",
+        "8 oz fresh mozzarella cheese, sliced",
+        "Fresh basil leaves",
+        "Balsamic glaze, olive oil, salt, and pepper"
+      ],
+      "instructions": [
+        "Arrange tomato and mozzarella slices on a plate.",
+        "Layer with fresh basil leaves.",
+        "Drizzle with balsamic glaze and olive oil.",
+        "Season with salt and pepper to taste.",
+        "Serve immediately as a side dish or appetizer."
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Chocolate Chip Cookies",
+      "description": "Homemade cookies with gooey chocolate chips, perfect for dessert or snack.",
+      "ingredients": [
+        "1 cup unsalted butter, softened",
+        "1 cup granulated sugar",
+        "1 cup packed brown sugar",
+        "2 eggs",
+        "2 tsp vanilla extract",
+        "3 cups all-purpose flour",
+        "1 tsp baking soda",
+        "1/2 tsp salt",
+        "2 cups semisweet chocolate chips"
+      ],
+      "instructions": [
+        "Preheat oven to 350°F (175°C).",
+        "In a large bowl, cream together butter, granulated sugar, and brown sugar until smooth.",
+        "Beat in eggs one at a time, then stir in vanilla.",
+        "Combine flour, baking soda, and salt; gradually stir into the creamed mixture.",
+        "Fold in chocolate chips.",
+        "Drop by rounded spoonfuls onto ungreased baking sheets.",
+        "Bake for 10-12 minutes until edges are golden brown.",
+        "Allow cookies to cool on baking sheet for 5 minutes before transferring to a wire rack to cool completely."
+      ]
+    },
+    {
+      "id": "7",
+      "name": "Beef Tacos",
+      "description": "Mexican street food classic with seasoned beef, salsa, lettuce, and cheese.",
+      "ingredients": [
+        "1 lb ground beef",
+        "1 packet taco seasoning",
+        "8 taco shells",
+        "1 cup shredded lettuce",
+        "1 cup shredded cheddar cheese",
+        "1 cup salsa"
+      ],
+      "instructions": [
+        "In a skillet, brown ground beef over medium-high heat until no longer pink.",
+        "Add taco seasoning and water according to package instructions.",
+        "Simmer until sauce thickens.",
+        "Heat taco shells in the oven according to package instructions.",
+        "Fill taco shells with seasoned beef, lettuce, cheese, and salsa.",
+        "Serve hot with additional toppings if desired."
+      ]
+    },
+    {
+      "id": "8",
+      "name": "Pasta Primavera",
+      "description": "Delicious pasta dish with assorted vegetables and creamy Alfredo sauce.",
+      "ingredients": [
+        "8 oz penne pasta",
+        "1 cup broccoli florets",
+        "1 cup sliced bell peppers",
+        "1 cup sliced mushrooms",
+        "1 cup cherry tomatoes, halved",
+        "1 cup Alfredo sauce",
+        "Fresh basil leaves for garnish"
+      ],
+      "instructions": [
+        "Cook penne pasta in boiling salted water until al dente.",
+        "In a large skillet, sauté broccoli, bell peppers, mushrooms, and cherry tomatoes until tender-crisp.",
+        "Add cooked penne pasta and Alfredo sauce to the skillet.",
+        "Toss gently until pasta and vegetables are coated with sauce.",
+        "Serve hot garnished with fresh basil leaves."
+      ]
+    },
+    {
+      "id": "9",
+      "name": "Mango Sticky Rice",
+      "description": "Thai dessert with sweet sticky rice topped with ripe mango slices and coconut sauce.",
+      "ingredients": [
+        "1 cup glutinous rice",
+        "1 cup coconut milk",
+        "1/2 cup sugar",
+        "2 ripe mangoes, sliced",
+        "Toasted sesame seeds for garnish"
+      ],
+      "instructions": [
+        "Rinse glutinous rice until water runs clear. Drain well.",
+        "In a saucepan, combine coconut milk and sugar. Bring to a simmer over medium heat.",
+        "Add glutinous rice and stir. Reduce heat to low, cover, and cook for 20 minutes or until rice is tender and coconut milk is absorbed.",
+        "Remove from heat and let it sit covered for 10 minutes.",
+        "Serve sticky rice topped with mango slices and sprinkle with toasted sesame seeds."
+      ]
+    },
+    {
+      "id": "10",
+      "name": "Caesar Salad",
+      "description": "Classic salad with romaine lettuce, croutons, Parmesan cheese, and Caesar dressing.",
+      "ingredients": [
+        "1 head romaine lettuce, torn into bite-size pieces",
+        "1 cup croutons",
+        "1/2 cup grated Parmesan cheese",
+        "1/2 cup Caesar dressing",
+        "Salt and black pepper to taste"
+      ],
+      "instructions": [
+        "In a large bowl, toss romaine lettuce with Caesar dressing until evenly coated.",
+        "Add croutons and Parmesan cheese.",
+        "Season with salt and pepper to taste.",
+        "Serve immediately as a side dish or add grilled chicken for a main course."
+      ]
+    },
+    {
+      "id": "11",
+      "name": "Homemade Pizza Margherita",
+      "description": "Classic Italian pizza with tomato sauce, fresh mozzarella, and basil leaves.",
+      "ingredients": [
+        "1 pizza dough",
+        "1/2 cup tomato sauce",
+        "8 oz fresh mozzarella cheese, sliced",
+        "Fresh basil leaves",
+        "Olive oil, salt, and pepper"
+      ],
+      "instructions": [
+        "Preheat oven to 475°F (245°C).",
+        "Roll out pizza dough and place on a pizza stone or baking sheet.",
+        "Spread tomato sauce evenly over the dough, leaving a border for the crust.",
+        "Arrange mozzarella cheese slices over the sauce.",
+        "Drizzle olive oil over the pizza and season with salt and pepper.",
+        "Bake for 10-12 minutes until crust is golden and cheese is bubbly.",
+        "Top with fresh basil leaves before serving."
+      ]
+    },
+    {
+      "id": "12",
+      "name": "Shrimp Scampi",
+      "description": "Garlicky shrimp sautéed in butter and white wine sauce, served over pasta.",
+      "ingredients": [
+        "8 oz linguine pasta",
+        "1 lb large shrimp, peeled and deveined",
+        "4 cloves garlic, minced",
+        "1/4 cup white wine",
+        "1/4 cup fresh lemon juice",
+        "1/4 cup chopped parsley",
+        "Salt and black pepper to taste"
+      ],
+      "instructions": [
+        "Cook linguine pasta in boiling salted water until al dente.",
+        "In a large skillet, melt butter over medium heat. Add minced garlic and sauté until fragrant.",
+        "Add shrimp to the skillet and cook until pink, about 2 minutes per side.",
+        "Pour in white wine and lemon juice. Bring to a simmer and cook for 2-3 minutes.",
+        "Stir in chopped parsley and season with salt and pepper.",
+        "Serve shrimp and sauce over cooked linguine."
+      ]
+    },
+    {
+      "id": "13",
+      "name": "Beef Stir Fry",
+      "description": "Quick and flavorful beef stir fry with vegetables in a savory soy sauce.",
+      "ingredients": [
+        "1 lb beef sirloin, thinly sliced",
+        "2 cups mixed vegetables (bell peppers, broccoli, carrots)",
+        "1/4 cup soy sauce",
+        "2 tbsp oyster sauce",
+        "2 cloves garlic, minced",
+        "1 tbsp cornstarch",
+        "1/4 cup water",
+        "Cooked rice for serving"
+      ],
+      "instructions": [
+        "In a small bowl, mix soy sauce, oyster sauce, garlic, cornstarch, and water to make the sauce.",
+        "Heat oil in a large skillet or wok over high heat.",
+        "Add beef slices and stir fry until browned. Remove from skillet.",
+        "Stir fry vegetables until crisp-tender.",
+        "Return beef to skillet and pour sauce over the mixture.",
+        "Cook until sauce thickens and coats the beef and vegetables.",
+        "Serve hot over cooked rice."
+      ]
+    },
+    {
+      "id": "14",
+      "name": "Tiramisu",
+      "description": "Classic Italian dessert with layers of coffee-soaked ladyfingers and mascarpone cream.",
+      "ingredients": [
+        "1 cup brewed espresso, cooled",
+        "24 ladyfinger cookies",
+        "16 oz mascarpone cheese",
+        "1 cup heavy cream",
+        "1/2 cup granulated sugar",
+        "1/4 cup cocoa powder"
+      ],
+      "instructions": [
+        "In a mixing bowl, beat mascarpone cheese, heavy cream, and sugar until smooth.",
+        "Quickly dip each ladyfinger into the cooled espresso and arrange in a single layer in a serving dish.",
+        "Spread half of the mascarpone mixture over the ladyfingers.",
+        "Repeat with another layer of dipped ladyfingers and mascarpone mixture.",
+        "Cover and refrigerate tiramisu for at least 4 hours or overnight.",
+        "Before serving, dust with cocoa powder."
+      ]
+    },
+    {
+      "id": "15",
+      "name": "Vegetable Curry",
+      "description": "Spicy and aromatic vegetable curry with mixed vegetables in a coconut milk base.",
+      "ingredients": [
+        "2 cups mixed vegetables (potatoes, carrots, peas)",
+        "1 onion, chopped",
+        "2 cloves garlic, minced",
+        "1 can coconut milk",
+        "2 tbsp curry powder",
+        "1 tbsp vegetable oil",
+        "Salt and pepper to taste",
+        "Fresh cilantro for garnish"
+      ],
+      "instructions": [
+        "Heat oil in a large pot over medium heat.",
+        "Sauté onion and garlic until softened and fragrant.",
+        "Add mixed vegetables and curry powder. Cook for 5 minutes.",
+        "Pour in coconut milk and simmer until vegetables are tender and sauce thickens.",
+        "Season with salt and pepper to taste.",
+        "Garnish with fresh cilantro before serving.",
+        "Serve hot with rice or naan."
+      ]
+    },
+    {
+      "id": "16",
+      "name": "Chocolate Cake",
+      "description": "Moist and decadent chocolate cake with rich chocolate frosting.",
+      "ingredients": [
+        "1 3/4 cups all-purpose flour",
+        "1 1/2 cups granulated sugar",
+        "3/4 cup unsweetened cocoa powder",
+        "1 1/2 tsp baking powder",
+        "1 1/2 tsp baking soda",
+        "1 tsp salt",
+        "2 eggs",
+        "1 cup milk",
+        "1/2 cup vegetable oil",
+        "2 tsp vanilla extract",
+        "1 cup boiling water",
+        "For frosting: 1/2 cup unsalted butter, 2/3 cup cocoa powder, 3 cups powdered sugar, 1/3 cup milk, 1 tsp vanilla extract"
+      ],
+      "instructions": [
+        "Preheat oven to 350°F (175°C). Grease and flour two 9-inch round baking pans.",
+        "In a large bowl, combine flour, sugar, cocoa powder, baking powder, baking soda, and salt.",
+        "Add eggs, milk, oil, and vanilla extract. Beat on medium speed for 2 minutes.",
+        "Stir in boiling water (batter will be thin).",
+        "Pour batter into prepared pans.",
+        "Bake for 30-35 minutes until a toothpick inserted into the center comes out clean.",
+        "Cool cakes in pans for 10 minutes, then remove from pans and cool completely on wire racks.",
+        "For frosting: In a medium bowl, beat butter until creamy. Add cocoa powder, powdered sugar, milk, and vanilla extract. Beat until smooth and spreadable.",
+        "Frost and assemble cake layers. Enjoy!"
+      ]
+    },
+    {
+      "id": "17",
+      "name": "Sushi Rolls",
+      "description": "Japanese sushi rolls filled with fresh fish, avocado, cucumber, and sushi rice.",
+      "ingredients": [
+        "4 sheets nori (seaweed)",
+        "2 cups sushi rice, cooked and seasoned",
+        "1/2 lb sushi-grade fish (salmon, tuna, etc.), sliced into strips",
+        "1 avocado, sliced",
+        "1 cucumber, julienned",
+        "Soy sauce, wasabi, and pickled ginger for serving"
+      ],
+      "instructions": [
+        "Place a sheet of nori on a bamboo sushi mat.",
+        "Spread a thin layer of sushi rice over the nori, leaving a 1-inch border at the top.",
+        "Arrange fish, avocado, and cucumber along the bottom edge of the rice.",
+        "Roll the sushi tightly using the bamboo mat, sealing the edge with water.",
+        "Slice sushi roll into bite-size pieces with a sharp knife.",
+        "Serve with soy sauce, wasabi, and pickled ginger."
+      ]
+    },
+    {
+      "id": "18",
+      "name": "Greek Salad",
+      "description": "Refreshing salad with tomatoes, cucumbers, red onion, olives, and feta cheese in a lemon-oregano dressing.",
+      "ingredients": [
+        "2 tomatoes, chopped",
+        "1 cucumber, sliced",
+        "1/2 red onion, thinly sliced",
+        "1/2 cup Kalamata olives, pitted",
+        "1/2 cup crumbled feta cheese",
+        "Fresh oregano leaves for garnish",
+        "For dressing: 1/4 cup olive oil, 2 tbsp fresh lemon juice, 1 clove garlic, minced, 1 tsp dried oregano, Salt and pepper to taste"
+      ],
+      "instructions": [
+        "In a large bowl, combine tomatoes, cucumber, red onion, olives, and feta cheese.",
+        "In a small bowl, whisk together olive oil, lemon juice, garlic, dried oregano, salt, and pepper.",
+        "Pour dressing over the salad and toss gently to combine.",
+        "Garnish with fresh oregano leaves before serving.",
+        "Serve chilled as a side dish or light meal."
+      ]
+    },
+    {
+      "id": "19",
+      "name": "Beef Wellington",
+      "description": "Elegant British dish with tender beef filet, mushroom duxelles, and puff pastry.",
+      "ingredients": [
+        "1 lb beef tenderloin",
+        "8 oz mushrooms, finely chopped",
+        "1 shallot, minced",
+        "2 cloves garlic, minced",
+        "2 tbsp butter",
+        "1 sheet puff pastry, thawed",
+        "Dijon mustard, salt, and pepper"
+      ],
+      "instructions": [
+        "Preheat oven to 425°F (220°C).",
+        "Season beef tenderloin with salt and pepper. Sear on all sides until browned.",
+        "In a skillet, sauté mushrooms, shallot, and garlic in butter until mushrooms release their liquid and mixture is thickened.",
+        "Roll out puff pastry and spread with Dijon mustard.",
+        "Spread mushroom mixture over the pastry, leaving a border.",
+        "Place seared beef tenderloin in the center and wrap pastry around it, sealing edges.",
+        "Bake for 25-30 minutes until pastry is golden and beef is cooked to desired doneness.",
+        "Let beef Wellington rest before slicing and serving."
+      ]
+    },
+    {
+      "id": "20",
+      "name": "Ratatouille",
+      "description": "Provençal vegetable stew with tomatoes, eggplant, zucchini, bell peppers, and herbs.",
+      "ingredients": [
+        "2 tomatoes, sliced",
+        "1 eggplant, sliced",
+        "1 zucchini, sliced",
+        "1 yellow bell pepper, sliced",
+        "1 red bell pepper, sliced",
+        "1 onion, sliced",
+        "2 cloves garlic, minced",
+        "1/4 cup olive oil",
+        "1 tsp dried thyme",
+        "1 tsp dried basil",
+        "Salt and black pepper to taste"
+      ],
+      "instructions": [
+        "Preheat oven to 375°F (190°C).",
+        "In a large baking dish, layer sliced tomatoes, eggplant, zucchini, bell peppers, onion, and garlic.",
+        "Drizzle olive oil over the vegetables and sprinkle with dried thyme, dried basil, salt, and pepper.",
+        "Cover with foil and bake for 45 minutes.",
+        "Uncover and bake for an additional 15-20 minutes until vegetables are tender and lightly browned.",
+        "Serve hot as a side dish or with crusty bread."
+      ]
+    },
+    {
+      "id": "21",
+      "name": "Chicken Teriyaki",
+      "description": "Japanese chicken dish with sweet and savory teriyaki sauce, served with steamed rice.",
+      "ingredients": [
+        "4 boneless, skinless chicken breasts",
+        "1/2 cup soy sauce",
+        "1/4 cup mirin",
+        "1/4 cup sake or dry white wine",
+        "2 tbsp sugar",
+        "2 cloves garlic, minced",
+        "1 tbsp grated ginger",
+        "2 tbsp vegetable oil",
+        "Cooked rice and green onions for serving"
+      ],
+      "instructions": [
+        "In a bowl, combine soy sauce, mirin, sake, sugar, garlic, and ginger to make the teriyaki sauce.",
+        "Heat vegetable oil in a large skillet over medium-high heat.",
+        "Add chicken breasts and cook until browned on both sides.",
+        "Pour teriyaki sauce over the chicken and bring to a simmer.",
+        "Reduce heat to medium-low and cook until chicken is cooked through and sauce thickens.",
+        "Slice chicken and serve over cooked rice.",
+        "Garnish with sliced green onions."
+      ]
+    },
+    {
+      "id": "22",
+      "name": "Gazpacho",
+      "description": "Refreshing Spanish cold soup made with ripe tomatoes, cucumbers, bell peppers, and garlic.",
+      "ingredients": [
+        "4 ripe tomatoes, chopped",
+        "1 cucumber, peeled and chopped",
+        "1 bell pepper, chopped",
+        "1 small onion, chopped",
+        "2 cloves garlic, minced",
+        "1/4 cup olive oil",
+        "2 tbsp red wine vinegar",
+        "2 cups tomato juice",
+        "Salt and black pepper to taste",
+        "Fresh basil or parsley for garnish"
+      ],
+      "instructions": [
+        "In a blender, combine tomatoes, cucumber, bell pepper, onion, and garlic.",
+        "Add olive oil, red wine vinegar, and tomato juice.",
+        "Blend until smooth.",
+        "Season with salt and pepper to taste.",
+        "Chill gazpacho in the refrigerator for at least 1 hour before serving.",
+        "Serve cold garnished with fresh basil or parsley."
+      ]
+    },
+    {
+      "id": "23",
+      "name": "Pad Thai",
+      "description": "Thai stir-fried noodles with shrimp, tofu, peanuts, and a tangy tamarind sauce.",
+      "ingredients": [
+        "8 oz rice noodles",
+        "1/2 lb shrimp, peeled and deveined",
+        "1/2 cup firm tofu, cubed",
+        "1/4 cup peanuts, chopped",
+        "2 eggs, beaten",
+        "2 cloves garlic, minced",
+        "1 shallot, minced",
+        "1/4 cup tamarind paste",
+        "2 tbsp fish sauce",
+        "2 tbsp sugar",
+        "1/2 cup bean sprouts",
+        "2 green onions, chopped",
+        "Lime wedges for serving"
+      ],
+      "instructions": [
+        "Cook rice noodles according to package instructions.",
+        "In a large skillet, heat oil over medium-high heat.",
+        "Add shrimp, tofu, peanuts, garlic, and shallot. Stir fry until shrimp turns pink.",
+        "Push ingredients to one side of the skillet and pour beaten eggs into the other side.",
+        "Scramble eggs until cooked, then mix with other ingredients.",
+        "Add cooked rice noodles, tamarind paste, fish sauce, and sugar. Toss to combine.",
+        "Stir in bean sprouts and green onions.",
+        "Serve hot with lime wedges."
+      ]
+    },
+    {
+      "id": "24",
+      "name": "Steak Frites",
+      "description": "French bistro classic with grilled steak and crispy French fries.",
+      "ingredients": [
+        "2 ribeye steaks",
+        "4 large potatoes, cut into fries",
+        "2 tbsp olive oil",
+        "Salt and black pepper to taste",
+        "1/4 cup butter",
+        "Fresh parsley for garnish"
+      ],
+      "instructions": [
+        "Preheat oven to 425°F (220°C).",
+        "Toss potato fries with olive oil, salt, and pepper.",
+        "Spread fries in a single layer on a baking sheet and bake for 30-35 minutes until crispy.",
+        "Meanwhile, season steaks with salt and pepper.",
+        "Grill steaks over high heat for 3-4 minutes per side for medium-rare.",
+        "Let steaks rest for a few minutes before slicing.",
+        "Serve steak with crispy fries, topped with butter and fresh parsley."
+      ]
+    },
+    {
+      "id": "25",
+      "name": "Mushroom Risotto",
+      "description": "Creamy Italian rice dish with sautéed mushrooms, Parmesan cheese, and Arborio rice.",
+      "ingredients": [
+        "1 cup Arborio rice",
+        "1/2 lb mushrooms, sliced",
+        "1 onion, chopped",
+        "2 cloves garlic, minced",
+        "4 cups chicken or vegetable broth, warmed",
+        "1/2 cup dry white wine",
+        "1/2 cup grated Parmesan cheese",
+        "2 tbsp butter",
+        "2 tbsp olive oil",
+        "Salt and black pepper to taste",
+        "Fresh parsley for garnish"
+      ],
+      "instructions": [
+        "In a large skillet, heat olive oil over medium heat.",
+        "Sauté mushrooms until browned and tender. Remove from skillet and set aside.",
+        "In the same skillet, sauté onion and garlic until softened.",
+        "Add Arborio rice and cook for 2-3 minutes until translucent.",
+        "Pour in white wine and stir until absorbed.",
+        "Gradually add warmed broth, 1/2 cup at a time, stirring frequently until rice is creamy and tender, about 20 minutes.",
+        "Stir in sautéed mushrooms, Parmesan cheese, and butter.",
+        "Season with salt and pepper to taste.",
+        "Serve hot garnished with fresh parsley."
+      ]
+    },
+    {
+      "id": "2061",
+      "title": "manzanas",
+      "description": "al horno",
+      "ingredients": "manzana azucar y limon",
+      "instructions": "pochar manzanas al baño maria y posterior mente enbdurnar en azucar y zumo de limon\n"
+    },
+    {
+      "id": "1326",
+      "title": "manzanas",
+      "description": "al horno",
+      "ingredients": "manzana azucar y limon",
+      "instructions": "pochar manzanas al baño maria y posterior mente enbdurnar en azucar y zumo de limon\n"
+    },
+    {
+      "id": "ab2a",
+      "title": "manzanas",
+      "description": "al horno",
+      "ingredients": "manzana azucar y limon",
+      "instructions": "pochar manzanas al baño maria y posterior mente enbdurnar en azucar y zumo de limon\n"
+    },
+    {
+      "id": "9ccf",
+      "title": "manzanas",
+      "description": "al horno",
+      "ingredients": "manzana azucar y limon",
+      "instructions": "pochar manzanas al baño maria y posterior mente enbdurnar en azucar y zumo de limon\n"
+    },
+    {
+      "id": "9a88",
+      "title": "manzanas",
+      "description": "al horno",
+      "ingredients": "manzana azucar y limon",
+      "instructions": "pochar manzanas al baño maria y posterior mente enbdurnar en azucar y zumo de limon\n"
+    }
+  ]
+}
