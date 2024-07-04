@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:3001/recipes'; // Definir la URL base de la AP
 
 export const getAllRecipes = async () => {
   try {
-    const response = await axios.get(API_URL); // Usar API_URL en la llamada GET
+    const response = await axios.get(API_URL); 
     return response.data;
   } catch (error) {
     console.error(error);
@@ -13,8 +13,8 @@ export const getAllRecipes = async () => {
 
 export const addRecipe = async (recipeData) => {
   try {
-    const response = await axios.post(API_URL, recipeData); // Usar API_URL en la llamada POST
-    return { success: true, data: response.data }; // Manejar respuesta exitosa según tu API
+    const response = await axios.post(API_URL, recipeData); 
+    return { success: true, data: response.data }; 
   } catch (error) {
     console.error('Error al añadir la receta:', error);
     return { success: false, error: 'Error al añadir la receta' };
@@ -23,8 +23,7 @@ export const addRecipe = async (recipeData) => {
 
 export const deleteRecipe = async (id) => {
   try {
-    const response = await axios.delete(`${API_URL}/${id}`); // Usar API_URL en la llamada DELETE
-    return response.data;
+    const response = await axios.delete(`${API_URL}/${id}`); 
   } catch (error) {
     console.error(error);
   }
@@ -32,9 +31,17 @@ export const deleteRecipe = async (id) => {
 
 export const updateRecipe = async (id, recipe) => {
   try {
-    const response = await axios.put(`${API_URL}/${id}`, recipe); // Usar API_URL en la llamada PUT
-    return response.data;
+    const response = await axios.put(`${API_URL}/${id}`, recipe);
   } catch (error) {
     console.error(error);
   }
 };
+
+export const getRecipeById = async (id) => {
+  try {
+    const response = await axios.get(`${API_URL}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
