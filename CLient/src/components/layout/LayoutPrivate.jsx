@@ -1,17 +1,15 @@
-import react from 'react';
+import React from "react";
+import Nav from "../Nav";
+import Footer from "../Footer";
+import { Outlet } from 'react-router-dom'
 
-const LayoutPrivate = ({ children }) => {
-    return (
-        <div>
-            <header>
-                <Nav/>
-            </header>
-            <main>{children}</main>
-            <footer>
-                <Footer />
-            </footer>
-        </div>
-    );
-};
-
+const LayoutPrivate = () => {
+  return (
+    <>
+        <Nav />
+        <Outlet />
+        <Footer />
+    </>
+  )
+}
 export default LayoutPrivate;

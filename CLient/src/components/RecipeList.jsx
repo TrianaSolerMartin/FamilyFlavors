@@ -12,7 +12,7 @@ const RecipeList = ({ recipes }) => {
       <ul>
         {recipes.map((recipe) => (
           <li key={recipe.id}>
-            <Link to={`/recipe/${recipe.id}`}>
+            <Link to={`recipe/${recipe.id}`}>
               {recipe.name} - {recipe.description.slice(0, 20)}...
             </Link>
           </li>
