@@ -26,8 +26,7 @@ const RecipeList = ({ recipes }) => {
           {recipes.map((recipe) => (
             <div className="recipe-card" key={recipe.id}>
               <div className="recipe-image">
-                {/* Aquí puedes agregar la imagen real, por ejemplo:
-                <img src={recipe.image} alt={recipe.name} /> */}
+                <img src={recipe.image} alt={recipe.name} /> 
               </div>
               <Link className="recipe-link" to={`recipe/${recipe.id}`}>
                 <div className="recipe-name">{recipe.name}</div>

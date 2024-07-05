@@ -1,4 +1,4 @@
-import RecipeDetail from '../components/RecipeDetail';
+import RecipeDetail from '../components/recipeDetail/RecipeDetail';
 
 const Recipe = () => {
     return ( 

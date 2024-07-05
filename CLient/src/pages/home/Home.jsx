@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import RecipeList from "../../components/RecipeList";
+import RecipeList from "../../components/recipeList/RecipeList";
 import { getAllRecipes } from '../../services/RecipeServices'; // Importa la función para obtener recetas
 
 const Home = () => {
