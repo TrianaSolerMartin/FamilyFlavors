@@ -5,21 +5,24 @@ import './NewRecipeForm.css';
 
 const RecipeForm = () => {
   const { register, formState: { errors }, handleSubmit, reset } = useForm();
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [imageURL, setImageURL] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [redirectUrl, setRedirectUrl] = useState('');
 
   const onSubmit = async (data) => {
     try {
       data.image = imageURL;
 
-      const { success, error } = await addRecipe(data);
+      const { success, error, recipeId } = await addRecipe(data);
 
       if (success) {
         alert('¡La receta fue añadida correctamente!');
         reset();
         setIsSubmitted(true);
         setTimeout(() => setIsSubmitted(false), 1500);
-        setImageURL(''); // Limpiar imageURL después de enviar
+
+        // Establecer la URL de redirección
+        setRedirectUrl(`/recipe/${recipeId}`);
       } else {
         alert(error);
       }
@@ -33,7 +36,7 @@ const RecipeForm = () => {
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'Presents_react'); // Ajusta con tu upload preset de Cloudinary
+    formData.append('upload_preset', 'Presents_react');
 
     try {
       const response = await fetch('https://api.cloudinary.com/v1_1/dlg7gpmha/image/upload', {
@@ -46,50 +49,56 @@ const RecipeForm = () => {
       }
 
       const data = await response.json();
-      setImageURL(data.secure_url); // Guardar la URL de la imagen en imageURL
+      setImageURL(data.secure_url);
     } catch (error) {
       console.error('Error al subir la imagen a Cloudinary:', error);
+      alert('Error al subir la imagen a Cloudinary. Por favor, intenta nuevamente.');
     }
   };
 
-  return (
-    <div className="new-recipe-form">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>Título</label>
-          <input type="text" {...register('title', { required: true })} />
-          {errors.title && <p className="error-message">El campo título es requerido</p>}
-        </div>
-        <div>
-          <label>Descripción</label>
-          <textarea {...register('description', { required: true })}></textarea>
-          {errors.description && <p className="error-message">El campo descripción es requerido</p>}
-        </div>
-        <div>
-          <label>Ingredientes</label>
-          <textarea {...register('ingredients', { required: true })}></textarea>
-          {errors.ingredients && <p className="error-message">El campo ingredientes es requerido</p>}
-        </div>
-        <div>
-          <label>Instrucciones</label>
-          <textarea {...register('instructions', { required: true })}></textarea>
-          {errors.instructions && <p className="error-message">El campo instrucciones es requerido</p>}
-        </div>
-        <div>
-          <label>Imagen</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-          />
-          {imageURL && <p className="success-message">Imagen subida correctamente.</p>}
-        </div>
-        <input type="submit" value="Añadir Receta" />
-      </form>
+  // Redireccionar después de que redirectUrl tenga una URL válida
+  if (redirectUrl) {
+    window.location.href = redirectUrl;
+  }
 
-      {isSubmitted && <p className="success-message">Receta añadida exitosamente.</p>}
+  return (
+    <div className="form-popup">
+      <div className="form-container">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <label>Título</label>
+            <input type="text" {...register('title', { required: true })} />
+            {errors.title && <p className="error-message">El campo título es requerido</p>}
+          </div>
+          <div>
+            <label>Descripción</label>
+            <textarea {...register('description', { required: true })}></textarea>
+            {errors.description && <p className="error-message">El campo descripción es requerido</p>}
+          </div>
+          <div>
+            <label>Ingredientes</label>
+            <textarea {...register('ingredients', { required: true })}></textarea>
+            {errors.ingredients && <p className="error-message">El campo ingredientes es requerido</p>}
+          </div>
+          <div>
+            <label>Instrucciones</label>
+            <textarea {...register('instructions', { required: true })}></textarea>
+            {errors.instructions && <p className="error-message">El campo instrucciones es requerido</p>}
+          </div>
+          <div>
+            <label>Imagen</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+            />
+            {imageURL && <p className="success-message">Imagen subida correctamente.</p>}
+          </div>
+          <input type="submit" value="Añadir Receta" />
+        </form>
+      </div>
     </div>
   );
-}
+};
 
 export default RecipeForm;
