@@ -1,0 +1,689 @@
+{
+  "recipes": [
+    {
+      "id": "1",
+      "name": "Classic Chocolate Cake",
+      "description": "Rich and moist chocolate cake with layers of creamy chocolate frosting.",
+      "ingredients": [
+        "1 3/4 cups all-purpose flour",
+        "3/4 cup unsweetened cocoa powder",
+        "2 cups granulated sugar",
+        "1 1/2 teaspoons baking powder",
+        "1 1/2 teaspoons baking soda",
+        "1 teaspoon salt",
+        "2 eggs",
+        "1 cup whole milk",
+        "1/2 cup vegetable oil",
+        "2 teaspoons vanilla extract",
+        "1 cup boiling water",
+        "1 batch chocolate frosting"
+      ],
+      "instructions": [
+        "Preheat oven to 350°F (175°C). Grease and flour two 9-inch round baking pans.",
+        "In a large bowl, combine flour, cocoa powder, sugar, baking powder, baking soda, and salt.",
+        "Add eggs, milk, oil, and vanilla extract. Beat on medium speed for 2 minutes.",
+        "Stir in boiling water (batter will be thin). Pour batter into prepared pans.",
+        "Bake for 30 to 35 minutes, or until a toothpick inserted into the center comes out clean.",
+        "Cool in pans for 10 minutes, then remove from pans and cool completely on wire racks.",
+        "Frost with chocolate frosting between layers and on top and sides of cake."
+      ],
+      "image": "https://example.com/images/classic_chocolate_cake.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Chicken Alfredo Pasta",
+      "description": "Creamy pasta dish with tender chicken, tossed in a rich Alfredo sauce.",
+      "ingredients": [
+        "8 oz fettuccine pasta",
+        "2 boneless, skinless chicken breasts, cut into strips",
+        "2 tablespoons olive oil",
+        "2 cloves garlic, minced",
+        "1 cup heavy cream",
+        "1 cup grated Parmesan cheese",
+        "Salt and pepper to taste",
+        "Chopped parsley for garnish"
+      ],
+      "instructions": [
+        "Cook fettuccine pasta according to package directions. Drain and set aside.",
+        "In a large skillet, heat olive oil over medium-high heat. Add chicken strips and cook until browned and cooked through, about 5-7 minutes.",
+        "Add minced garlic and cook for 1 minute until fragrant.",
+        "Stir in heavy cream and Parmesan cheese. Cook, stirring constantly, until sauce thickens, about 3-5 minutes.",
+        "Season with salt and pepper to taste. Toss pasta with sauce until well coated.",
+        "Serve hot, garnished with chopped parsley."
+      ],
+      "image": "https://example.com/images/chicken_alfredo_pasta.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Caprese Salad",
+      "description": "Simple Italian salad with tomatoes, fresh mozzarella, basil, and balsamic glaze.",
+      "ingredients": [
+        "2 large tomatoes, sliced",
+        "1 ball fresh mozzarella cheese, sliced",
+        "1/4 cup fresh basil leaves",
+        "2 tablespoons balsamic glaze",
+        "Salt and pepper to taste"
+      ],
+      "instructions": [
+        "Arrange tomato and mozzarella slices on a serving plate, alternating and overlapping them.",
+        "Tuck fresh basil leaves between the slices.",
+        "Drizzle with balsamic glaze.",
+        "Season with salt and pepper to taste.",
+        "Serve immediately as a side dish or appetizer."
+      ],
+      "image": "https://example.com/images/caprese_salad.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Filet Mignon",
+      "description": "Tender beef steak served with mashed potatoes and asparagus.",
+      "ingredients": [
+        "4 filet mignon steaks",
+        "2 tablespoons butter",
+        "Salt and pepper to taste",
+        "Mashed potatoes and asparagus for serving"
+      ],
+      "instructions": [
+        "Season filet mignon steaks with salt and pepper.",
+        "In a large skillet, melt butter over medium-high heat.",
+        "Add filet mignon steaks and cook for 3-4 minutes per side for medium-rare.",
+        "Remove steaks from skillet and let rest for a few minutes before serving.",
+        "Serve filet mignon with mashed potatoes and asparagus on the side."
+      ],
+      "image": "https://example.com/images/filet_mignon.jpg"
+    },
+    {
+      "id": "5",
+      "name": "Classic Margarita",
+      "description": "Refreshing cocktail made with tequila, triple sec, and fresh lime juice, served in a glass rimmed with salt.",
+      "ingredients": [
+        "2 oz white tequila",
+        "1 oz triple sec",
+        "1 oz fresh lime juice",
+        "Salt for rimming glass",
+        "Lime slice for garnish"
+      ],
+      "instructions": [
+        "Moisten the rim of a glass with lime juice and dip in salt to rim.",
+        "In a shaker, combine tequila, triple sec, and lime juice with ice.",
+        "Strain mixture into prepared glass.",
+        "Garnish with a lime slice.",
+        "Serve chilled."
+      ],
+      "image": "https://example.com/images/classic_margarita.jpg"
+    },
+    {
+      "id": "6",
+      "name": "Andalusian Gazpacho",
+      "description": "Spanish cold soup made from tomatoes, cucumber, bell pepper, onion, and garlic.",
+      "ingredients": [
+        "4 ripe tomatoes, chopped",
+        "1 large cucumber, peeled and chopped",
+        "1 green bell pepper, chopped",
+        "1/2 red onion, chopped",
+        "2 cloves garlic, minced",
+        "2 tablespoons sherry vinegar",
+        "1/4 cup olive oil",
+        "Salt and pepper to taste"
+      ],
+      "instructions": [
+        "In a blender, combine tomatoes, cucumber, bell pepper, onion, and garlic.",
+        "Add sherry vinegar and olive oil.",
+        "Blend until smooth.",
+        "Season with salt and pepper to taste.",
+        "Refrigerate for at least 1 hour before serving.",
+        "Serve chilled."
+      ],
+      "image": "https://example.com/images/andalusian_gazpacho.jpg"
+    },
+    {
+      "id": "7",
+      "name": "Raspberry Macarons",
+      "description": "Light French confections made with ground almonds and filled with raspberry cream.",
+      "ingredients": [
+        "1 cup ground almonds",
+        "1 1/2 cups powdered sugar",
+        "2 egg whites",
+        "Pink food coloring",
+        "1/2 cup raspberry jam"
+      ],
+      "instructions": [
+        "Preheat oven to 300°F (150°C) and line a baking sheet with parchment paper.",
+        "In a bowl, mix together ground almonds and powdered sugar.",
+        "In another bowl, beat egg whites until soft peaks form.",
+        "Gently fold almond and sugar mixture into egg whites, mixing carefully.",
+        "Add pink food coloring as needed to achieve desired color.",
+        "Transfer mixture to a piping bag and pipe small circles onto prepared baking sheet.",
+        "Let sit for 30 minutes to form a crust.",
+        "Bake for 12-15 minutes until firm to the touch.",
+        "Cool completely before filling with raspberry jam."
+      ],
+      "image": "https://example.com/images/raspberry_macarons.jpg"
+    },
+    {
+      "id": "8",
+      "name": "Ham and Cheese Calzone",
+      "description": "Folded Italian pizza stuffed with ham, mozzarella cheese, and tomato sauce.",
+      "ingredients": [
+        "1 pizza dough",
+        "1/2 cup tomato sauce",
+        "1 cup shredded mozzarella cheese",
+        "3.5 oz sliced ham",
+        "Olive oil, salt, and pepper"
+      ],
+      "instructions": [
+        "Preheat oven to 450°F (230°C).",
+        "Roll out pizza dough and place on a baking sheet.",
+        "Spread tomato sauce over dough, leaving a border uncovered.",
+        "Layer mozzarella cheese and ham on one half of the dough.",
+        "Fold the other half of the dough over the filling and press edges to seal.",
+        "Cut small slits on top to allow steam to escape during baking.",
+        "Bake for 15-20 minutes or until crust is golden and crispy.",
+        "Cool slightly before cutting and serving."
+      ],
+      "image": "https://example.com/images/ham_and_cheese_calzone.jpg"
+    },
+    {
+      "id": "9",
+      "name": "Vegetarian Lasagna",
+      "description": "Italian lasagna with layers of pasta, roasted vegetables, ricotta cheese, and marinara sauce.",
+      "ingredients": [
+        "1 package lasagna noodles",
+        "2 cups fresh spinach",
+        "1 eggplant, thinly sliced",
+        "1 zucchini, thinly sliced",
+        "1 red bell pepper, sliced",
+        "2 cups ricotta cheese",
+        "2 cups marinara sauce",
+        "1 cup shredded mozzarella cheese",
+        "Olive oil, salt, and pepper"
+      ],
+      "instructions": [
+        "Preheat oven to 350°F (180°C).",
+        "On a baking sheet, arrange slices of eggplant, zucchini, and red bell pepper.",
+        "Drizzle with olive oil, season with salt and pepper, and roast for 15-20 minutes until tender.",
+        "Cook lasagna noodles according to package directions, then drain and set aside.",
+        "In a baking dish, spread a thin layer of marinara sauce.",
+        "Layer lasagna noodles, roasted vegetables, ricotta cheese, and marinara sauce, repeating until all ingredients are used.",
+        "Top with shredded mozzarella cheese.",
+        "Cover with foil and bake for 30 minutes, then uncover and bake for an additional 10 minutes until cheese is bubbly and golden.",
+        "Let stand for 10 minutes before serving."
+      ],
+      "image": "https://example.com/images/vegetarian_lasagna.jpg"
+    },
+    {
+      "id": "10",
+      "name": "Pumpkin Soup",
+      "description": "Creamy soup made from roasted pumpkin, onions, garlic, and spices.",
+      "ingredients": [
+        "1 small pumpkin, peeled and diced",
+        "1 onion, chopped",
+        "2 cloves garlic, minced",
+        "4 cups vegetable broth",
+        "1/2 cup heavy cream",
+        "1/4 teaspoon ground nutmeg",
+        "Salt and pepper to taste"
+      ],
+      "instructions": [
+        "Preheat oven to 400°F (200°C).",
+        "Spread diced pumpkin and chopped onion on a baking sheet.",
+        "Drizzle with olive oil, season with salt and pepper, and roast for 25-30 minutes until tender.",
+        "In a large pot, sauté minced garlic until fragrant.",
+        "Add roasted pumpkin and onion to the pot, then pour in vegetable broth.",
+        "Simmer for 15-20 minutes.",
+        "Use an immersion blender to purée the soup until smooth.",
+        "Stir in heavy cream and ground nutmeg.",
+        "Season with salt and pepper to taste.",
+        "Serve hot, garnished with a swirl of cream if desired."
+      ],
+      "image": "https://example.com/images/pumpkin_soup.jpg"
+    },
+    {
+      "id": "11",
+      "name": "Tiramisu",
+      "description": "Italian dessert made from layers of coffee-soaked ladyfingers and mascarpone cheese.",
+      "ingredients": [
+        "1 cup brewed espresso, cooled",
+        "24 ladyfinger cookies",
+        "1 cup mascarpone cheese",
+        "1/2 cup granulated sugar",
+        "2 tablespoons cocoa powder",
+        "1/2 cup heavy cream",
+        "1 teaspoon vanilla extract"
+      ],
+      "instructions": [
+        "In a shallow dish, dip each ladyfinger cookie in brewed espresso and line them in a single layer in a serving dish.",
+        "In a bowl, whisk together mascarpone cheese, sugar, heavy cream, and vanilla extract until smooth.",
+        "Spread half of the mascarpone mixture over the ladyfingers.",
+        "Repeat with another layer of espresso-dipped ladyfingers and mascarpone mixture.",
+        "Dust the top with cocoa powder.",
+        "Refrigerate for at least 2 hours before serving chilled."
+      ],
+      "image": "https://example.com/images/tiramisu.jpg"
+    },
+    {
+      "id": "12",
+      "name": "Beef Tacos",
+      "description": "Mexican street food with seasoned ground beef, lettuce, tomato, cheese, and salsa.",
+      "ingredients": [
+        "1 lb ground beef",
+        "1 packet taco seasoning",
+        "8 taco shells",
+        "Shredded lettuce, diced tomato, shredded cheese, salsa, sour cream for serving"
+      ],
+      "instructions": [
+        "In a skillet, cook ground beef over medium-high heat until browned and cooked through.",
+        "Drain excess fat, then stir in taco seasoning and water according to packet instructions.",
+        "Simmer for 5-7 minutes until thickened.",
+        "Warm taco shells according to package directions.",
+        "Fill taco shells with seasoned ground beef, shredded lettuce, diced tomato, shredded cheese, salsa, and sour cream.",
+        "Serve immediately."
+      ],
+      "image": "https://example.com/images/beef_tacos.jpg"
+    },
+    {
+      "id": "13",
+      "name": "Caesar Salad",
+      "description": "Classic salad made with romaine lettuce, croutons, Parmesan cheese, and Caesar dressing.",
+      "ingredients": [
+        "1 head romaine lettuce, chopped",
+        "1 cup croutons",
+        "1/2 cup grated Parmesan cheese",
+        "1/4 cup Caesar dressing",
+        "Salt and pepper to taste"
+      ],
+      "instructions": [
+        "In a large bowl, combine chopped romaine lettuce, croutons, and grated Parmesan cheese.",
+        "Drizzle Caesar dressing over salad.",
+        "Toss until well coated.",
+        "Season with salt and pepper to taste.",
+        "Serve immediately as a side dish or main course."
+      ],
+      "image": "https://example.com/images/caesar_salad.jpg"
+    },
+    {
+      "id": "14",
+      "name": "Spaghetti Carbonara",
+      "description": "Italian pasta dish with pancetta, eggs, Parmesan cheese, and black pepper.",
+      "ingredients": [
+        "12 oz spaghetti",
+        "4 oz pancetta or guanciale, diced",
+        "2 eggs",
+        "1/2 cup grated Parmesan cheese",
+        "1/4 teaspoon ground black pepper",
+        "Salt to taste"
+      ],
+      "instructions": [
+        "Cook spaghetti according to package directions. Drain and set aside.",
+        "In a skillet, cook diced pancetta until crispy.",
+        "In a bowl, whisk together eggs, grated Parmesan cheese, and black pepper.",
+        "Add cooked spaghetti and crispy pancetta to the bowl, tossing to coat pasta evenly with egg mixture.",
+        "Season with salt to taste.",
+        "Serve immediately, garnished with extra Parmesan cheese and black pepper."
+      ],
+      "image": "https://example.com/images/spaghetti_carbonara.jpg"
+    },
+    {
+      "id": "15",
+      "name": "Mojito",
+      "description": "Refreshing Cuban cocktail made with rum, mint leaves, lime juice, and soda water.",
+      "ingredients": [
+        "2 oz white rum",
+        "1 oz fresh lime juice",
+        "2 teaspoons granulated sugar",
+        "6-8 fresh mint leaves",
+        "Club soda",
+        "Lime slice and fresh mint sprig for garnish"
+      ],
+      "instructions": [
+        "In a glass, muddle mint leaves and granulated sugar together until fragrant.",
+        "Fill glass with ice cubes.",
+        "Add white rum and fresh lime juice.",
+        "Top with club soda.",
+        "Stir gently to combine.",
+        "Garnish with a lime slice and fresh mint sprig.",
+        "Serve immediately."
+      ],
+      "image": "https://example.com/images/mojito.jpg"
+    },
+    {
+      "id": "16",
+      "name": "French Onion Soup",
+      "description": "Rich soup made from caramelized onions, beef broth, and topped with melted cheese toast.",
+      "ingredients": [
+        "4 large onions, thinly sliced",
+        "2 tablespoons butter",
+        "4 cups beef broth",
+        "1 cup red wine",
+        "1 tablespoon all-purpose flour",
+        "4 slices French bread",
+        "1 cup shredded Gruyère cheese",
+        "Salt and pepper to taste"
+      ],
+      "instructions": [
+        "In a large pot, melt butter over medium heat.",
+        "Add thinly sliced onions and cook until caramelized, stirring occasionally, about 30-40 minutes.",
+        "Sprinkle flour over caramelized onions and cook for 1-2 minutes.",
+        "Pour in red wine and beef broth, stirring to combine.",
+        "Simmer for 15-20 minutes.",
+        "Preheat broiler.",
+        "Ladle soup into oven-safe bowls.",
+        "Top each bowl with a slice of French bread and shredded Gruyère cheese.",
+        "Place bowls under broiler for 2-3 minutes until cheese is bubbly and golden.",
+        "Serve hot."
+      ],
+      "image": "https://example.com/images/french_onion_soup.jpg"
+    },
+    {
+      "id": "17",
+      "name": "Sushi Rolls",
+      "description": "Japanese delicacy made from vinegared rice, seafood, and vegetables wrapped in seaweed.",
+      "ingredients": [
+        "2 cups sushi rice",
+        "2 cups water",
+        "1/2 cup rice vinegar",
+        "1/4 cup granulated sugar",
+        "1 teaspoon salt",
+        "Nori seaweed sheets",
+        "Assorted fillings: raw fish, cucumber, avocado, crab sticks, etc.",
+        "Soy sauce, pickled ginger, and wasabi for serving"
+      ],
+      "instructions": [
+        "Rinse sushi rice under cold water until water runs clear. Drain well.",
+        "In a saucepan, combine sushi rice and water. Bring to a boil, then reduce heat to low and cover. Cook for 20 minutes, then remove from heat and let stand for 10 minutes.",
+        "In a small bowl, mix rice vinegar, sugar, and salt until dissolved.",
+        "Transfer cooked rice to a large bowl and gently fold in vinegar mixture.",
+        "Place a nori seaweed sheet on a bamboo sushi mat.",
+        "Spread a thin layer of seasoned sushi rice on the nori sheet, leaving a 1-inch border at the top.",
+        "Arrange desired fillings in a line across the center of the rice.",
+        "Roll up the bamboo mat, pressing gently to shape the sushi roll.",
+        "Slice roll into 8 pieces using a sharp knife, wiping the knife clean between cuts.",
+        "Serve sushi rolls with soy sauce, pickled ginger, and wasabi."
+      ],
+      "image": "https://example.com/images/sushi_rolls.jpg"
+    },
+    {
+      "id": "18",
+      "name": "Ratatouille",
+      "description": "French Provencal stewed vegetable dish, made with tomatoes, zucchini, eggplant, and bell peppers.",
+      "ingredients": [
+        "1 large eggplant, diced",
+        "2 zucchinis, diced",
+        "1 red bell pepper, diced",
+        "1 yellow bell pepper, diced",
+        "1 onion, chopped",
+        "2 cloves garlic, minced",
+        "2 cups diced tomatoes",
+        "1/4 cup olive oil",
+        "1 teaspoon dried thyme",
+        "Salt and pepper to taste"
+      ],
+      "instructions": [
+        "In a large skillet, heat olive oil over medium heat.",
+        "Add diced eggplant, zucchinis, bell peppers, onion, and garlic.",
+        "Cook, stirring occasionally, until vegetables are tender, about 15 minutes.",
+        "Stir in diced tomatoes and dried thyme.",
+        "Simmer for 10-15 minutes, stirring occasionally, until flavors meld.",
+        "Season with salt and pepper to taste.",
+        "Serve hot, as a side dish or main course."
+      ],
+      "image": "https://example.com/images/ratatouille.jpg"
+    },
+    {
+      "id": "19",
+      "name": "Chocolate Chip Cookies",
+      "description": "Classic cookies with buttery dough and chocolate chips, baked until golden brown.",
+      "ingredients": [
+        "1 cup unsalted butter, softened",
+        "3/4 cup granulated sugar",
+        "3/4 cup packed brown sugar",
+        "1 teaspoon vanilla extract",
+        "2 large eggs",
+        "2 1/4 cups all-purpose flour",
+        "1 teaspoon baking soda",
+        "1/2 teaspoon salt",
+        "2 cups semisweet chocolate chips"
+      ],
+      "instructions": [
+        "Preheat oven to 375°F (190°C).",
+        "In a bowl, cream together softened butter, granulated sugar, packed brown sugar, and vanilla extract until smooth.",
+        "Beat in eggs one at a time.",
+        "In another bowl, whisk together all-purpose flour, baking soda, and salt.",
+        "Gradually add dry ingredients to butter mixture, mixing until combined.",
+        "Stir in semisweet chocolate chips.",
+        "Drop tablespoonfuls of dough onto ungreased baking sheets.",
+        "Bake for 9-11 minutes until edges are golden brown.",
+        "Cool on baking sheets for 2 minutes before transferring to wire racks to cool completely."
+      ],
+      "image": "https://example.com/images/chocolate_chip_cookies.jpg"
+    },
+    {
+      "id": "20",
+      "name": "Pad Thai",
+      "description": "Thai stir-fried noodle dish with shrimp, tofu, peanuts, bean sprouts, and tamarind sauce.",
+      "ingredients": [
+        "8 oz rice noodles",
+        "1/2 lb shrimp, peeled and deveined",
+        "1/2 cup tofu, cubed",
+        "1/2 cup bean sprouts",
+        "1/4 cup chopped peanuts",
+        "2 tablespoons vegetable oil",
+        "2 cloves garlic, minced",
+        "2 eggs, beaten",
+        "2 tablespoons fish sauce",
+        "1 tablespoon tamarind paste",
+        "1 tablespoon sugar",
+        "1/4 teaspoon crushed red pepper flakes",
+        "Lime wedges for serving"
+      ],
+      "instructions": [
+        "Soak rice noodles in warm water for 20-30 minutes until softened. Drain well.",
+        "In a small bowl, mix fish sauce, tamarind paste, sugar, and crushed red pepper flakes.",
+        "In a large skillet or wok, heat vegetable oil over medium-high heat.",
+        "Add minced garlic and cook until fragrant.",
+        "Add shrimp and tofu, stir-frying until shrimp turns pink and tofu is lightly browned.",
+        "Push shrimp and tofu to one side of the skillet and pour beaten eggs into the other side.",
+        "Scramble eggs until set, then mix with shrimp and tofu.",
+        "Add soaked rice noodles and prepared sauce to the skillet, tossing to combine.",
+        "Stir in bean sprouts and chopped peanuts.",
+        "Cook for 2-3 minutes until noodles are heated through.",
+        "Serve hot, garnished with lime wedges."
+      ],
+      "image": "https://example.com/images/pad_thai.jpg"
+    },
+    {
+      "id": "21",
+      "name": "Greek Salad",
+      "description": "Traditional salad with tomatoes, cucumbers, red onion, olives, and feta cheese, dressed in olive oil and lemon juice.",
+      "ingredients": [
+        "2 large tomatoes, diced",
+        "1 cucumber, diced",
+        "1/2 red onion, thinly sliced",
+        "1/2 cup Kalamata olives",
+        "1/2 cup crumbled feta cheese",
+        "1/4 cup olive oil",
+        "2 tablespoons fresh lemon juice",
+        "1 teaspoon dried oregano",
+        "Salt and pepper to taste"
+      ],
+      "instructions": [
+        "In a large bowl, combine diced tomatoes, diced cucumber, thinly sliced red onion, Kalamata olives, and crumbled feta cheese.",
+        "In a small bowl, whisk together olive oil, fresh lemon juice, dried oregano, salt, and pepper.",
+        "Drizzle dressing over salad and toss until well coated.",
+        "Serve immediately as a side dish or appetizer."
+      ],
+      "image": "https://example.com/images/greek_salad.jpg"
+    },
+    {
+      "id": "22",
+      "name": "Beef Stroganoff",
+      "description": "Russian dish with sautéed beef strips in a sour cream sauce, served over egg noodles.",
+      "ingredients": [
+        "1 lb beef sirloin, thinly sliced",
+        "1 onion, chopped",
+        "2 cloves garlic, minced",
+        "8 oz mushrooms, sliced",
+        "1 cup beef broth",
+        "1 cup sour cream",
+        "2 tablespoons all-purpose flour",
+        "2 tablespoons vegetable oil",
+        "Salt and pepper to taste",
+        "Cooked egg noodles for serving"
+      ],
+      "instructions": [
+        "In a large skillet, heat vegetable oil over medium-high heat.",
+        "Add thinly sliced beef sirloin and cook until browned.",
+        "Remove beef from skillet and set aside.",
+        "In the same skillet, sauté chopped onion and minced garlic until softened.",
+        "Add sliced mushrooms and cook until tender.",
+        "Sprinkle all-purpose flour over vegetables and stir to combine.",
+        "Gradually pour in beef broth, stirring constantly.",
+        "Simmer until sauce thickens, then stir in sour cream.",
+        "Return cooked beef to skillet and heat through.",
+        "Season with salt and pepper to taste.",
+        "Serve beef stroganoff over cooked egg noodles."
+      ],
+      "image": "https://example.com/images/beef_stroganoff.jpg"
+    },
+    {
+      "id": "23",
+      "name": "Apple Pie",
+      "description": "Classic American dessert with a flaky crust, filled with spiced apples and baked until golden brown.",
+      "ingredients": [
+        "1 package refrigerated pie crusts",
+        "6 cups thinly sliced, peeled apples",
+        "3/4 cup granulated sugar",
+        "2 tablespoons all-purpose flour",
+        "1 teaspoon ground cinnamon",
+        "1/4 teaspoon ground nutmeg",
+        "1 tablespoon butter",
+        "1 egg white, beaten"
+      ],
+      "instructions": [
+        "Preheat oven to 425°F (220°C).",
+        "Fit one pie crust into a 9-inch pie plate.",
+        "In a large bowl, combine thinly sliced apples, granulated sugar, all-purpose flour, ground cinnamon, and ground nutmeg.",
+        "Pour apple mixture into pie crust, mounding apples slightly in the center.",
+        "Dot with butter.",
+        "Place second pie crust over filling. Trim edges and crimp to seal.",
+        "Cut slits in top crust to allow steam to escape.",
+        "Brush top crust with beaten egg white.",
+        "Bake for 45-55 minutes until crust is golden brown and filling is bubbly.",
+        "Cool on wire rack before serving."
+      ],
+      "image": "https://example.com/images/apple_pie.jpg"
+    },
+    {
+      "id": "24",
+      "name": "Tom Yum Soup",
+      "description": "Thai hot and sour soup with shrimp, lemongrass, lime leaves, galangal, and chili peppers.",
+      "ingredients": [
+        "4 cups chicken broth",
+        "8 oz shrimp, peeled and deveined",
+        "2 stalks lemongrass, cut into 2-inch pieces",
+        "3 kaffir lime leaves",
+        "1 inch piece galangal, thinly sliced",
+        "2 tablespoons fish sauce",
+        "2 tablespoons lime juice",
+        "1 tablespoon sugar",
+        "2 red chili peppers, sliced",
+        "Chopped cilantro for garnish"
+      ],
+      "instructions": [
+        "In a pot, bring chicken broth to a boil.",
+        "Add lemongrass, kaffir lime leaves, and galangal slices.",
+        "Simmer for 5 minutes to infuse flavors.",
+        "Add shrimp, fish sauce, lime juice, sugar, and sliced red chili peppers.",
+        "Cook until shrimp is pink and cooked through, about 3-4 minutes.",
+        "Remove lemongrass, kaffir lime leaves, and galangal slices.",
+        "Serve hot, garnished with chopped cilantro."
+      ],
+      "image": "https://example.com/images/tom_yum_soup.jpg"
+    },
+    {
+      "id": "25",
+      "name": "Chicken Enchiladas",
+      "description": "Mexican dish with seasoned shredded chicken wrapped in corn tortillas and topped with enchilada sauce and cheese.",
+      "ingredients": [
+        "2 cups shredded cooked chicken",
+        "1 cup shredded Monterey Jack cheese",
+        "1 cup shredded cheddar cheese",
+        "1 can (10 oz) red enchilada sauce",
+        "1/2 cup sour cream",
+        "1 can (4 oz) chopped green chilies, drained",
+        "1/4 cup chopped fresh cilantro",
+        "1 teaspoon ground cumin",
+        "1/2 teaspoon garlic powder",
+        "8 corn tortillas"
+      ],
+      "instructions": [
+        "Preheat oven to 375°F (190°C).",
+        "In a bowl, combine shredded cooked chicken, shredded Monterey Jack cheese, shredded cheddar cheese, chopped green chilies, chopped fresh cilantro, ground cumin, and garlic powder.",
+        "In a separate bowl, mix together red enchilada sauce and sour cream.",
+        "Spread a small amount of sauce mixture in the bottom of a baking dish.",
+        "Wrap corn tortillas in a damp paper towel and microwave for 1 minute to soften.",
+        "Place a spoonful of chicken mixture in the center of each tortilla, roll up, and place seam-side down in the baking dish.",
+        "Pour remaining sauce mixture over enchiladas.",
+        "Top with additional shredded cheese if desired.",
+        "Bake for 20-25 minutes until cheese is melted and bubbly.",
+        "Serve hot."
+      ],
+      "image": "https://example.com/images/chicken_enchiladas.jpg"
+    },
+    {
+      "id": "dfdb",
+      "title": "hjgj",
+      "description": "jhgj",
+      "ingredients": "hjgj",
+      "instructions": "gjhgj"
+    },
+    {
+      "id": "cf04",
+      "title": "imagene",
+      "description": "imagen proba\n",
+      "ingredients": "prueba",
+      "instructions": "prueba",
+      "image": ""
+    },
+    {
+      "id": "45b3",
+      "title": "imj",
+      "description": "imj",
+      "ingredients": "imj",
+      "instructions": "imj",
+      "image": ""
+    },
+    {
+      "id": "bb76",
+      "title": "img",
+      "description": "img",
+      "ingredients": "img",
+      "instructions": "img",
+      "image": ""
+    },
+    {
+      "id": "cd90",
+      "title": "img",
+      "description": "img",
+      "ingredients": "img",
+      "instructions": "img",
+      "image": ""
+    },
+    {
+      "id": "95db",
+      "title": "1",
+      "description": "1\n1\n1\n",
+      "ingredients": "1",
+      "instructions": "2º",
+      "image": "https://res.cloudinary.com/dlg7gpmha/image/upload/v1720206788/bicyclesmuseum/myus7pkx8yncmlshjrw5.png"
+    },
+    {
+      "id": "49ac",
+      "title": "lññ",
+      "description": "ñ´l",
+      "ingredients": "l",
+      "instructions": "´ñ´l",
+      "image": "https://res.cloudinary.com/dlg7gpmha/image/upload/v1720209089/bicyclesmuseum/xwsyedd9a7nxalztglkf.png"
+    }
+  ]
+}

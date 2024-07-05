@@ -1,0 +1,91 @@
+/* Estilos para el contenedor principal */
+.landing-container {
+    text-align: center;
+    margin: 50px auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el encabezado */
+.header {
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-size: 3.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 1.5rem;
+    color: #666;
+}
+
+/* Estilos para los pasos */
+.steps-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 60px;
+}
+
+.step {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.step-icon {
+    font-size: 3rem;
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+.step p {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/* Estilos para el llamado a la acción */
+.cta-container {
+    background-color: #4CAF50;
+    padding: 60px 20px;
+    border-radius: 12px;
+    color: #fff;
+    margin-bottom: 40px;
+}
+
+.cta-container h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.signup-button {
+    background-color: #fff;
+    color: #4CAF50;
+    border: 2px solid #fff;
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.signup-button:hover {
+    background-color: #1E8449;
+    color: #fff;
+    transform: scale(1.05);
+}
