@@ -1,6 +1,6 @@
 export const getUser = async () => {
     try {
-        const response = await fetch("/api/user");
+        const response = await fetch("auth/user");
         const data = await response.json();
         return data;
     } catch (error) {
@@ -10,7 +10,7 @@ export const getUser = async () => {
 
 export const registerUser = async (user) => {
     try {
-        const response = await fetch("/api/register", {
+        const response = await fetch("auth/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export const registerUser = async (user) => {
 
 export const loginUser = async (user) => {
     try {
-        const response = await fetch("/api/login", {
+        const response = await fetch("auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export const loginUser = async (user) => {
 
 export const logoutUser = async () => {
     try {
-        const response = await fetch("/api/logout");
+        const response = await fetch("auth/logout");
         const data = await response.json();
         return data;
     } catch (error) {

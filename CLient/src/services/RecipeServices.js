@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3001/recipes'; // Definir la URL base de la API
+const API_URL = 'http://localhost:5000/recipes';
 
 export const getAllRecipes = async () => {
   try {
@@ -23,7 +23,7 @@ export const addRecipe = async (recipeData) => {
 
 export const deleteRecipe = async (id) => {
   try {
-    const response = await axios.delete(`${API_URL}/${id}`); 
+    await axios.delete(`${API_URL}/${id}`); 
   } catch (error) {
     console.error(error);
   }
@@ -31,7 +31,7 @@ export const deleteRecipe = async (id) => {
 
 export const updateRecipe = async (id, recipe) => {
   try {
-    const response = await axios.put(`${API_URL}/${id}`, recipe);
+    await axios.put(`${API_URL}/${id}`, recipe);
   } catch (error) {
     console.error(error);
   }
