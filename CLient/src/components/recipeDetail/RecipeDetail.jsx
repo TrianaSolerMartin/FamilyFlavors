@@ -1,21 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getRecipeById } from '../../services/RecipeServices';
+import React from 'react';
 import './RecipeDetail.css';
+import '../form/NewRecipeForm.css'; // Importa los estilos de RecipeForm
 
-const RecipeDetail = () => {
-    const { id } = useParams();
-    const [recipe, setRecipe] = useState();
-
-    useEffect(() => {
-        const fetchRecipeDetailed = async () => {
-            const detailedRecipe = await getRecipeById(id);
-            setRecipe(detailedRecipe);
-        }; 
-        fetchRecipeDetailed();
-    }, [id]);
-
-
+const RecipeDetail = ({ recipe, closeModal }) => {
     const handleShare = (platform) => {
         switch (platform) {
             case 'instagram':
@@ -33,11 +20,16 @@ const RecipeDetail = () => {
     };
 
     return (
-        <div className="recipe-detail">
-            <h1>Recipe Detail</h1>
-            <div className="recipe-content">
-                {recipe && (
-                    <>
+        <div className="modal-overlay">
+            <div className="modal-content">
+                <div className="modal-header">
+                    <h2 className="modal-title">Recipe Detail</h2>
+                    <button className="modal-close" onClick={closeModal}>
+                        &times;
+                    </button>
+                </div>
+                <div className="modal-body">
+                    <div className="recipe-content">
                         <div className="recipe-text">
                             <h2>{recipe.name}</h2>
                             <p>{recipe.description}</p>
@@ -58,8 +50,8 @@ const RecipeDetail = () => {
                         <div className="recipe-image">
                             <img src={recipe.image} alt={recipe.name} />
                         </div>
-                    </>
-                )}
+                    </div>
+                </div>
             </div>
         </div>
     );

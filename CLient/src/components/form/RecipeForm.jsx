@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { addRecipe } from '../../services/RecipeServices';
-import './NewRecipeForm.css';
+import './NewRecipeForm.css'; 
 
 const RecipeForm = () => {
   const { register, formState: { errors }, handleSubmit, reset } = useForm();
   const [imageURL, setImageURL] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState('');
+  const [modalOpen, setModalOpen] = useState(true);
 
   const onSubmit = async (data) => {
     try {
       data.image = imageURL;
-
+RecipeForm;
       const { success, error, recipeId } = await addRecipe(data);
 
       if (success) {
@@ -26,78 +27,70 @@ const RecipeForm = () => {
       } else {
         alert(error);
       }
-    } catch (error) {
-      console.error("Error al añadir la receta:", error);
-      alert('Error al añadir la receta. Por favor, intenta nuevamente.');
+    } catch (err) {
+      console.error("Error adding recipe:", err);
     }
   };
 
-  const handleImageUpload = async (event) => {
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'Presents_react');
-
-    try {
-      const response = await fetch('https://api.cloudinary.com/v1_1/dlg7gpmha/image/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al subir la imagen a Cloudinary');
-      }
-
-      const data = await response.json();
-      setImageURL(data.secure_url);
-    } catch (error) {
-      console.error('Error al subir la imagen a Cloudinary:', error);
-      alert('Error al subir la imagen a Cloudinary. Por favor, intenta nuevamente.');
-    }
+  const closeModal = () => {
+    setModalOpen(false);
   };
-
-  // Redireccionar después de que redirectUrl tenga una URL válida
-  if (redirectUrl) {
-    window.location.href = redirectUrl;
-  }
 
   return (
-    <div className="form-popup">
-      <div className="form-container">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label>Título</label>
-            <input type="text" {...register('title', { required: true })} />
-            {errors.title && <p className="error-message">El campo título es requerido</p>}
+    <>
+      {modalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2 className="modal-title">Añadir Receta</h2>
+              <button className="modal-close" onClick={closeModal}>
+                &times;
+              </button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleSubmit(onSubmit)} className="form">
+                <label htmlFor="title" className="form__label">Título</label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  {...register('title', { required: true })}
+                  className="form__input"
+                  placeholder="Título de la receta"
+                />
+                {errors.title && <p className="form__message form__message--error">Este campo es obligatorio</p>}
+
+                <label htmlFor="description" className="form__label">Descripción</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  {...register('description', { required: true })}
+                  className="form__input"
+                  placeholder="Descripción de la receta"
+                />
+                {errors.description && <p className="form__message form__message--error">Este campo es obligatorio</p>}
+
+                <label htmlFor="image" className="form__label">URL de la Imagen</label>
+                <input
+                  type="text"
+                  id="image"
+                  name="image"
+                  value={imageURL}
+                  onChange={(e) => setImageURL(e.target.value)}
+                  className="form__input"
+                  placeholder="URL de la imagen"
+                />
+
+                <div className="form-buttons">
+                  <button type="submit" className="modal-button">Añadir</button>
+                  <button type="button" onClick={() => reset()} className="modal-cancel-button">Cancelar</button>
+                </div>
+              </form>
+            </div>
           </div>
-          <div>
-            <label>Descripción</label>
-            <textarea {...register('description', { required: true })}></textarea>
-            {errors.description && <p className="error-message">El campo descripción es requerido</p>}
-          </div>
-          <div>
-            <label>Ingredientes</label>
-            <textarea {...register('ingredients', { required: true })}></textarea>
-            {errors.ingredients && <p className="error-message">El campo ingredientes es requerido</p>}
-          </div>
-          <div>
-            <label>Instrucciones</label>
-            <textarea {...register('instructions', { required: true })}></textarea>
-            {errors.instructions && <p className="error-message">El campo instrucciones es requerido</p>}
-          </div>
-          <div>
-            <label>Imagen</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-            />
-            {imageURL && <p className="success-message">Imagen subida correctamente.</p>}
-          </div>
-          <input type="submit" value="Añadir Receta" />
-        </form>
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 
