@@ -1,14 +1,24 @@
 import axios from 'axios';
+import apiClient from '../api.config.js';
 
-const API_URL = 'http://localhost:5000/recipes';
+const API_URL = 'http://localhost:5000/api/recipes';
+
 
 export const getAllRecipes = async () => {
-  try {
-    const response = await axios.get(API_URL); 
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
+    try {
+        const response = await apiClient.get('/recipes');
+        return {
+            success: true,
+            data: response.data || []
+        };
+    } catch (error) {
+        console.error('API Error:', error);
+        return {
+            success: false,
+            error: error.response?.data?.message || 'Error fetching recipes',
+            data: []
+        };
+    }
 };
 
 export const addRecipe = async (recipeData) => {

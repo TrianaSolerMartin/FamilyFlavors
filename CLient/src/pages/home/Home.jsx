@@ -11,14 +11,20 @@ const Home = () => {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const recipesData = await getAllRecipes(); 
-                setRecipes(recipesData);
+                const response = await getAllRecipes();
+                if (response.success) {
+                    setRecipes(response.data);
+                } else {
+                    console.error('Error:', response.error);
+                    setRecipes([]);
+                }
             } catch (error) {
                 console.error('Error fetching recipes:', error);
+                setRecipes([]);
             }
         };
-
-        fetchRecipes(); 
+    
+        fetchRecipes();
     }, []);
 
     const handleRecipeClick = (recipe) => {

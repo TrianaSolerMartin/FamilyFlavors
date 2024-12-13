@@ -1,6 +1,6 @@
 import React from 'react';
 import './RecipeDetail.css';
-import '../form/NewRecipeForm.css'; // Importa los estilos de RecipeForm
+import '../form/NewRecipeForm.css'; 
 
 const RecipeDetail = ({ recipe, closeModal }) => {
     const handleShare = (platform) => {

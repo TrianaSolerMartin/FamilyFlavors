@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../database/connection_db.js';
+import connection_db from "../database/connection_db.js";
 
-const User = sequelize.define('User', {
+const User = connection_db.define('User', {
     username: {
         type: DataTypes.STRING,
         allowNull: false,
