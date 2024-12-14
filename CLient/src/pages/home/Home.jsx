@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { getRecipes } from '../../services/RecipeServices';
 import RecipeForm from '../../components/form/RecipeForm';
-import RecipeCard from '../../components/recipeDetail/RecipeDetail';
+import RecipeDetail from '../../components/recipeDetail/RecipeDetail';
+import './Home.css';
 
 const Home = () => {
     const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showAddForm, setShowAddForm] = useState(false);
+    const [selectedRecipe, setSelectedRecipe] = useState(null); 
 
     const fetchRecipes = async () => {
         try {
@@ -33,6 +35,14 @@ const Home = () => {
         setShowAddForm(true);
     };
 
+    const handleRecipeClick = (recipe) => {
+        setSelectedRecipe(recipe);
+    };
+
+    const handleCloseDetail = () => {
+        setSelectedRecipe(null);
+    };
+
     const handleCloseForm = () => {
         setShowAddForm(false);
         fetchRecipes();
@@ -50,25 +60,38 @@ const Home = () => {
                 </button>
             </header>
 
-            {!loading && recipes.length === 0 && !showAddForm && (
-                <div className="no-recipes">
-                    <h2>No hay recetas todavía</h2>
-                    <button onClick={handleAddRecipe}>
-                        Añadir Primera Receta
-                    </button>
+            {!loading && recipes.length > 0 && (
+                <div className="recipes-grid">
+                    {recipes.map((recipe) => (
+                        <div 
+                            key={recipe.id} 
+                            className="recipe-card" 
+                            onClick={() => handleRecipeClick(recipe)}
+                        >
+                            <img 
+                                src={recipe.image || '/default-recipe.jpg'} 
+                                alt={recipe.title}
+                                className="recipe-image" 
+                            />
+                            <div className="recipe-content">
+                                <h3>{recipe.title}</h3>
+                                <p>{recipe.description}</p>
+                                <span className="recipe-time">{recipe.prepTime}</span>
+                            </div>
+                        </div>
+                    ))}
                 </div>
+            )}
+
+{selectedRecipe && (
+                <RecipeDetail 
+                    recipe={selectedRecipe} 
+                    onClose={handleCloseDetail}
+                />
             )}
 
             {showAddForm && (
                 <RecipeForm onClose={handleCloseForm} />
-            )}
-
-            {!loading && recipes.length > 0 && (
-                <div className="recipes-grid">
-                    {recipes.map(recipe => (
-                        <RecipeCard key={recipe.id} recipe={recipe} />
-                    ))}
-                </div>
             )}
         </div>
     );
