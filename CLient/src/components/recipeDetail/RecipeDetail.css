@@ -33,7 +33,7 @@
     display: flex;
     flex: 1;
     gap: 20px;
-    height: calc(100% - 60px); /* Adjust based on header height */
+    height: calc(100% - 60px); 
     overflow: hidden;
 }
 
@@ -91,4 +91,46 @@
     border-radius: 6px;
     position: sticky;
     top: 0;
+}
+
+/* Add these styles */
+.share-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+}
+
+.share-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.share-option label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.share-option i {
+    font-size: 20px;
+}
+
+.action-btn.share {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 15px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.action-btn.share:hover {
+    background: #45a049;
 }
