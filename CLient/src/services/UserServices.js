@@ -1,51 +1,27 @@
-export const getUser = async () => {
-    try {
-        const response = await fetch("auth/user");
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error("Error: ", error);
-    }
-    };
+import apiClient from '../api.config.js';
 
-export const registerUser = async (user) => {
+export const login = async (credentials) => {
     try {
-        const response = await fetch("auth/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(user),
-        });
-        const data = await response.json();
-        return data;
+        const response = await apiClient.post('/auth/login', credentials);
+        localStorage.setItem('token', response.data.token);
+        return { success: true };
     } catch (error) {
-        console.error("Error: ", error);
+        return { 
+            success: false, 
+            error: error.response?.data?.message || 'Error en login' 
+        };
     }
-    }
+};
 
-export const loginUser = async (user) => {
+export const register = async (userData) => {
     try {
-        const response = await fetch("auth/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(user),
-        });
-        const data = await response.json();
-        return data;
+        const response = await apiClient.post('/auth/register', userData);
+        localStorage.setItem('token', response.data.token);
+        return { success: true };
     } catch (error) {
-        console.error("Error: ", error);
+        return { 
+            success: false, 
+            error: error.response?.data?.message || 'Error en registro' 
+        };
     }
-    }
-
-export const logoutUser = async () => {
-    try {
-        const response = await fetch("auth/logout");
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error("Error: ", error);
-    }
-    }
+};

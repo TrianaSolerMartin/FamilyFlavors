@@ -39,6 +39,7 @@ Recipe.belongsTo(UserModel, {
     foreignKey: 'userId',
     as: 'author'
 });
+UserModel.hasMany(Recipe, { as: 'recipes', foreignKey: 'userId' });
 
 Recipe.belongsToMany(IngredientModel, {
     through: RecipeIngredient,

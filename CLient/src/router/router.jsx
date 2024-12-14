@@ -5,17 +5,28 @@ import Home from "../pages/home/Home";
 import Recipe from "../pages/Recipe.jsx";
 import RecipeForm from "../components/form/RecipeForm";
 import NotFound from "../pages/notfound/NotFound";
+import LoginForm from "../components/form/LoginFom.jsx";
+import ProtectedRoute from "../../ProtectectRouter.jsx";
 import LayoutPublic from "../components/layout/LayoutPublic";
 import LayoutPrivate from "../components/layout/LayoutPrivate";
+import { AuthProvider } from "../context/AuthCOntext";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LayoutPublic />,
+    element: (
+      <AuthProvider>
+        <LayoutPublic />
+      </AuthProvider>
+    ),
     children: [
       {
         index: true,
         element: <Landing />,
+      },
+      {
+        path: "login",
+        element: <LoginForm />,
       },
       {
         path: "register",
@@ -25,7 +36,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <LayoutPrivate />, 
+    element: (
+      <AuthProvider>
+        <ProtectedRoute>
+          <LayoutPrivate />
+        </ProtectedRoute>
+      </AuthProvider>
+    ),
     children: [
       {
         index: true,
@@ -48,4 +65,3 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
-
