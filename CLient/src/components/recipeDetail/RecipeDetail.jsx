@@ -61,41 +61,52 @@ const RecipeDetail = ({ recipe, onClose }) => {
         <div className="modal-overlay">
             <div className="modal-content">
                 <div className="modal-header">
-                    <h2>{recipe.title}</h2>
+                    <div className="header-content">
+                        <h2>{recipe.title}</h2>
+                        <div className="recipe-meta">
+                            <span><i className="far fa-clock"></i> {recipe.prepTime}</span>
+                            <span><i className="fas fa-utensils"></i> {recipe.servings} porciones</span>
+                        </div>
+                    </div>
                     <div className="header-actions">
-                        <button className="action-btn share" onClick={handleShare}>
-                            <i className="fas fa-share-alt"></i> Compartir
-                        </button>
+
                         <button className="close-btn" onClick={onClose}>×</button>
                     </div>
                 </div>
+
                 <div className="modal-body">
                     <div className="recipe-image">
                         <img src={recipe.image || '/default-recipe.jpg'} alt={recipe.title} />
                     </div>
-                    <div className="recipe-info">
-                        <p className="description">{recipe.description}</p>
-                        <div className="prep-time">
-                            <h3>Tiempo de preparación:</h3>
-                            <p>{recipe.prepTime}</p>
+                    <div className="recipe-details">
+                        <div className="recipe-description">
+                            <p>{recipe.description}</p>
                         </div>
-                        <div className="ingredients">
-                            <h3>Ingredientes:</h3>
-                            <ul>
-                                {recipe.ingredients?.map((ingredient) => (
-                                    <li key={ingredient.id}>
-                                        {ingredient.name} - {ingredient.RecipeIngredient?.quantity}
-                                    </li>
-                                ))}
-                            </ul>
+                        <div className="recipe-sections">
+                            <div className="ingredients-section">
+                                <h3>Ingredientes</h3>
+                                <ul>
+                                    {recipe.ingredients?.map((ingredient) => (
+                                        <li key={ingredient.id}>
+                                            <span className="quantity">{ingredient.RecipeIngredient?.quantity}</span>
+                                            <span className="ingredient">{ingredient.name}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="steps-section">
+                                <h3>Preparación</h3>
+                                <ol>
+                                    {recipe.steps?.map((step, index) => (
+                                        <li key={index}>{step.description}</li>
+                                    ))}
+                                </ol>
+                            </div>
+                            <div className="button-actions-section">
+                            <button className="action-btn share" onClick={handleShare}>
+                            <i className="fas fa-share-alt"></i>
+                        </button>
                         </div>
-                        <div className="steps">
-                            <h3>Pasos:</h3>
-                            <ol>
-                                {recipe.steps?.map((step) => (
-                                    <li key={step.id}>{step.description}</li>
-                                ))}
-                            </ol>
                         </div>
                     </div>
                 </div>
@@ -103,12 +114,14 @@ const RecipeDetail = ({ recipe, onClose }) => {
         </div>
     );
 };
+
 RecipeDetail.propTypes = {
     recipe: PropTypes.shape({
         title: PropTypes.string,
         image: PropTypes.string,
         description: PropTypes.string,
         prepTime: PropTypes.string,
+        servings: PropTypes.number,
         ingredients: PropTypes.arrayOf(
             PropTypes.shape({
                 id: PropTypes.number,
