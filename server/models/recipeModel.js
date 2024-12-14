@@ -1,5 +1,8 @@
 import { DataTypes } from 'sequelize';
 import connection_db from "../database/connection_db.js";
+import UserModel from './userModel.js';
+import IngredientModel from './ingredientModel.js';
+import RecipeIngredient from './recipeIngredientModel.js';
 
 const Recipe = connection_db.define('Recipe', {
     id: {
@@ -17,6 +20,36 @@ const Recipe = connection_db.define('Recipe', {
     instructions: {
         type: DataTypes.TEXT,
     },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'Users',
+            key: 'id'
+        }
+    }
+});
+
+// Associations
+Recipe.belongsTo(UserModel, {
+    foreignKey: 'userId',
+    as: 'author'
+});
+
+Recipe.belongsToMany(IngredientModel, {
+    through: RecipeIngredient,
+    foreignKey: 'recipeId',
+    as: 'ingredients'
+});
+
+IngredientModel.belongsToMany(Recipe, {
+    through: RecipeIngredient,
+    foreignKey: 'ingredientId',
+    as: 'recipes'
 });
 
 export default Recipe;

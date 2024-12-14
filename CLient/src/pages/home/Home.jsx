@@ -25,6 +25,7 @@ const Home = () => {
         };
     
         fetchRecipes();
+        console.log('Recipes:', recipes);
     }, []);
 
     const handleRecipeClick = (recipe) => {
