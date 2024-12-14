@@ -1,0 +1,86 @@
+.no-recipes {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 20px;
+    margin: 2rem auto;
+    max-width: 600px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    animation: bounceIn 0.6s ease;
+    background: linear-gradient(145deg, #ffffff, #f5f5f5);
+}
+
+.no-recipes h2 {
+    color: #2c3e50;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.no-recipes p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.no-recipes button {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    background: linear-gradient(45deg, #4caf50, #45a049);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    transform: scale(1);
+}
+
+.no-recipes button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.no-recipes::before {
+    content: '📝';
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1rem;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 0.9;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@media (max-width: 768px) {
+    .no-recipes {
+        margin: 1rem;
+        padding: 2rem 1rem;
+    }
+
+    .no-recipes h2 {
+        font-size: 1.8rem;
+    }
+}

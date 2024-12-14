@@ -1,56 +1,55 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getRecipes } from '../../services/RecipeServices';
 import './RecipeList.css';
 
-const RecipeList = ({ recipes = [], onRecipeClick }) => {
-    const listRef = useRef(null);
+const RecipeList = () => {
+    const [recipes, setRecipes] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const scrollLeft = () => {
-        listRef.current.scrollBy({ left: -300, behavior: 'smooth' });
-    };
+    useEffect(() => {
+        const fetchRecipes = async () => {
+            try {
+                const response = await getRecipes();
+                if (response.success) {
+                    setRecipes(response.data);
+                } else {
+                    setError(response.error);
+                }
+            } catch (err) {
+                setError('Error fetching recipes');
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const scrollRight = () => {
-        listRef.current.scrollBy({ left: 300, behavior: 'smooth' });
-    };
+        fetchRecipes();
+    }, []);
 
-    if (!Array.isArray(recipes) || recipes.length === 0) {
-        return (
-            <div className="recipe-list-container">
-                <h1 className="recipe-list-title">Recipes</h1>
-                <div className="recipe-list-wrapper">
-                    <div>No recipes available</div>
-                </div>
-            </div>
-        );
-    }
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
-        <div className="recipe-list-container">
-            <h1 className="recipe-list-title">Recipes</h1>
-            <div className="recipe-list-wrapper">
-                <button className="nav-arrow left-arrow" onClick={scrollLeft}>{'<'}</button>
-                <div className="recipe-list" ref={listRef}>
-                    {recipes.map((recipe) => (
-                        <div 
-                            key={recipe.id} 
-                            className="recipe-card" 
-                            onClick={() => onRecipeClick(recipe)}
-                        >
-                            <div className="recipe-image">
-                                <img src={recipe.image} alt={recipe.name} />
-                            </div>
-                            <Link className="recipe-link" to={`recipe/${recipe.id}`}>
-                                <div className="recipe-text">
-                                    <h3 className="recipe-name">{recipe.name}</h3>
-                                    <p className="recipe-description">
-                                        {recipe.description?.slice(0, 20)}...
-                                    </p>
-                                </div>
+        <div className="recipes-container">
+            <h2>Our Recipes</h2>
+            <div className="recipes-grid">
+                {recipes.map(recipe => (
+                    <div key={recipe.id} className="recipe-card">
+                        <img 
+                            src={recipe.image || '/default-recipe.jpg'} 
+                            alt={recipe.title} 
+                        />
+                        <div className="recipe-content">
+                            <h3>{recipe.title}</h3>
+                            <p>{recipe.description}</p>
+                            <span>Prep Time: {recipe.prepTime} mins</span>
+                            <Link to={`/recipe/${recipe.id}`} className="view-recipe">
+                                View Recipe
                             </Link>
                         </div>
-                    ))}
-                </div>
-                <button className="nav-arrow right-arrow" onClick={scrollRight}>{'>'}</button>
+                    </div>
+                ))}
             </div>
         </div>
     );

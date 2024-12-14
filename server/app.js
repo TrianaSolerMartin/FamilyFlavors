@@ -11,20 +11,26 @@ import recipeRoutes from './routes/recipeRoutes.js';
 import ingredientRoutes from './routes/ingredientRoutes.js';
 import authRouter from './routes/authRouter.js';
 import recipeIngredientRouter from './routes/recipeIngredientRouter.js';
+import StepModel from './models/stepModel.js';
 
 const { DB_PORT } = process.env;
 dotenv.config();
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+  }));
+  
+  app.use(express.json());
 
 // Routes
 app.use('/api/recipes', recipeRoutes);
 app.use('/api/ingredients', ingredientRoutes);
 app.use('/api/auth', authRouter);
 app.use('/api/recipe-ingredients', recipeIngredientRouter);
+
 
 const server = app.listen(DB_PORT, () => {
     console.log(`Server is running on port ${DB_PORT}`);
@@ -55,6 +61,8 @@ wss.on('connection', (ws) => {
 
 const syncDatabase = async () => {
     try {
+        // await connection_db.sync({ force: true });
+        console.log('Database synchronized');
         await connection_db.authenticate();
         console.log('Connection has been established successfully.👏👏');
 
@@ -69,6 +77,8 @@ const syncDatabase = async () => {
 
         await RecipeIngredient.sync({ alter: true });
         console.log('RecipeIngredient connected correctly 🔗');
+        await StepModel.sync({ alter: true });
+        console.log('StepModel connected correctly 🔗');
 
     } catch (error) {
         console.error('Unable to connect to the database:', error);

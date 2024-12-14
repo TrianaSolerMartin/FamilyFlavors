@@ -1,57 +1,69 @@
-import axios from 'axios';
-import apiClient from '../api.config.js';
+import apiClient from '../api.config';
 
-const API_URL = 'http://localhost:5000/api/recipes';
-
-
-export const getAllRecipes = async () => {
+export const getRecipes = async () => {
     try {
-        const response = await apiClient.get('/recipes');
+        const response = await apiClient.get('/api/recipes');
         return {
             success: true,
-            data: response.data || []
+            data: response.data.data || []
         };
     } catch (error) {
-        console.error('API Error:', error);
+        console.error('Error fetching recipes:', error);
         return {
             success: false,
-            error: error.response?.data?.message || 'Error fetching recipes',
-            data: []
+            error: error.response?.data?.message || 'Error fetching recipes'
         };
     }
 };
 
-export const addRecipe = async (recipeData) => {
-  try {
-    const response = await axios.post(API_URL, recipeData); 
-    return { success: true, data: response.data }; 
-  } catch (error) {
-    console.error('Error al añadir la receta:', error);
-    return { success: false, error: 'Error al añadir la receta' };
-  }
+export const createRecipe = async (recipeData) => {
+    try {
+        const response = await apiClient.post('/api/recipes', recipeData);
+        return {
+            success: true,
+            data: response.data.data
+        };
+    } catch (error) {
+        console.error('Error creating recipe:', error);
+        return {
+            success: false,
+            error: error.response?.data?.message || 'Error creating recipe'
+        };
+    }
 };
 
-export const deleteRecipe = async (id) => {
-  try {
-    await axios.delete(`${API_URL}/${id}`); 
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-export const updateRecipe = async (id, recipe) => {
-  try {
-    await axios.put(`${API_URL}/${id}`, recipe);
-  } catch (error) {
-    console.error(error);
-  }
+export const getAllRecipes = async () => {
+    try {
+        const response = await apiClient.get('/recipes');
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'Error fetching recipes');
+    }
 };
 
 export const getRecipeById = async (id) => {
-  try {
-    const response = await axios.get(`${API_URL}/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
-}
+    try {
+        const response = await apiClient.get(`/recipes/${id}`);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'Error fetching recipe');
+    }
+};
+
+export const updateRecipe = async (id, recipeData) => {
+    try {
+        const response = await apiClient.put(`/recipes/${id}`, recipeData);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'Error updating recipe');
+    }
+};
+
+export const deleteRecipe = async (id) => {
+    try {
+        const response = await apiClient.delete(`/recipes/${id}`);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'Error deleting recipe');
+    }
+};

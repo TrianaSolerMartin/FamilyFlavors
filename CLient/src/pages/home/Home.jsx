@@ -1,49 +1,74 @@
-import React, { useState, useEffect } from 'react';
-import RecipeList from "../../components/recipeList/RecipeList";
-import RecipeDetail from "../../components/recipeDetail/RecipeDetail";
-import { getAllRecipes } from '../../services/RecipeServices'; 
+import { useState, useEffect } from 'react';
+import { getRecipes } from '../../services/RecipeServices';
+import RecipeForm from '../../components/form/RecipeForm';
+import RecipeCard from '../../components/recipeDetail/RecipeDetail';
 
 const Home = () => {
     const [recipes, setRecipes] = useState([]);
-    const [selectedRecipe, setSelectedRecipe] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [showAddForm, setShowAddForm] = useState(false);
+
+    const fetchRecipes = async () => {
+        try {
+            setLoading(true);
+            const response = await getRecipes();
+            if (response.success) {
+                setRecipes(response.data || []);
+            } else {
+                setError(response.error);
+            }
+        } catch (error) {
+            setError('Error fetching recipes');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                const response = await getAllRecipes();
-                if (response.success) {
-                    setRecipes(response.data);
-                } else {
-                    console.error('Error:', response.error);
-                    setRecipes([]);
-                }
-            } catch (error) {
-                console.error('Error fetching recipes:', error);
-                setRecipes([]);
-            }
-        };
-    
         fetchRecipes();
-        console.log('Recipes:', recipes);
     }, []);
 
-    const handleRecipeClick = (recipe) => {
-        setSelectedRecipe(recipe);
-        setIsModalOpen(true);
+    const handleAddRecipe = () => {
+        setShowAddForm(true);
     };
 
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setSelectedRecipe(null);
+    const handleCloseForm = () => {
+        setShowAddForm(false);
+        fetchRecipes();
     };
+
+    if (loading) return <div className="loading">Loading...</div>;
+    if (error) return <div className="error">{error}</div>;
 
     return (
-        <div>
-            <h1>Home</h1>
-            <RecipeList recipes={recipes} onRecipeClick={handleRecipeClick} />
-            {isModalOpen && selectedRecipe && (
-                <RecipeDetail recipe={selectedRecipe} closeModal={closeModal} />
+        <div className="home-container">
+            <header className="home-header">
+                <h1>Mis Recetas</h1>
+                <button className="add-recipe-btn" onClick={handleAddRecipe}>
+                    Añadir Receta
+                </button>
+            </header>
+
+            {!loading && recipes.length === 0 && !showAddForm && (
+                <div className="no-recipes">
+                    <h2>No hay recetas todavía</h2>
+                    <button onClick={handleAddRecipe}>
+                        Añadir Primera Receta
+                    </button>
+                </div>
+            )}
+
+            {showAddForm && (
+                <RecipeForm onClose={handleCloseForm} />
+            )}
+
+            {!loading && recipes.length > 0 && (
+                <div className="recipes-grid">
+                    {recipes.map(recipe => (
+                        <RecipeCard key={recipe.id} recipe={recipe} />
+                    ))}
+                </div>
             )}
         </div>
     );

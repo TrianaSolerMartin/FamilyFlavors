@@ -1,56 +1,65 @@
-import { DataTypes } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import connection_db from "../database/connection_db.js";
-import UserModel from './userModel.js';
-import IngredientModel from './ingredientModel.js';
-import RecipeIngredient from './recipeIngredientModel.js';
 
-const Recipe = connection_db.define('Recipe', {
+class Recipe extends Model {
+    static associate(models) {
+        // Many-to-many with Ingredients
+        Recipe.belongsToMany(models.Ingredient, {
+            through: models.RecipeIngredient,
+            foreignKey: 'recipeId',
+            as: 'ingredients'
+        });
+
+        // One-to-many with Steps
+        Recipe.hasMany(models.Step, {
+            foreignKey: 'recipeId',
+            as: 'steps'
+        });
+
+        // Belongs to User
+        Recipe.belongsTo(models.User, {
+            foreignKey: 'userId',
+            as: 'author'
+        });
+    }
+}
+
+Recipe.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    name: {
+    title: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+            notEmpty: true,
+            len: [3, 100]
+        }
     },
     description: {
         type: DataTypes.TEXT,
+        allowNull: false
     },
-    instructions: {
-        type: DataTypes.TEXT,
+    prepTime: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
     image: {
-        type: DataTypes.STRING,
-        allowNull: true
+        type: DataTypes.STRING
     },
     userId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         references: {
             model: 'Users',
             key: 'id'
         }
     }
-});
-
-// Associations
-Recipe.belongsTo(UserModel, {
-    foreignKey: 'userId',
-    as: 'author'
-});
-UserModel.hasMany(Recipe, { as: 'recipes', foreignKey: 'userId' });
-
-Recipe.belongsToMany(IngredientModel, {
-    through: RecipeIngredient,
-    foreignKey: 'recipeId',
-    as: 'ingredients'
-});
-
-IngredientModel.belongsToMany(Recipe, {
-    through: RecipeIngredient,
-    foreignKey: 'ingredientId',
-    as: 'recipes'
+}, {
+    sequelize: connection_db,
+    modelName: 'Recipe',
+    tableName: 'Recipes'
 });
 
 export default Recipe;

@@ -1,91 +1,80 @@
-/* Estilos para el contenedor principal */
 .landing-container {
-    text-align: center;
-    margin: 50px auto;
-    padding: 20px;
-    width: 80%;
-    max-width: 800px;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    min-height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                url('/images/food-bg.jpg') center/cover;
 }
 
-/* Estilos para el encabezado */
-.header {
-    margin-bottom: 40px;
-}
-
-.header h1 {
-    font-size: 3.5rem;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.header p {
-    font-size: 1.5rem;
-    color: #666;
-}
-
-/* Estilos para los pasos */
-.steps-container {
+.hero-section {
+    height: 80vh;
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 60px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
 }
 
-.step {
-    flex: 1;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.hero-section h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
 }
 
-.step:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.step-icon {
-    font-size: 3rem;
-    color: #4CAF50;
-    margin-bottom: 10px;
-}
-
-.step p {
-    font-size: 1.2rem;
-    color: #333;
-}
-
-/* Estilos para el llamado a la acción */
-.cta-container {
-    background-color: #4CAF50;
-    padding: 60px 20px;
-    border-radius: 12px;
-    color: #fff;
-    margin-bottom: 40px;
-}
-
-.cta-container h2 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-}
-
-.signup-button {
-    background-color: #fff;
-    color: #4CAF50;
-    border: 2px solid #fff;
-    padding: 15px 30px;
+.hero-section p {
     font-size: 1.5rem;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    margin-bottom: 2rem;
 }
 
-.signup-button:hover {
-    background-color: #1E8449;
-    color: #fff;
-    transform: scale(1.05);
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.btn-primary {
+    background: #ff6b6b;
+    color: white;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    transform: translateY(-3px);
+}
+
+.features-section {
+    padding: 4rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    background: white;
+}
+
+.feature-card {
+    text-align: center;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+}
+
+.feature-card i {
+    font-size: 2.5rem;
+    color: #ff6b6b;
+    margin-bottom: 1rem;
 }

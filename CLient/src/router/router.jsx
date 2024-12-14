@@ -1,15 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 import Landing from "../pages/landing/Landing.jsx";
-import Register from "../pages/Register.jsx";
+import Register from "../components/form/Register.jsx";
 import Home from "../pages/home/Home";
 import Recipe from "../pages/Recipe.jsx";
+import RecipeList from "../components/recipeList/RecipeList";
 import RecipeForm from "../components/form/RecipeForm";
 import NotFound from "../pages/notfound/NotFound";
 import LoginForm from "../components/form/LoginFom.jsx";
 import ProtectedRoute from "../../ProtectectRouter.jsx";
 import LayoutPublic from "../components/layout/LayoutPublic";
 import LayoutPrivate from "../components/layout/LayoutPrivate";
-import { AuthProvider } from "../context/AuthContext";
+import { AuthProvider } from "../context/AuthCOntext";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
         path: "register",
         element: <Register />,
       },
+      {
+        path: "recipes",
+        element: <RecipeList />,
+      }
     ],
   },
   {
@@ -49,13 +54,22 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "recipe/:id",
-        element: <Recipe />,
-      },
-      {
-        path: "new-recipe",
-        element: <RecipeForm />,
-      },
+        path: "recipes",
+        children: [
+          {
+            index: true,
+            element: <RecipeList />,
+          },
+          {
+            path: ":id",
+            element: <Recipe />,
+          },
+          {
+            path: "new",
+            element: <RecipeForm />,
+          }
+        ]
+      }
     ],
   },
   {

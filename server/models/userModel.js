@@ -1,8 +1,21 @@
-import { DataTypes } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import bcrypt from 'bcrypt';
 import connection_db from "../database/connection_db.js";
 
-const User = connection_db.define('User', {
+class User extends Model {
+    static associate(models) {
+        User.hasMany(models.Recipe, {
+            foreignKey: 'userId',
+            as: 'recipes'
+        });
+    }
+
+    async validatePassword(password) {
+        return bcrypt.compare(password, this.password);
+    }
+}
+
+User.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -11,7 +24,11 @@ const User = connection_db.define('User', {
     username: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
+        validate: {
+            notEmpty: true,
+            len: [3, 50]
+        }
     },
     email: {
         type: DataTypes.STRING,
@@ -23,13 +40,18 @@ const User = connection_db.define('User', {
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            len: [6, 100]
+        }
     },
     role: {
         type: DataTypes.ENUM('user', 'admin'),
         defaultValue: 'user'
     }
 }, {
+    sequelize: connection_db,
+    modelName: 'User',
     hooks: {
         beforeCreate: async (user) => {
             const salt = await bcrypt.genSalt(10);

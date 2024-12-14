@@ -1,81 +1,226 @@
+import connection_db from '../database/connection_db.js';
 import Recipe from '../models/recipeModel.js';
 import Ingredient from '../models/ingredientModel.js';
+import Step from '../models/stepModel.js';
+import RecipeIngredient from '../models/recipeIngredientModel.js';
 
-const getAllRecipes = async (req, res) => {
+export const createRecipe = async (req, res) => {
+  let transaction;
+
+  try {
+    transaction = await connection_db.transaction();
+    const { title, description, prepTime, ingredients, steps, image } = req.body;
+    const userId = req.user.id;
+
+    // Create recipe
+    const recipe = await Recipe.create({
+      title, description, prepTime, image, userId
+    }, { transaction });
+
+    // Create ingredients and associations
+    if (ingredients?.length) {
+      for (const ing of ingredients) {
+        const [ingredient] = await Ingredient.findOrCreate({
+          where: { name: ing.name.toLowerCase().trim() },
+          transaction
+        });
+
+        await RecipeIngredient.create({
+          recipeId: recipe.id,
+          ingredientId: ingredient.id,
+          quantity: ing.quantity
+        }, { transaction });
+      }
+    }
+
+    // Create steps
+    if (steps?.length) {
+      await Step.bulkCreate(
+        steps.map((step, index) => ({
+          description: step.description,
+          orderNumber: index + 1,
+          recipeId: recipe.id
+        })), 
+        { transaction }
+      );
+    }
+
+    await transaction.commit();
+
+    const completeRecipe = await Recipe.findByPk(recipe.id, {
+      include: [{
+        model: Ingredient,
+        as: 'ingredients',
+        through: { attributes: ['quantity'] }
+      }, {
+        model: Step,
+        as: 'steps',
+        order: [['orderNumber', 'ASC']]
+      }]
+    });
+
+    return res.status(201).json({
+      success: true,
+      data: completeRecipe
+    });
+
+  } catch (error) {
+    if (transaction) await transaction.rollback();
+    console.error('Error creating recipe:', error);
+    return res.status(500).json({
+      success: false,
+      error: error.message || 'Error creating recipe'
+    });
+  }
+};
+
+export const getAllRecipes = async (req, res) => {
     try {
-        const recipes = await Recipe.findAll({ include: Ingredient });
-        res.json(recipes);
+        const recipes = await Recipe.findAll({ 
+            include: [
+                { 
+                    model: Ingredient, 
+                    as: 'ingredients',
+                    through: { attributes: ['quantity'] } 
+                },
+                { 
+                    model: Step, 
+                    as: 'steps',
+                    order: [['orderNumber', 'ASC']] 
+                }
+            ],
+            order: [['createdAt', 'DESC']]
+        });
+        
+        return res.status(200).json({
+            success: true,
+            data: recipes
+        });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error fetching recipes:', error);
+        return res.status(500).json({
+            success: false,
+            error: 'Error fetching recipes'
+        });
     }
 };
 
-const createRecipe = async (req, res) => {
+export const getRecipeById = async (req, res) => {
     try {
-        const { name, description, instructions, ingredients } = req.body;
-        const recipe = await Recipe.create({ name, description, instructions });
-        if (ingredients && ingredients.length > 0) {
-            const ingredientInstances = await Ingredient.findAll({
-                where: { name: ingredients },
+        const recipe = await Recipe.findByPk(req.params.id, {
+            include: [
+                { model: Ingredient, as: 'ingredients' },
+                { model: Step, as: 'steps', order: [['orderNumber', 'ASC']] }
+            ]
+        });
+
+        if (!recipe) {
+            return res.status(404).json({
+                success: false,
+                error: 'Recipe not found'
             });
-            await recipe.addIngredients(ingredientInstances);
         }
-        res.status(201).json(recipe);
+
+        return res.status(200).json({
+            success: true,
+            data: recipe
+        });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error fetching recipe:', error);
+        return res.status(500).json({
+            success: false,
+            error: 'Error fetching recipe'
+        });
     }
 };
 
-const deleteRecipe = async (req, res) => {
+export const updateRecipe = async (req, res) => {
     try {
+        const { title, description, prepTime, image, ingredients, steps } = req.body;
         const recipe = await Recipe.findByPk(req.params.id);
-        if (recipe) {
-            await recipe.destroy();
-            res.json({ message: 'Recipe deleted' });
-        } else {
-            res.status(404).json({ error: 'Recipe not found' });
+
+        if (!recipe) {
+            return res.status(404).json({
+                success: false,
+                error: 'Recipe not found'
+            });
         }
-    }
-    catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
 
-const updateRecipe = async (req, res) => {
-    try {
-        const recipe = await Recipe.findByPk(req.params.id);
-        if (recipe) {
-            const { name, description, instructions, ingredients } = req.body;
-            await recipe.update({ name, description, instructions });
-            if (ingredients && ingredients.length > 0) {
-                const ingredientInstances = await Ingredient.findAll({
-                    where: { name: ingredients },
-                });
-                await recipe.setIngredients(ingredientInstances);
+        // Update recipe
+        await recipe.update({
+            title,
+            description,
+            prepTime,
+            image
+        });
+
+        // Update ingredients
+        if (ingredients) {
+            await Ingredient.destroy({ where: { recipeId: recipe.id } });
+            if (ingredients.length) {
+                await Ingredient.bulkCreate(
+                    ingredients.map(ing => ({...ing, recipeId: recipe.id}))
+                );
             }
-            res.json(recipe);
-        } else {
-            res.status(404).json({ error: 'Recipe not found' });
         }
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-}
 
-const getRecipeById = async (req, res) => {
-    try {
-        const recipe = await Recipe.findByPk(req.params.id, { include: Ingredient });
-        if (recipe) {
-            res.json(recipe);
-        } else {
-            res.status(404).json({ error: 'Recipe not found' });
+        // Update steps
+        if (steps) {
+            await Step.destroy({ where: { recipeId: recipe.id } });
+            if (steps.length) {
+                await Step.bulkCreate(
+                    steps.map((step, index) => ({
+                        ...step,
+                        recipeId: recipe.id,
+                        orderNumber: index + 1
+                    }))
+                );
+            }
         }
-    }
-    catch (error) {
-        res.status(500).json({ error: error.message });
+
+        // Fetch updated recipe
+        const updatedRecipe = await Recipe.findByPk(recipe.id, {
+            include: [
+                { model: Ingredient, as: 'ingredients' },
+                { model: Step, as: 'steps', order: [['orderNumber', 'ASC']] }
+            ]
+        });
+
+        return res.status(200).json({
+            success: true,
+            data: updatedRecipe
+        });
+    } catch (error) {
+        console.error('Error updating recipe:', error);
+        return res.status(500).json({
+            success: false,
+            error: 'Error updating recipe'
+        });
     }
 };
 
-export { getAllRecipes, createRecipe, deleteRecipe, updateRecipe, getRecipeById };
+export const deleteRecipe = async (req, res) => {
+    try {
+        const recipe = await Recipe.findByPk(req.params.id);
+        
+        if (!recipe) {
+            return res.status(404).json({
+                success: false,
+                error: 'Recipe not found'
+            });
+        }
 
-
+        await recipe.destroy();
+        
+        return res.status(200).json({
+            success: true,
+            message: 'Recipe deleted successfully'
+        });
+    } catch (error) {
+        console.error('Error deleting recipe:', error);
+        return res.status(500).json({
+            success: false,
+            error: 'Error deleting recipe'
+        });
+    }
+};
