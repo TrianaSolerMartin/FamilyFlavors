@@ -1,27 +1,49 @@
-import { DB_DEV_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_DIALECT } from '../config.js';
-import { Sequelize } from "sequelize";
+import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
+import { DB_DEV_NAME, DB_USER, DB_PASSWORD, DB_HOST } from '../config.js';
+
+dotenv.config();
+
 
 const connection_db = new Sequelize(DB_DEV_NAME, DB_USER, DB_PASSWORD, {
     host: DB_HOST,
-    dialect: DB_DIALECT
+    dialect: 'mysql',
+    logging: console.log,
+    database: DB_DEV_NAME,
+    define: {
+        charset: 'utf8',
+        collate: 'utf8_general_ci'
+    }
 });
 
-connection_db.authenticate()
-  .then(() => {
-    console.log('Connection to the database has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+// Validate connection and create database if needed
+const initializeDatabase = async () => {
+    try {
+        // Create database if it doesn't exist
+        await connection_db.query(`CREATE DATABASE IF NOT EXISTS ${DB_DEV_NAME};`);
+        
+        // Use the database
+        await connection_db.query(`USE ${DB_DEV_NAME};`);
+        
+        await connection_db.authenticate();
+        console.log('Database connection established successfully');
+        
+        return true;
+    } catch (error) {
+        console.error('Unable to connect to database:', error.message);
+        return false;
+    }
+};
 
-// Añadir hooks para medir el tiempo de ejecución de las consultas
-connection_db.addHook('beforeQuery', (options) => {
-    options.startTime = Date.now();
-});
+export const initModels = (models) => {
+    Object.values(models).forEach(model => {
+        if (typeof model.associate === 'function') {
+            model.associate(models);
+        }
+    });
+};
 
-connection_db.addHook('afterQuery', (options) => {
-    const duration = Date.now() - options.startTime;
-    console.log(`Query executed in ${duration}ms`);
-});
+// Initialize database connection
+await initializeDatabase();
 
 export default connection_db;

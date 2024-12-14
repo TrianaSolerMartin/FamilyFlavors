@@ -1,7 +1,18 @@
-import { DataTypes } from 'sequelize';
-import connection_db from "../database/connection_db.js";
+import { Model, DataTypes } from 'sequelize';
+import connection_db from '../database/connection_db.js';
 
-const Ingredient = connection_db.define('Ingredient', {
+class Ingredient extends Model {
+    static associate(models) {
+        Ingredient.belongsToMany(models.Recipe, {
+            through: models.RecipeIngredient,
+            foreignKey: 'ingredientId',
+            otherKey: 'recipeId',
+            as: 'recipes'
+        });
+    }
+}
+
+Ingredient.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -12,6 +23,9 @@ const Ingredient = connection_db.define('Ingredient', {
         allowNull: false,
         unique: true
     }
+}, {
+    sequelize: connection_db,
+    modelName: 'Ingredient'
 });
 
 export default Ingredient;

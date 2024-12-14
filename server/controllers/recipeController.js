@@ -5,91 +5,94 @@ import Step from '../models/stepModel.js';
 import RecipeIngredient from '../models/recipeIngredientModel.js';
 
 export const createRecipe = async (req, res) => {
-  let transaction;
+    let transaction;
+    let isCommitted = false;
 
-  try {
-    transaction = await connection_db.transaction();
-    const { title, description, prepTime, ingredients, steps, image } = req.body;
-    const userId = req.user.id;
+    try {
+        transaction = await connection_db.transaction();
+        const { title, description, prepTime, ingredients, steps, image } = req.body;
+        const userId = req.user.id;
 
-    // Create recipe
-    const recipe = await Recipe.create({
-      title, description, prepTime, image, userId
-    }, { transaction });
+        // Create recipe
+        const recipe = await Recipe.create({
+            title, description, prepTime, image, userId
+        }, { transaction });
 
-    // Create ingredients and associations
-    if (ingredients?.length) {
-      for (const ing of ingredients) {
-        const [ingredient] = await Ingredient.findOrCreate({
-          where: { name: ing.name.toLowerCase().trim() },
-          transaction
+        // Handle ingredients
+        if (ingredients?.length) {
+            for (const ing of ingredients) {
+                const [ingredient] = await Ingredient.findOrCreate({
+                    where: { name: ing.name.toLowerCase().trim() },
+                    transaction
+                });
+
+                await RecipeIngredient.create({
+                    recipeId: recipe.id,
+                    ingredientId: ingredient.id,
+                    quantity: ing.quantity
+                }, { transaction });
+            }
+        }
+
+        // Handle steps
+        if (steps?.length) {
+            await Step.bulkCreate(
+                steps.map((step, index) => ({
+                    description: step.description,
+                    orderNumber: index + 1,
+                    recipeId: recipe.id
+                })),
+                { transaction }
+            );
+        }
+
+        await transaction.commit();
+        isCommitted = true;
+
+        const completeRecipe = await Recipe.findByPk(recipe.id, {
+            include: [
+                { model: Ingredient, as: 'ingredients', through: { attributes: ['quantity'] } },
+                { model: Step, as: 'steps', order: [['orderNumber', 'ASC']] }
+            ]
         });
 
-        await RecipeIngredient.create({
-          recipeId: recipe.id,
-          ingredientId: ingredient.id,
-          quantity: ing.quantity
-        }, { transaction });
-      }
+        return res.status(201).json({ success: true, data: completeRecipe });
+
+    } catch (error) {
+        if (transaction && !isCommitted) {
+            await transaction.rollback();
+        }
+
+        if (error.name === 'SequelizeValidationError') {
+            return res.status(400).json({
+                success: false,
+                error: error.errors[0].message
+            });
+        }
+
+        console.error('Error creating recipe:', error);
+        return res.status(500).json({ 
+            success: false, 
+            error: 'Error creating recipe'
+        });
     }
-
-    // Create steps
-    if (steps?.length) {
-      await Step.bulkCreate(
-        steps.map((step, index) => ({
-          description: step.description,
-          orderNumber: index + 1,
-          recipeId: recipe.id
-        })), 
-        { transaction }
-      );
-    }
-
-    await transaction.commit();
-
-    const completeRecipe = await Recipe.findByPk(recipe.id, {
-      include: [{
-        model: Ingredient,
-        as: 'ingredients',
-        through: { attributes: ['quantity'] }
-      }, {
-        model: Step,
-        as: 'steps',
-        order: [['orderNumber', 'ASC']]
-      }]
-    });
-
-    return res.status(201).json({
-      success: true,
-      data: completeRecipe
-    });
-
-  } catch (error) {
-    if (transaction) await transaction.rollback();
-    console.error('Error creating recipe:', error);
-    return res.status(500).json({
-      success: false,
-      error: error.message || 'Error creating recipe'
-    });
-  }
 };
 
 export const getAllRecipes = async (req, res) => {
     try {
-        const recipes = await Recipe.findAll({ 
+        const recipes = await Recipe.findAll({
             include: [
                 { 
-                    model: Ingredient, 
+                    model: Ingredient,
                     as: 'ingredients',
-                    through: { attributes: ['quantity'] } 
+                    through: { attributes: ['quantity'] }
                 },
-                { 
-                    model: Step, 
+                {
+                    model: Step,
                     as: 'steps',
-                    order: [['orderNumber', 'ASC']] 
+                    order: [['orderNumber', 'ASC']]
                 }
-            ],
-            order: [['createdAt', 'DESC']]
+            ]
         });
         
         return res.status(200).json({
@@ -100,7 +103,7 @@ export const getAllRecipes = async (req, res) => {
         console.error('Error fetching recipes:', error);
         return res.status(500).json({
             success: false,
-            error: 'Error fetching recipes'
+            error: error.message
         });
     }
 };

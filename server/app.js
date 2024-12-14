@@ -7,23 +7,38 @@ import UserModel from './models/userModel.js';
 import RecipeModel from './models/recipeModel.js';
 import IngredientModel from './models/ingredientModel.js';
 import RecipeIngredient from './models/recipeIngredientModel.js';
+import StepModel from './models/stepModel.js';
 import recipeRoutes from './routes/recipeRoutes.js';
 import ingredientRoutes from './routes/ingredientRoutes.js';
 import authRouter from './routes/authRouter.js';
 import recipeIngredientRouter from './routes/recipeIngredientRouter.js';
-import StepModel from './models/stepModel.js';
 
-const { DB_PORT } = process.env;
 dotenv.config();
-
 const app = express();
+const PORT = process.env.PORT || 5000;
 
+// Middleware
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true
-  }));
-  
-  app.use(express.json());
+}));
+app.use(express.json());
+
+// Initialize models
+const models = {
+    User: UserModel,
+    Recipe: RecipeModel,
+    Ingredient: IngredientModel,
+    Step: StepModel,
+    RecipeIngredient: RecipeIngredient
+};
+
+// Setup associations
+Object.values(models).forEach(model => {
+    if (typeof model.associate === 'function') {
+        model.associate(models);
+    }
+});
 
 // Routes
 app.use('/api/recipes', recipeRoutes);
@@ -31,13 +46,25 @@ app.use('/api/ingredients', ingredientRoutes);
 app.use('/api/auth', authRouter);
 app.use('/api/recipe-ingredients', recipeIngredientRouter);
 
+// Database sync
+const syncDatabase = async () => {
+    try {
+        await connection_db.sync({ alter: true });
+        console.log('Database synchronized');
+        await connection_db.authenticate();
+        console.log('Connection established successfully 👏');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
+        process.exit(1);
+    }
+};
 
-const server = app.listen(DB_PORT, () => {
-    console.log(`Server is running on port ${DB_PORT}`);
+// WebSocket setup
+const server = app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
 
 const wss = new WebSocketServer({ server });
-
 let clients = [];
 
 wss.on('connection', (ws) => {
@@ -45,7 +72,6 @@ wss.on('connection', (ws) => {
     clients.push(ws);
 
     ws.on('message', (message) => {
-        console.log(`Received message: ${message} server`);
         clients.forEach(client => {
             if (client !== ws && client.readyState === WebSocket.OPEN) {
                 client.send(message);
@@ -54,37 +80,11 @@ wss.on('connection', (ws) => {
     });
 
     ws.on('close', () => {
-        console.log('Client disconnected from WebSocket');
         clients = clients.filter(client => client !== ws);
     });
 });
 
-const syncDatabase = async () => {
-    try {
-        // await connection_db.sync({ force: true });
-        console.log('Database synchronized');
-        await connection_db.authenticate();
-        console.log('Connection has been established successfully.👏👏');
-
-        await UserModel.sync({ alter: true });
-        console.log('UserModel connected correctly 👤👤');
-
-        await RecipeModel.sync({ alter: true });
-        console.log('RecipeModel connected correctly 📋');
-
-        await IngredientModel.sync({ alter: true });
-        console.log('IngredientModel connected correctly 📋');
-
-        await RecipeIngredient.sync({ alter: true });
-        console.log('RecipeIngredient connected correctly 🔗');
-        await StepModel.sync({ alter: true });
-        console.log('StepModel connected correctly 🔗');
-
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
-};
-
+// Initialize database
 syncDatabase();
 
 export default app;

@@ -1,22 +1,21 @@
+// Purpose: Recipe model definition and associations
 import { Model, DataTypes } from 'sequelize';
-import connection_db from "../database/connection_db.js";
+import connection_db from '../database/connection_db.js';
 
 class Recipe extends Model {
     static associate(models) {
-        // Many-to-many with Ingredients
         Recipe.belongsToMany(models.Ingredient, {
             through: models.RecipeIngredient,
             foreignKey: 'recipeId',
+            otherKey: 'ingredientId',
             as: 'ingredients'
         });
 
-        // One-to-many with Steps
         Recipe.hasMany(models.Step, {
             foreignKey: 'recipeId',
             as: 'steps'
         });
 
-        // Belongs to User
         Recipe.belongsTo(models.User, {
             foreignKey: 'userId',
             as: 'author'
@@ -34,7 +33,6 @@ Recipe.init({
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            notEmpty: true,
             len: [3, 100]
         }
     },

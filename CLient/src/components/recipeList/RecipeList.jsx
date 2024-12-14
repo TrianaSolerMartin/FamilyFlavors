@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { getRecipes } from '../../services/RecipeServices';
+import { getAllRecipes } from '../../services/RecipeServices';
 import './RecipeList.css';
 
 const RecipeList = () => {
@@ -11,14 +10,14 @@ const RecipeList = () => {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await getRecipes();
+                const response = await getAllRecipes();
                 if (response.success) {
                     setRecipes(response.data);
                 } else {
-                    setError(response.error);
+                    setError('Failed to fetch recipes');
                 }
             } catch (err) {
-                setError('Error fetching recipes');
+                setError(err.message || 'Error fetching recipes');
             } finally {
                 setLoading(false);
             }
@@ -27,32 +26,24 @@ const RecipeList = () => {
         fetchRecipes();
     }, []);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
-    return (
-        <div className="recipes-container">
-            <h2>Our Recipes</h2>
-            <div className="recipes-grid">
-                {recipes.map(recipe => (
-                    <div key={recipe.id} className="recipe-card">
-                        <img 
-                            src={recipe.image || '/default-recipe.jpg'} 
-                            alt={recipe.title} 
-                        />
-                        <div className="recipe-content">
-                            <h3>{recipe.title}</h3>
-                            <p>{recipe.description}</p>
-                            <span>Prep Time: {recipe.prepTime} mins</span>
-                            <Link to={`/recipe/${recipe.id}`} className="view-recipe">
-                                View Recipe
-                            </Link>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
+  return (
+    <div className="recipes-container">
+      <h2>Nuestras Recetas</h2>
+      <div className="recipes-grid">
+        {recipes.map(recipe => (
+          <div key={recipe.id} className="recipe-card">
+            <img src={recipe.image} alt={recipe.title} />
+            <h3>{recipe.title}</h3>
+            <p>{recipe.description}</p>
+            <p>Tiempo de preparación: {recipe.prepTime} minutos</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default RecipeList;

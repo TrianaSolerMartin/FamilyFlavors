@@ -34,13 +34,16 @@ export const createRecipe = async (recipeData) => {
 
 export const getAllRecipes = async () => {
     try {
-        const response = await apiClient.get('/recipes');
-        return response.data;
+        const response = await apiClient.get('/recipes'); 
+        return {
+            success: true,
+            data: response.data.data || []
+        };
     } catch (error) {
-        throw new Error(error.response?.data?.message || 'Error fetching recipes');
+        console.error('Error fetching recipes:', error);
+        throw error;
     }
 };
-
 export const getRecipeById = async (id) => {
     try {
         const response = await apiClient.get(`/recipes/${id}`);

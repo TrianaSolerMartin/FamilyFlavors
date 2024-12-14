@@ -1,17 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
-import connection_db from "../database/connection_db.js";
+import connection_db from '../database/connection_db.js';
 
-class RecipeIngredient extends Model {
-    static associate(models) {
-        // Define belongs to relationships
-        RecipeIngredient.belongsTo(models.Recipe, {
-            foreignKey: 'recipeId'
-        });
-        RecipeIngredient.belongsTo(models.Ingredient, {
-            foreignKey: 'ingredientId'
-        });
-    }
-}
+class RecipeIngredient extends Model {}
 
 RecipeIngredient.init({
     recipeId: {
@@ -20,8 +10,7 @@ RecipeIngredient.init({
         references: {
             model: 'Recipes',
             key: 'id'
-        },
-        onDelete: 'CASCADE'
+        }
     },
     ingredientId: {
         type: DataTypes.INTEGER,
@@ -29,21 +18,22 @@ RecipeIngredient.init({
         references: {
             model: 'Ingredients',
             key: 'id'
-        },
-        onDelete: 'CASCADE'
+        }
     },
     quantity: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
+        allowNull: false
     }
 }, {
     sequelize: connection_db,
     modelName: 'RecipeIngredient',
     tableName: 'RecipeIngredients',
-    timestamps: true
+    indexes: [
+        {
+            unique: true,
+            fields: ['recipeId', 'ingredientId']
+        }
+    ]
 });
 
 export default RecipeIngredient;
