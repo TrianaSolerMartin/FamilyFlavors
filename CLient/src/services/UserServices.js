@@ -3,8 +3,17 @@ import apiClient from '../api.config.js';
 export const login = async (credentials) => {
     try {
         const response = await apiClient.post('/auth/login', credentials);
-        localStorage.setItem('token', response.data.token);
-        return { success: true };
+        if (response.data.success) {
+            localStorage.setItem('token', response.data.token);
+            return { 
+                success: true, 
+                data: response.data
+            };
+        }
+        return {
+            success: false,
+            error: response.data.message
+        };
     } catch (error) {
         return { 
             success: false, 
@@ -12,7 +21,6 @@ export const login = async (credentials) => {
         };
     }
 };
-
 export const register = async (userData) => {
     try {
         const response = await apiClient.post('/auth/register', userData);
