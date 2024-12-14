@@ -1,9 +1,8 @@
 import React from 'react';
 import Swal from 'sweetalert2';
-import './RecipeDetail.css';
-import PropTypes from 'prop-types';
 import { shareRecipe } from '../../utils/shareRecipe';
-
+import PropTypes from 'prop-types';
+import './RecipeDetail.css';
 
 const RecipeDetail = ({ recipe, onClose }) => {
     if (!recipe) return null;
@@ -19,6 +18,18 @@ const RecipeDetail = ({ recipe, onClose }) => {
                             <i class="fab fa-whatsapp"></i> WhatsApp
                         </label>
                     </div>
+                    <div class="share-option">
+                        <input type="radio" id="facebook" name="platform" value="facebook">
+                        <label for="facebook">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </label>
+                    </div>
+<div class="share-option">
+    <input type="radio" id="x" name="platform" value="x">
+    <label for="x">
+        <i class="fab fa-x-twitter"></i> X (Twitter)
+    </label>
+</div>
                     <div class="share-option">
                         <input type="radio" id="email" name="platform" value="email">
                         <label for="email">
@@ -36,9 +47,9 @@ const RecipeDetail = ({ recipe, onClose }) => {
             showCancelButton: true,
             cancelButtonText: 'Cancelar',
             confirmButtonText: 'Compartir',
-            customClass: {
-                container: 'share-modal',
-                popup: 'share-popup'
+            preConfirm: () => {
+                const selectedOption = document.querySelector('input[name="platform"]:checked');
+                return selectedOption ? selectedOption.value : null;
             }
         });
 
@@ -46,7 +57,6 @@ const RecipeDetail = ({ recipe, onClose }) => {
             await shareRecipe(recipe, shareOption);
         }
     };
-
     return (
         <div className="modal-overlay">
             <div className="modal-content">
