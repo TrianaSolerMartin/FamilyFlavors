@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getRecipes } from '../../services/RecipeServices';
+import { getAllRecipes } from '../../services/RecipeServices';
 import './RecipeList.css';
 
 const RecipeList = () => {
@@ -8,7 +8,7 @@ const RecipeList = () => {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await getRecipes();
+                const response = await getAllRecipes();
                 setRecipes(response.data);
             } catch (error) {
                 console.error('Error fetching recipes:', error);

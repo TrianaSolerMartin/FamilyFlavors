@@ -1,20 +1,24 @@
+
 import apiClient from '../api.config';
 
-export const getRecipes = async () => {
+export const getAllRecipes = async (params) => {
     try {
-        const response = await apiClient.get('/api/recipes');
-        return {
-            success: true,
-            data: response.data.data || []
-        };
+        const response = await apiClient.get('/api/recipes', { 
+            params: {
+                category: params.category,
+                sortBy: params.sortBy,
+                search: params.search,
+                page: params.page,
+                limit: params.limit
+            }
+        });
+        return response.data;
     } catch (error) {
         console.error('Error fetching recipes:', error);
-        return {
-            success: false,
-            error: error.response?.data?.message || 'Error fetching recipes'
-        };
+        throw error;
     }
 };
+
 
 export const createRecipe = async (recipeData) => {
     try {
@@ -37,18 +41,6 @@ export const toggleFavoriteRecipe = async (recipeId) => {
     return response.data;
 };
 
-export const getAllRecipes = async () => {
-    try {
-        const response = await apiClient.get('/recipes'); 
-        return {
-            success: true,
-            data: response.data.data || []
-        };
-    } catch (error) {
-        console.error('Error fetching recipes:', error);
-        throw error;
-    }
-};
 export const getRecipeById = async (id) => {
     try {
         const response = await apiClient.get(`/recipes/${id}`);

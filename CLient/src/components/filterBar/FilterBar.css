@@ -6,19 +6,17 @@
     background: var(--bg-dark-secondary);
     border-radius: 12px;
     margin-bottom: 2rem;
+    margin-top: calc(var(--header-height) + 1rem);
+    position: sticky;
+    top: var(--header-height);
+    z-index: 90;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .search-container {
-    position: relative;
     flex: 1;
-}
-
-.search-container i {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-secondary);
+    position: relative;
 }
 
 .search-container input {
@@ -28,6 +26,14 @@
     border: 1px solid var(--border-color);
     background: var(--bg-dark);
     color: var(--text-light);
+}
+
+.search-container i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
 }
 
 .categories {
@@ -57,6 +63,7 @@
     background: var(--bg-dark);
     color: var(--text-light);
     cursor: pointer;
+    min-width: 120px;
 }
 
 @media (max-width: 768px) {

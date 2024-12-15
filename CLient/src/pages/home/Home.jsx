@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getRecipes, toggleFavoriteRecipe } from '../../services/RecipeServices';
+import { getAllRecipes } from '../../services/RecipeServices';
 import FilterBar from '../../components/filterBar/filterBar';
 import RecipeGrid from '../../components/recipeGrid/recipeGrid';
 import QuickViewModal from '../../components/quickViewModal/quickViewModal';
+import debounce from '../../utils/debounce';
 import './Home.css';
 
 const Home = () => {
@@ -27,7 +28,7 @@ const Home = () => {
     const fetchRecipes = async () => {
         try {
             setLoading(true);
-            const response = await getRecipes({
+            const response = await getAllRecipes({
                 ...filters,
                 page,
                 limit: 8
@@ -42,55 +43,52 @@ const Home = () => {
             setHasMore(response.data.length === 8);
             setError(null);
         } catch (err) {
-            setError('Failed to load recipes. Please try again later.');
+            console.error('Error fetching recipes:', err);
+            setError('Failed to load recipes');
         } finally {
             setLoading(false);
         }
     };
 
-    const handleSearch = (searchTerm) => {
+    const handleSearch = debounce((searchTerm) => {
         setFilters(prev => ({ ...prev, search: searchTerm }));
         setPage(1);
-    };
+        setRecipes([]);
+    }, 300);
 
     const handleFilter = (category) => {
         setFilters(prev => ({ ...prev, category }));
         setPage(1);
+        setRecipes([]);
     };
 
     const handleSort = (sortBy) => {
         setFilters(prev => ({ ...prev, sortBy }));
         setPage(1);
+        setRecipes([]);
     };
 
-    const handleToggleFavorite = async (recipeId) => {
-        try {
-            const result = await toggleFavoriteRecipe(recipeId);
-            if (result.success) {
-                setRecipes(prev => 
-                    prev.map(recipe => 
-                        recipe.id === recipeId 
-                            ? { ...recipe, isFavorite: !recipe.isFavorite }
-                            : recipe
-                    )
-                );
-            }
-        } catch (error) {
-            console.error('Failed to toggle favorite:', error);
-        }
+    const handleQuickView = (recipe) => {
+        setSelectedRecipe(recipe);
     };
-    const shareRecipe = (recipe) => {
-        if (navigator.share) {
-            navigator.share({
-                title: recipe.title,
-                text: recipe.description,
-                url: window.location.origin + '/recipe/' + recipe.id
-            });
-        }
+
+    const handleRecipeClick = (recipeId) => {
+        navigate(`/recipe/${recipeId}`);
     };
 
     return (
         <div className="home-container">
+            <header className="home-header">
+                <h1>Our Recipes</h1>
+                <button 
+                    className="add-recipe-btn"
+                    onClick={() => navigate('/create-recipe')}
+                >
+                    <i className="fas fa-plus"></i>
+                    Add Recipe
+                </button>
+            </header>
+
             <FilterBar 
                 filters={filters} 
                 onSearch={handleSearch}
@@ -98,21 +96,31 @@ const Home = () => {
                 onSort={handleSort}
             />
             
-            {error && <div className="error">{error}</div>}
+            {error && (
+                <div className="error-message">
+                    <i className="fas fa-exclamation-circle"></i>
+                    {error}
+                </div>
+            )}
             
             <RecipeGrid 
                 recipes={recipes}
-                onFavorite={handleToggleFavorite}
-                onShare={shareRecipe}
-                onQuickView={setSelectedRecipe}
+                onRecipeClick={handleRecipeClick}
+                onQuickView={handleQuickView}
             />
             
-            {loading && <div className="loading">Loading...</div>}
+            {loading && (
+                <div className="loading">
+                    <i className="fas fa-spinner fa-spin"></i>
+                    Loading...
+                </div>
+            )}
             
             {selectedRecipe && (
                 <QuickViewModal 
                     recipe={selectedRecipe}
                     onClose={() => setSelectedRecipe(null)}
+                    onViewFull={() => handleRecipeClick(selectedRecipe.id)}
                 />
             )}
         </div>

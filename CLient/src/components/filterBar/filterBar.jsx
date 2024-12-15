@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './FilterBar.css';
 
 const FilterBar = ({ filters, onSearch, onFilter, onSort }) => {
     const categories = ['All', 'Breakfast', 'Lunch', 'Dinner', 'Desserts'];
     const sortOptions = [
-        { value: 'newest', label: 'Newest' },
-        { value: 'oldest', label: 'Oldest' },
-        { value: 'az', label: 'A-Z' },
-        { value: 'za', label: 'Z-A' }
+        { value: 'newest', label: 'Newest First' },
+        { value: 'oldest', label: 'Oldest First' },
+        { value: 'az', label: 'A to Z' },
+        { value: 'za', label: 'Z to A' }
     ];
 
     return (
@@ -47,6 +48,16 @@ const FilterBar = ({ filters, onSearch, onFilter, onSort }) => {
             </select>
         </div>
     );
+};
+FilterBar.propTypes = {
+    filters: PropTypes.shape({
+        search: PropTypes.string,
+        category: PropTypes.string,
+        sortBy: PropTypes.string
+    }).isRequired,
+    onSearch: PropTypes.func.isRequired,
+    onFilter: PropTypes.func.isRequired,
+    onSort: PropTypes.func.isRequired
 };
 
 export default FilterBar;
