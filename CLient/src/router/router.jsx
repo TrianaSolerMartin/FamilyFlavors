@@ -66,7 +66,7 @@ const router = createBrowserRouter([
           },
           {
             path: "new",
-            element: <RecipeForm />,
+            element: <RecipeForm isOpen={true} />
           }
         ]
       }

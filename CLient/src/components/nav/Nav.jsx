@@ -21,12 +21,13 @@ const Nav = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    const handleAddRecipeClick = (e) => {
-        e.preventDefault();
-        if (!isAuthenticated) {
-            navigate('/login', { state: { from: '/home/new-recipe' } });
+    const handleAddRecipeClick = () => {
+        if (isAuthenticated) {
+            navigate('/home/recipes/new');
         } else {
-            navigate('/home/new-recipe');
+            navigate('/login', { 
+                state: { from: '/home/recipes/new' } 
+            });
         }
     };
 
