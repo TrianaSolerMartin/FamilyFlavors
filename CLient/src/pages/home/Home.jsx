@@ -1,97 +1,119 @@
-import { useState, useEffect } from 'react';
-import { getRecipes } from '../../services/RecipeServices';
-import RecipeForm from '../../components/form/RecipeForm';
-import RecipeDetail from '../../components/recipeDetail/RecipeDetail';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getRecipes, toggleFavoriteRecipe } from '../../services/RecipeServices';
+import FilterBar from '../../components/filterBar/filterBar';
+import RecipeGrid from '../../components/recipeGrid/recipeGrid';
+import QuickViewModal from '../../components/quickViewModal/quickViewModal';
 import './Home.css';
 
 const Home = () => {
     const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [showAddForm, setShowAddForm] = useState(false);
-    const [selectedRecipe, setSelectedRecipe] = useState(null); 
+    const [filters, setFilters] = useState({
+        category: 'all',
+        sortBy: 'newest',
+        search: ''
+    });
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [selectedRecipe, setSelectedRecipe] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchRecipes();
+    }, [filters, page]);
 
     const fetchRecipes = async () => {
         try {
             setLoading(true);
-            const response = await getRecipes();
-            if (response.success) {
-                setRecipes(response.data || []);
+            const response = await getRecipes({
+                ...filters,
+                page,
+                limit: 8
+            });
+            
+            if (page === 1) {
+                setRecipes(response.data);
             } else {
-                setError(response.error);
+                setRecipes(prev => [...prev, ...response.data]);
             }
-        } catch (error) {
-            setError('Error fetching recipes');
+            
+            setHasMore(response.data.length === 8);
+            setError(null);
+        } catch (err) {
+            setError('Failed to load recipes. Please try again later.');
         } finally {
             setLoading(false);
         }
     };
 
-    useEffect(() => {
-        fetchRecipes();
-    }, []);
-
-    const handleAddRecipe = () => {
-        setShowAddForm(true);
+    const handleSearch = (searchTerm) => {
+        setFilters(prev => ({ ...prev, search: searchTerm }));
+        setPage(1);
     };
 
-    const handleRecipeClick = (recipe) => {
-        setSelectedRecipe(recipe);
+    const handleFilter = (category) => {
+        setFilters(prev => ({ ...prev, category }));
+        setPage(1);
     };
 
-    const handleCloseDetail = () => {
-        setSelectedRecipe(null);
+    const handleSort = (sortBy) => {
+        setFilters(prev => ({ ...prev, sortBy }));
+        setPage(1);
     };
 
-    const handleCloseForm = () => {
-        setShowAddForm(false);
-        fetchRecipes();
+    const handleToggleFavorite = async (recipeId) => {
+        try {
+            const result = await toggleFavoriteRecipe(recipeId);
+            if (result.success) {
+                setRecipes(prev => 
+                    prev.map(recipe => 
+                        recipe.id === recipeId 
+                            ? { ...recipe, isFavorite: !recipe.isFavorite }
+                            : recipe
+                    )
+                );
+            }
+        } catch (error) {
+            console.error('Failed to toggle favorite:', error);
+        }
     };
-
-    if (loading) return <div className="loading">Loading...</div>;
-    if (error) return <div className="error">{error}</div>;
+    const shareRecipe = (recipe) => {
+        if (navigator.share) {
+            navigator.share({
+                title: recipe.title,
+                text: recipe.description,
+                url: window.location.origin + '/recipe/' + recipe.id
+            });
+        }
+    };
 
     return (
         <div className="home-container">
-            <header className="home-header">
-                <h1>Mis Recetas</h1>
-                <button className="add-recipe-btn" onClick={handleAddRecipe}>
-                    Añadir Receta
-                </button>
-            </header>
-
-            {!loading && recipes.length > 0 && (
-                <div className="recipes-grid">
-                    {recipes.map((recipe) => (
-                        <div 
-                            key={recipe.id} 
-                            className="recipe-card" 
-                            onClick={() => handleRecipeClick(recipe)}
-                        >
-                            <img 
-                                src={recipe.image || '/default-recipe.jpg'} 
-                                alt={recipe.title}
-                                className="recipe-image" 
-                            />
-                            <div className="recipe-content">
-                                <h3>{recipe.title}</h3>
-                                <p>{recipe.description}</p>
-                                <span className="recipe-time">{recipe.prepTime}</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            )}
-
-{selectedRecipe && (
-                <RecipeDetail 
-                    recipe={selectedRecipe} 
-                    onClose={handleCloseDetail}
+            <FilterBar 
+                filters={filters} 
+                onSearch={handleSearch}
+                onFilter={handleFilter}
+                onSort={handleSort}
+            />
+            
+            {error && <div className="error">{error}</div>}
+            
+            <RecipeGrid 
+                recipes={recipes}
+                onFavorite={handleToggleFavorite}
+                onShare={shareRecipe}
+                onQuickView={setSelectedRecipe}
+            />
+            
+            {loading && <div className="loading">Loading...</div>}
+            
+            {selectedRecipe && (
+                <QuickViewModal 
+                    recipe={selectedRecipe}
+                    onClose={() => setSelectedRecipe(null)}
                 />
-            )}
-
-            {showAddForm && (
-                <RecipeForm onClose={handleCloseForm} />
             )}
         </div>
     );

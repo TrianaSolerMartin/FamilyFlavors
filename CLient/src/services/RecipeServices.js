@@ -32,6 +32,11 @@ export const createRecipe = async (recipeData) => {
     }
 };
 
+export const toggleFavoriteRecipe = async (recipeId) => {
+    const response = await apiClient.patch(`/api/recipes/${recipeId}/favorite`);
+    return response.data;
+};
+
 export const getAllRecipes = async () => {
     try {
         const response = await apiClient.get('/recipes'); 
