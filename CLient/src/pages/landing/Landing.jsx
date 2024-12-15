@@ -1,10 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Landig.css';
+import backgroundVideo from '../../../assets/video/home_video.mp4';
+
 const Landing = () => {
     return (
         <div className="landing-container">
-            <div className="hero-section">
+            <video 
+                autoPlay 
+                loop 
+                muted 
+                className="video-background"
+            >
+                <source src={backgroundVideo} type="video/mp4" />
+            </video>            <div className="hero-section">
                 <h1>Family Flavors</h1>
                 <p>Comparte y descubre recetas familiares</p>
                 <div className="auth-buttons">
