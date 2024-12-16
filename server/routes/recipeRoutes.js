@@ -5,7 +5,8 @@ import {
     createRecipe, 
     getRecipeById,
     updateRecipe,
-    deleteRecipe 
+    deleteRecipe,
+    toggleFavorite
 } from '../controllers/recipeController.js';
 
 const router = express.Router();
@@ -18,5 +19,6 @@ router.get('/:id', getRecipeById);
 router.post('/', authenticate, createRecipe);
 router.put('/:id', authenticate, updateRecipe);
 router.delete('/:id', authenticate, deleteRecipe);
+router.patch('/:id/favorite', authenticate, toggleFavorite);
 
 export default router;

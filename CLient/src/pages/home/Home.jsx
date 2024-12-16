@@ -4,6 +4,8 @@ import { getAllRecipes } from '../../services/RecipeServices';
 import FilterBar from '../../components/filterBar/filterBar';
 import RecipeGrid from '../../components/recipeGrid/recipeGrid';
 import QuickViewModal from '../../components/quickViewModal/quickViewModal';
+import Pagination from '../../utils/pagination/pagination';
+import LoadingSpinner from '../../utils/loadingSpinner/loadingSpinner';
 import debounce from '../../utils/debounce';
 import './Home.css';
 
@@ -20,36 +22,35 @@ const Home = () => {
     const [hasMore, setHasMore] = useState(true);
     const [selectedRecipe, setSelectedRecipe] = useState(null);
     const navigate = useNavigate();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
         fetchRecipes();
-    }, [filters, page]);
+    }, [filters, currentPage]);
 
     const fetchRecipes = async () => {
         try {
             setLoading(true);
             const response = await getAllRecipes({
                 ...filters,
-                page,
+                page: currentPage,
                 limit: 8
             });
             
-            if (page === 1) {
+            if (response.success) {
                 setRecipes(response.data);
+                setTotalPages(Math.ceil(response.total / 8));
+                setError(null);
             } else {
-                setRecipes(prev => [...prev, ...response.data]);
+                setError(response.error);
             }
-            
-            setHasMore(response.data.length === 8);
-            setError(null);
         } catch (err) {
-            console.error('Error fetching recipes:', err);
             setError('Failed to load recipes');
         } finally {
             setLoading(false);
         }
     };
-
     const handleSearch = debounce((searchTerm) => {
         setFilters(prev => ({ ...prev, search: searchTerm }));
         setPage(1);
@@ -67,6 +68,11 @@ const Home = () => {
         setPage(1);
         setRecipes([]);
     };
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 0);
+    };
+
 
     const handleQuickView = (recipe) => {
         setSelectedRecipe(recipe);
@@ -103,17 +109,24 @@ const Home = () => {
                 </div>
             )}
             
-            <RecipeGrid 
-                recipes={recipes}
-                onRecipeClick={handleRecipeClick}
-                onQuickView={handleQuickView}
-            />
-            
-            {loading && (
-                <div className="loading">
-                    <i className="fas fa-spinner fa-spin"></i>
-                    Loading...
-                </div>
+            {loading ? (
+                <LoadingSpinner />
+            ) : error ? (
+                <div className="error-message">{error}</div>
+            ) : (
+                <>
+                    <RecipeGrid 
+                        recipes={recipes}
+                        onRecipeClick={handleRecipeClick}
+                        onQuickView={handleQuickView}
+                    />
+                    
+                    <Pagination 
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
+                </>
             )}
             
             {selectedRecipe && (

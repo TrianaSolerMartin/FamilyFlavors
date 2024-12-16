@@ -47,6 +47,14 @@ Recipe.init({
     image: {
         type: DataTypes.STRING
     },
+    isFavorite: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    servings: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
     userId: {
         type: DataTypes.INTEGER,
         references: {

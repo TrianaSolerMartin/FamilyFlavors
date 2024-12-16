@@ -2,7 +2,7 @@ import apiClient from '../api.config';
 
 export const login = async (credentials) => {
     try {
-        const response = await apiClient.post('/api/auth/login', credentials);
+        const response = await apiClient.post('/auth/login', credentials);
         
         if (response.data.success && response.data.token) {
             localStorage.setItem('token', response.data.token);
@@ -27,7 +27,7 @@ export const login = async (credentials) => {
 };
 export const register = async (userData) => {
     try {
-        const response = await apiClient.post('/api/auth/register', userData);
+        const response = await apiClient.post('/auth/register', userData);
         if (response.data.token) {
             localStorage.setItem('token', response.data.token);
             apiClient.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;

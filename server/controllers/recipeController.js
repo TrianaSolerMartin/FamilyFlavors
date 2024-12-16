@@ -77,27 +77,82 @@ export const createRecipe = async (req, res) => {
         });
     }
 };
+export const toggleFavorite = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const recipe = await Recipe.findByPk(id);
+        
+        if (!recipe) {
+            return res.status(404).json({ error: 'Recipe not found' });
+        }
+
+        recipe.isFavorite = !recipe.isFavorite;
+        await recipe.save();
+        
+        res.json(recipe);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
 export const getAllRecipes = async (req, res) => {
     try {
-        const recipes = await Recipe.findAll({
+        const { 
+            page = 1, 
+            limit = 8, 
+            category = 'all', 
+            sortBy = 'newest',
+            search = '' 
+        } = req.query;
+
+        let where = {};
+        let order = [];
+
+        // Apply category filter
+        if (category !== 'all') {
+            where.category = category;
+        }
+
+        // Apply search filter
+        if (search) {
+            where[Op.or] = [
+                { title: { [Op.iLike]: `%${search}%` } },
+                { description: { [Op.iLike]: `%${search}%` } }
+            ];
+        }
+
+        // Apply sorting
+        switch (sortBy) {
+            case 'newest':
+                order.push(['createdAt', 'DESC']);
+                break;
+            case 'oldest':
+                order.push(['createdAt', 'ASC']);
+                break;
+            case 'az':
+                order.push(['title', 'ASC']);
+                break;
+            case 'za':
+                order.push(['title', 'DESC']);
+                break;
+        }
+
+        const { rows: recipes, count } = await Recipe.findAndCountAll({
+            where,
+            order,
+            limit: parseInt(limit),
+            offset: (parseInt(page) - 1) * parseInt(limit),
             include: [
-                { 
-                    model: Ingredient,
-                    as: 'ingredients',
-                    through: { attributes: ['quantity'] }
-                },
-                {
-                    model: Step,
-                    as: 'steps',
-                    order: [['orderNumber', 'ASC']]
-                }
+                { model: Ingredient, as: 'ingredients' },
+                { model: Step, as: 'steps' }
             ]
         });
-        
+
         return res.status(200).json({
             success: true,
-            data: recipes
+            data: recipes,
+            total: count,
+            pages: Math.ceil(count / limit)
         });
     } catch (error) {
         console.error('Error fetching recipes:', error);

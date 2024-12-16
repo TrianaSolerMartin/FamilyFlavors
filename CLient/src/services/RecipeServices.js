@@ -3,19 +3,26 @@ import apiClient from '../api.config';
 
 export const getAllRecipes = async (params) => {
     try {
-        const response = await apiClient.get('/api/recipes', { 
+        const response = await apiClient.get('/recipes', { 
             params: {
-                category: params.category,
-                sortBy: params.sortBy,
-                search: params.search,
-                page: params.page,
-                limit: params.limit
+                category: params?.category || 'all',
+                sortBy: params?.sortBy || 'newest',
+                search: params?.search?.trim() || '',
+                page: params?.page || 1,
+                limit: params?.limit || 8
             }
         });
-        return response.data;
+        return {
+            success: true,
+            data: response.data.data,
+            total: response.data.total,
+            pages: response.data.pages
+        };
     } catch (error) {
-        console.error('Error fetching recipes:', error);
-        throw error;
+        return {
+            success: false,
+            error: error.response?.data?.message || 'Failed to fetch recipes'
+        };
     }
 };
 
