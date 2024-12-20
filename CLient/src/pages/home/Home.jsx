@@ -19,7 +19,6 @@ const Home = () => {
         search: ''
     });
     const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
     const [selectedRecipe, setSelectedRecipe] = useState(null);
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);

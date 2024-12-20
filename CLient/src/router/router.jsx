@@ -10,7 +10,7 @@ import LoginForm from "../components/form/LoginFom.jsx";
 import ProtectedRoute from "../../ProtectectRouter.jsx";
 import LayoutPublic from "../components/layout/LayoutPublic";
 import LayoutPrivate from "../components/layout/LayoutPrivate";
-import { AuthProvider } from "../context/AuthCOntext";
+import { AuthProvider } from "../context/AuthContext";
 
 const router = createBrowserRouter([
   {
