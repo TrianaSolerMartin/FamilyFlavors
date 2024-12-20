@@ -6,6 +6,8 @@ import {
     getRecipeById,
     updateRecipe,
     deleteRecipe,
+    getUserRecipes,
+    getFavorites,
     toggleFavorite
 } from '../controllers/recipeController.js';
 
@@ -19,6 +21,8 @@ router.get('/:id', getRecipeById);
 router.post('/', authenticate, createRecipe);
 router.put('/:id', authenticate, updateRecipe);
 router.delete('/:id', authenticate, deleteRecipe);
+router.get('/user/recipes', authenticate, getUserRecipes);
+router.get('/favorites', authenticate, getFavorites);
 router.patch('/:id/favorite', authenticate, toggleFavorite);
 
 export default router;

@@ -77,6 +77,98 @@ export const createRecipe = async (req, res) => {
         });
     }
 };
+
+export const updateRecipe = async (req, res) => {
+    try {
+        const { title, description, prepTime, image, ingredients, steps } = req.body;
+        const recipe = await Recipe.findByPk(req.params.id);
+
+        if (!recipe) {
+            return res.status(404).json({
+                success: false,
+                error: 'Recipe not found'
+            });
+        }
+
+        // Update recipe
+        await recipe.update({
+            title,
+            description,
+            prepTime,
+            image
+        });
+
+        // Update ingredients
+        if (ingredients) {
+            await Ingredient.destroy({ where: { recipeId: recipe.id } });
+            if (ingredients.length) {
+                await Ingredient.bulkCreate(
+                    ingredients.map(ing => ({...ing, recipeId: recipe.id}))
+                );
+            }
+        }
+
+        // Update steps
+        if (steps) {
+            await Step.destroy({ where: { recipeId: recipe.id } });
+            if (steps.length) {
+                await Step.bulkCreate(
+                    steps.map((step, index) => ({
+                        ...step,
+                        recipeId: recipe.id,
+                        orderNumber: index + 1
+                    }))
+                );
+            }
+        }
+
+        // Fetch updated recipe
+        const updatedRecipe = await Recipe.findByPk(recipe.id, {
+            include: [
+                { model: Ingredient, as: 'ingredients' },
+                { model: Step, as: 'steps', order: [['orderNumber', 'ASC']] }
+            ]
+        });
+
+        return res.status(200).json({
+            success: true,
+            data: updatedRecipe
+        });
+    } catch (error) {
+        console.error('Error updating recipe:', error);
+        return res.status(500).json({
+            success: false,
+            error: 'Error updating recipe'
+        });
+    }
+};
+
+export const deleteRecipe = async (req, res) => {
+    try {
+        const recipe = await Recipe.findByPk(req.params.id);
+        
+        if (!recipe) {
+            return res.status(404).json({
+                success: false,
+                error: 'Recipe not found'
+            });
+        }
+
+        await recipe.destroy();
+        
+        return res.status(200).json({
+            success: true,
+            message: 'Recipe deleted successfully'
+        });
+    } catch (error) {
+        console.error('Error deleting recipe:', error);
+        return res.status(500).json({
+            success: false,
+            error: 'Error deleting recipe'
+        });
+    }
+};
+
 export const toggleFavorite = async (req, res) => {
     try {
         const { id } = req.params;
@@ -192,93 +284,28 @@ export const getRecipeById = async (req, res) => {
     }
 };
 
-export const updateRecipe = async (req, res) => {
+export const getUserRecipes = async (req, res) => {
     try {
-        const { title, description, prepTime, image, ingredients, steps } = req.body;
-        const recipe = await Recipe.findByPk(req.params.id);
-
-        if (!recipe) {
-            return res.status(404).json({
-                success: false,
-                error: 'Recipe not found'
-            });
-        }
-
-        // Update recipe
-        await recipe.update({
-            title,
-            description,
-            prepTime,
-            image
+        const userId = req.user.id;
+        const recipes = await Recipe.findAll({
+            where: { userId },
+            include: Ingredient
         });
-
-        // Update ingredients
-        if (ingredients) {
-            await Ingredient.destroy({ where: { recipeId: recipe.id } });
-            if (ingredients.length) {
-                await Ingredient.bulkCreate(
-                    ingredients.map(ing => ({...ing, recipeId: recipe.id}))
-                );
-            }
-        }
-
-        // Update steps
-        if (steps) {
-            await Step.destroy({ where: { recipeId: recipe.id } });
-            if (steps.length) {
-                await Step.bulkCreate(
-                    steps.map((step, index) => ({
-                        ...step,
-                        recipeId: recipe.id,
-                        orderNumber: index + 1
-                    }))
-                );
-            }
-        }
-
-        // Fetch updated recipe
-        const updatedRecipe = await Recipe.findByPk(recipe.id, {
-            include: [
-                { model: Ingredient, as: 'ingredients' },
-                { model: Step, as: 'steps', order: [['orderNumber', 'ASC']] }
-            ]
-        });
-
-        return res.status(200).json({
-            success: true,
-            data: updatedRecipe
-        });
+        res.json(recipes);
     } catch (error) {
-        console.error('Error updating recipe:', error);
-        return res.status(500).json({
-            success: false,
-            error: 'Error updating recipe'
-        });
+        res.status(500).json({ error: error.message });
     }
 };
 
-export const deleteRecipe = async (req, res) => {
+export const getFavorites = async (req, res) => {
     try {
-        const recipe = await Recipe.findByPk(req.params.id);
-        
-        if (!recipe) {
-            return res.status(404).json({
-                success: false,
-                error: 'Recipe not found'
-            });
-        }
-
-        await recipe.destroy();
-        
-        return res.status(200).json({
-            success: true,
-            message: 'Recipe deleted successfully'
+        const userId = req.user.id;
+        const recipes = await Recipe.findAll({
+            where: { userId, isFavorite: true },
+            include: Ingredient
         });
+        res.json(recipes);
     } catch (error) {
-        console.error('Error deleting recipe:', error);
-        return res.status(500).json({
-            success: false,
-            error: 'Error deleting recipe'
-        });
+        res.status(500).json({ error: error.message });
     }
 };
