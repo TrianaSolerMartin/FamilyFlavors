@@ -1,29 +1,23 @@
 {
-  "name": "nodejs-recipe-app",
+  "name": "server",
   "version": "1.0.0",
-  "description": "A Node.js application for managing recipes and ingredients.",
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "start": "node app.js"
   },
   "dependencies": {
-    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "dotenv": "^8.6.0",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.0",
-    "mysql2": "^3.11.5",
-    "pg": "^8.13.1",
-    "sequelize": "^6.37.5",
+    "mysql2": "^3.6.1",
+    "sequelize": "^6.33.0",
     "ws": "^8.18.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
-  },
-  "author": "",
-  "license": "ISC"
+    "nodemon": "^3.0.1"
+  }
 }

@@ -1,5 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 import connection_db from "../database/connection_db.js";
 
 class User extends Model {
@@ -11,7 +11,7 @@ class User extends Model {
     }
 
     async validatePassword(password) {
-        return bcrypt.compare(password, this.password);
+        return bcryptjs.compare(password, this.password);
     }
 }
 
@@ -24,11 +24,7 @@ User.init({
     username: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
-        validate: {
-            notEmpty: true,
-            len: [3, 50]
-        }
+        unique: true
     },
     email: {
         type: DataTypes.STRING,
@@ -40,22 +36,23 @@ User.init({
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            len: [6, 100]
-        }
-    },
-    role: {
-        type: DataTypes.ENUM('user', 'admin'),
-        defaultValue: 'user'
+        allowNull: false
     }
 }, {
     sequelize: connection_db,
     modelName: 'User',
     hooks: {
         beforeCreate: async (user) => {
-            const salt = await bcrypt.genSalt(10);
-            user.password = await bcrypt.hash(user.password, salt);
+            if (user.password) {
+                const salt = await bcryptjs.genSalt(10);
+                user.password = await bcryptjs.hash(user.password, salt);
+            }
+        },
+        beforeUpdate: async (user) => {
+            if (user.changed('password')) {
+                const salt = await bcryptjs.genSalt(10);
+                user.password = await bcryptjs.hash(user.password, salt);
+            }
         }
     }
 });
