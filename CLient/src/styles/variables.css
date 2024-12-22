@@ -1,0 +1,52 @@
+:root {
+    /* Colors */
+    --primary-color: #ff6b6b;
+    --secondary-color: #4ecdc4;
+    --text-light: #ffffff;
+    --text-dark: #e4e6eb;
+    --bg-dark: #18191a;
+    --bg-dark-secondary: #242526;
+    --bg-dark-tertiary: #3a3b3c;
+    --blur-bg: rgba(0, 0, 0, 0.4);
+    
+    /* Shadows */
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    --modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    
+    /* Typography */
+    --font-primary: 'Inter', sans-serif;
+    --font-secondary: 'Lora', serif;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    
+    /* Dimensions */
+    --header-height: 60px;
+    --modal-width: 90%;
+    --modal-max-width: 800px;
+  }
+  
+  /* Global Styles */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: var(--font-primary);
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-secondary);
+    font-weight: 600;
+  }
+  
+  button {
+    font-family: var(--font-primary);
+    cursor: pointer;
+  }

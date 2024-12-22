@@ -1,0 +1,25 @@
+.layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding-top: var(--header-height);
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .main-content.private {
+    background: var(--bg-dark);
+  }
+  
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: var(--bg-dark);
+    color: var(--text-light);
+  }

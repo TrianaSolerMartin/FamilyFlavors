@@ -1,0 +1,229 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn var(--transition-normal) forwards;
+}
+
+.modal-content {
+  background: var(--bg-dark);
+  border-radius: 20px;
+  width: var(--modal-width);
+  max-width: var(--modal-max-width);
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.7);
+  opacity: 0;
+  animation: popIn var(--transition-normal) forwards;
+  box-shadow: var(--modal-shadow);
+}
+
+.modal-header {
+  background: var(--bg-dark);
+  color: var(--text-light);
+  padding: 20px 40px;
+  border-radius: 20px 20px 0 0;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: var(--bg-dark-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-light);
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-normal);
+  z-index: 1100;
+}
+
+.close-btn:hover {
+  background: var(--primary-color);
+  color: var(--text-light);
+  border-color: transparent;
+  transform: rotate(90deg);
+  box-shadow: var(--card-shadow);
+}
+
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 40px;
+  background: var(--bg-dark);
+}
+
+.recipe-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text-light);
+  margin: 30px 0;
+  padding: 0 40px;
+}
+
+.recipe-meta {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 40px;
+  margin-bottom: 30px;
+  color: var(--text-dark);
+}
+
+.recipe-meta span {
+  color: var(--text-light);
+}
+
+.recipe-meta i {
+  color: var(--accent-color);
+}
+
+.recipe-image {
+  width: calc(100% - 80px);
+  height: 300px;
+  margin: 0 auto 30px;
+}
+
+.recipe-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: var(--modal-shadow);
+}
+
+.recipe-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.ingredients-section,
+.steps-section {
+  background: var(--bg-dark-secondary);
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--modal-shadow);
+}
+
+.ingredients-section h3,
+.steps-section h3 {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}
+
+.quantity {
+  color: var(--secondary-color);
+  font-weight: 500;
+}
+
+.ingredient {
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+
+.steps-section ol li {
+  color: var(--text-light);
+  margin-bottom: 15px;
+  position: relative;
+  padding-left: 10px;
+}
+
+.modal-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border-color);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: center;
+  background: var(--bg-dark);
+  border-radius: 0 0 20px 20px;
+}
+
+.share-button {
+  background: var(--primary-color);
+  color: var(--text-light);
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: var(--transition-normal);
+  box-shadow: var(--card-shadow);
+}
+
+.share-button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--modal-shadow);
+}
+
+@media (max-width: 768px) {
+  .recipe-content {
+    grid-template-columns: 1fr;
+  }
+
+  .recipe-image {
+    height: 200px;
+  }
+
+  .modal-body {
+    padding: 15px 20px;
+  }
+
+  .recipe-title {
+    font-size: 24px;
+    padding: 0 20px;
+  }
+
+  .recipe-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0 20px;
+  }
+
+  .modal-footer {
+    padding: 15px 20px;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
