@@ -1,249 +1,339 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { createRecipe } from '../../services/RecipeServices';
-import './NewRecipeForm.css';
-import Modal from '../common/Modal';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createRecipe } from "../../services/RecipeServices";
+import imageCompression from "browser-image-compression";
+import "./NewRecipeForm.css";
 
-const RecipeForm = ({ isOpen }) => {
-    const [formData, setFormData] = useState({
-        title: '',
-        description: '',
-        prepTime: '',
-        image: ''
-    });
-    const [ingredients, setIngredients] = useState([{ name: '', quantity: '' }]);
-    const [steps, setSteps] = useState([{ description: '' }]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    const [activeModal, setActiveModal] = useState(null);
-    const navigate = useNavigate();
+// Constants
+const MAX_PREP_TIME = 999;
+const MAX_IMAGE_SIZE = 1; // in MB
+const COMPRESSION_OPTIONS = {
+  maxSizeMB: MAX_IMAGE_SIZE,
+  maxWidthOrHeight: 1024,
+  useWebWorker: true
+};
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
+const RecipeForm = () => {
+  const navigate = useNavigate();
 
-    const handleIngredientChange = (index, field, value) => {
-        const newIngredients = [...ingredients];
-        newIngredients[index][field] = value;
-        setIngredients(newIngredients);
-    };
+  // Update initial state with defaults
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    prepTime: "1", 
+    image: null,
+    isFavorite: false,
+  });
 
-    const handleStepChange = (index, value) => {
-        const newSteps = [...steps];
-        newSteps[index].description = value;
-        setSteps(newSteps);
-    };
+  const [ingredients, setIngredients] = useState([{ name: "", quantity: "" }]);
+  const [steps, setSteps] = useState([{ description: "" }]);
+  const [loading, setLoading] = useState(false);
+  const [imagePreview, setImagePreview] = useState("");
+  const [error, setError] = useState("");
+//   const [uploadProgress, setUploadProgress] = useState(0);
 
-    const addIngredient = () => {
-        setIngredients([...ingredients, { name: '', quantity: '' }]);
-    };
+const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'prepTime') {
+      const numValue = parseInt(value) || 1;
+      setFormData(prev => ({
+        ...prev,
+        [name]: Math.max(1, Math.min(numValue, MAX_PREP_TIME)).toString()
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
+    
+  // Keep rest of the existing handlers
+  const handleIngredientChange = (index, field, value) => {
+    const updatedIngredients = [...ingredients];
+    updatedIngredients[index][field] = value;
+    setIngredients(updatedIngredients);
+  };
 
-    const removeIngredient = (index) => {
-        setIngredients(ingredients.filter((_, i) => i !== index));
-    };
+  const handleStepChange = (index, value) => {
+    const updatedSteps = [...steps];
+    updatedSteps[index].description = value;
+    setSteps(updatedSteps);
+  };
 
-    const addStep = () => {
-        setSteps([...steps, { description: '' }]);
-    };
+  const addIngredient = () => {
+    setIngredients([...ingredients, { name: "", quantity: "" }]);
+  };
 
-    const removeStep = (index) => {
-        setSteps(steps.filter((_, i) => i !== index));
-    };
+  const removeIngredient = (index) => {
+    if (ingredients.length > 1) {
+      setIngredients(ingredients.filter((_, i) => i !== index));
+    }
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError('');
+  const addStep = () => {
+    setSteps([...steps, { description: "" }]);
+  };
 
-        if (!formData.title || !formData.description) {
-            setError('Title and description are required');
-            setLoading(false);
-            return;
-        }
+  const removeStep = (index) => {
+    if (steps.length > 1) {
+      setSteps(steps.filter((_, i) => i !== index));
+    }
+  };
 
+  const sanitizeInput = (str) => {
+    return str.replace(/[<>]/g, "").trim();
+  };
+
+  const validateForm = () => {
+    if (!formData.title) return "El título es requerido";
+    if (!formData.description) return "La descripción es requerida";
+
+    const prepTime = Number(formData.prepTime);
+
+    if (isNaN(prepTime) || prepTime <= 0 || prepTime > MAX_PREP_TIME) {
+      return `El tiempo de preparación debe ser entre 1 y ${MAX_PREP_TIME}`;
+    }
+
+    if (!ingredients.some((ing) => ing.name && ing.quantity)) {
+      return "Agregue al menos un ingrediente";
+    }
+
+    if (!steps.some((step) => step.description)) {
+      return "Agregue al menos un paso";
+    }
+
+    return null;
+  };
+
+// Update handleSubmit
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    const validationError = validateForm();
+
+    if (validationError) {
+        setError(validationError);
+        return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+        console.log('Form Data before submit:', formData);
+        
+        const recipeData = {
+            title: sanitizeInput(formData.title),
+            description: sanitizeInput(formData.description),
+            prepTime: Number(formData.prepTime),
+            image: formData.image, // This should be the compressed File object
+            isFavorite: Boolean(formData.isFavorite),
+            ingredients: ingredients
+                .filter(ing => ing.name && ing.quantity)
+                .map(ing => ({
+                    name: sanitizeInput(ing.name),
+                    quantity: sanitizeInput(ing.quantity)
+                }))
+        };
+
+        console.log('Recipe Data being sent:', recipeData);
+        await createRecipe(recipeData);
+        navigate("/recipes");
+    } catch (error) {
+        setError(error.message || "Error al crear receta");
+        console.error("Error al crear receta:", error);
+    } finally {
+        setLoading(false);
+    }
+};
+
+// Update handleImageChange
+const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
         try {
-            const recipeData = {
-                ...formData,
-                ingredients: ingredients.filter(ing => ing.name && ing.quantity),
-                steps: steps.filter(step => step.description)
-            };
-
-            const response = await createRecipe(recipeData);
-            if (response.success) {
-                navigate('/home');
-            } else {
-                setError(response.error || 'Error creating recipe');
-            }
-        } catch (err) {
-            setError('Network error creating recipe');
-        } finally {
-            setLoading(false);
+            const compressedFile = await compressImage(file);
+            console.log('Original file:', file);
+            console.log('Compressed file:', compressedFile);
+            
+            // Ensure the compressed file maintains the File properties
+            const processedFile = new File([compressedFile], file.name, {
+                type: file.type,
+                lastModified: file.lastModified,
+            });
+            
+            setFormData(prev => ({
+                ...prev,
+                image: processedFile
+            }));
+        } catch (error) {
+            console.error('Error processing image:', error);
+            setError("Error al procesar la imagen");
         }
-    };
+    }
+};
 
-    const handleClose = () => {
-        navigate(-1);
-    };
+const compressImage = async (file) => {
+    try {
+      return await imageCompression(file, COMPRESSION_OPTIONS);
+    } catch (error) {
+      console.error("Error compressing image:", error);
+      throw new Error("Error al procesar la imagen");
+    }
+  };
+  
+  return (
 
-    return (
-        <div className="modal-overlay">
-        <div className="recipe-form">
-            <button className="close-btn" onClick={handleClose}> × </button>
-            <form onSubmit={handleSubmit} className="recipe-form">
-                <h2>Crear Nueva Receta</h2>
-                
-                {error && <div className="error-message">{error}</div>}
-                
-                <div className="form-main">
-                    <div className="form-group">
-                        <label>Título</label>
-                        <input
-                            type="text"
-                            name="title"
-                            value={formData.title}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Descripción</label>
-                        <textarea
-                            name="description"
-                            value={formData.description}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+    <div className="modal-overlay">
+      <div className="recipe-form">
+        <h2>Nueva Receta</h2>
+        {error && <div className="error-message">{error}</div>}
 
-                    <div className="form-group">
-                        <label>Tiempo de Preparación (minutos)</label>
-                        <input
-                            type="number"
-                            name="prepTime"
-                            value={formData.prepTime}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                </div>
-                <div className="form-actions">
-                    <button 
-                        type="button" 
-                        className="action-btn"
-                        onClick={() => setActiveModal('ingredients')}
-                    >
-                        <i className="fas fa-list"></i>
-                        <span>Ingredientes ({ingredients.length})</span>
-                    </button>
+        <form onSubmit={handleSubmit} className={loading ? "form-loading" : ""}>
+          <div className="form-section">
+            <div className="form-group">
+              <label htmlFor="title">Título *</label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-                    <button 
-                        type="button" 
-                        className="action-btn"
-                        onClick={() => setActiveModal('steps')}
-                    >
-                        <i className="fas fa-tasks"></i>
-                        <span>Pasos ({steps.length})</span>
-                    </button>
+            <div className="form-group">
+              <label htmlFor="description">Descripción *</label>
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-                    <button 
-                        type="button" 
-                        className="action-btn"
-                        onClick={() => setActiveModal('image')}
-                    >
-                        <i className="fas fa-image"></i>
-                        <span>Imagen</span>
-                    </button>
-                </div>
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="prepTime">Tiempo (min) *</label>
+                <input
+    type="number"
+    name="prepTime"
+    value={formData.prepTime}
+    onChange={handleChange}
+    min="1"
+    max={MAX_PREP_TIME}
+    required
+/>
+              </div>
+            </div>
+            <div className="form-group">
+  <label htmlFor="image">Imagen</label>
+  <input
+    type="file"
+    id="image"
+    name="image"
+    accept="image/*"
+    onChange={handleImageChange}
+  />
+  {loading && formData.image && (
+    <div className="upload-progress">
+      <div className="upload-progress-bar" />
+      <span>Subiendo imagen...</span>
+    </div>
+  )}
+  {imagePreview && (
+    <div className="image-preview">
+      <img src={imagePreview} alt="Vista previa" />
+      <button 
+        type="button" 
+        className="remove-image"
+        onClick={() => {
+          setFormData(prev => ({...prev, image: null}));
+          setImagePreview("");
+        }}
+      >
+        Eliminar imagen
+      </button>
+    </div>
+  )}
+</div>
+          </div>
 
-                <button type="submit" className="submit-btn" disabled={loading}>
-                    {loading ? 'Creando...' : 'Crear Receta'}
-                </button>
+          <div className="form-section">
+            <h3>Ingredientes *</h3>
+            {ingredients.map((ingredient, index) => (
+              <div key={index} className="ingredient-row">
+                <input
+                  type="text"
+                  placeholder="Nombre del ingrediente"
+                  value={ingredient.name}
+                  onChange={(e) =>
+                    handleIngredientChange(index, "name", e.target.value)
+                  }
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Cantidad"
+                  value={ingredient.quantity}
+                  onChange={(e) =>
+                    handleIngredientChange(index, "quantity", e.target.value)
+                  }
+                  required
+                />
+                {ingredients.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeIngredient(index)}
+                    className="remove-btn"
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
+            ))}
+            <button type="button" onClick={addIngredient} className="add-btn">
+              + Agregar Ingrediente
+            </button>
+          </div>
 
+          <div className="form-section">
+            <h3>Instrucciones *</h3>
+            {steps.map((step, index) => (
+              <div key={index} className="step-row">
+                <textarea
+                  placeholder={`Paso ${index + 1}`}
+                  value={step.description}
+                  onChange={(e) => handleStepChange(index, e.target.value)}
+                  required
+                />
+                {steps.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeStep(index)}
+                    className="remove-btn"
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
+            ))}
+            <button type="button" onClick={addStep} className="add-btn">
+              + Agregar Paso
+            </button>
+          </div>
 
-            <Modal 
-                isOpen={activeModal === 'ingredients'} 
-                onClose={() => setActiveModal(null)}
-                title="Ingredientes"
-            >
-                {ingredients.map((ingredient, index) => (
-                    <div key={index} className="ingredient-row">
-                        <input
-                            type="text"
-                            placeholder="Nombre del ingrediente"
-                            value={ingredient.name}
-                            onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
-                            required
-                        />
-                        <input
-                            type="text"
-                            placeholder="Cantidad"
-                            value={ingredient.quantity}
-                            onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
-                            required
-                        />
-                        <button 
-                            type="button" 
-                            onClick={() => removeIngredient(index)}
-                            className="remove-btn"
-                        >
-                            ×
-                        </button>
-                    </div>
-                ))}
-                <button type="button" onClick={addIngredient} className="add-btn">
-                    + Añadir Ingrediente
-                </button>
-            </Modal>
-
-            <Modal 
-                isOpen={activeModal === 'steps'} 
-                onClose={() => setActiveModal(null)}
-                title="Pasos"
-            >
-                {steps.map((step, index) => (
-                    <div key={index} className="step-row">
-                        <textarea
-                            placeholder={`Paso ${index + 1}`}
-                            value={step.description}
-                            onChange={(e) => handleStepChange(index, e.target.value)}
-                            required
-                        />
-                        <button 
-                            type="button" 
-                            onClick={() => removeStep(index)}
-                            className="remove-btn"
-                        >
-                            ×
-                        </button>
-                    </div>
-                ))}
-                <button type="button" onClick={addStep} className="add-btn">
-                    + Añadir Paso
-                </button>
-            </Modal>
-
-            <Modal 
-                isOpen={activeModal === 'image'} 
-                onClose={() => setActiveModal(null)}
-                title="Imagen"
-            >
-                <div className="form-group">
-                    <input
-                        type="url"
-                        name="image"
-                        placeholder="URL de la imagen"
-                        value={formData.image}
-                        onChange={handleChange}
-                    />
-                </div>
-            </Modal>
-            </form>
-        </div>
-        </div>
-    );
+          <div className="form-actions">
+            <button type="submit" disabled={loading} className="submit-btn">
+              {loading ? "Guardando..." : "Guardar Receta"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default RecipeForm;

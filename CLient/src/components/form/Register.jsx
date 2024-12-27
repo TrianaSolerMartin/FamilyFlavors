@@ -17,19 +17,42 @@ const Register = () => {
         e.preventDefault();
         setError('');
         setIsLoading(true);
-
+    
         try {
+            // Form validation
+            if (!validateForm()) {
+                setError('Por favor, completa todos los campos requeridos');
+                return;
+            }
+    
             const response = await register(userData);
+            
             if (response.success) {
                 navigate('/login');
             } else {
-                setError(response.error || 'Error en el registro');
+                // Handle specific error responses
+                if (response.status === 400) {
+                    setError('Por favor, verifica la información ingresada');
+                } else {
+                    setError(response.error || 'Error en el registro');
+                }
             }
-        } catch (err) {
-            setError('Error de conexión');
+        } catch (error) {
+            if (error.response?.status === 400) {
+                setError('Datos de registro inválidos');
+            } else {
+                setError('Error de conexión');
+            }
         } finally {
             setIsLoading(false);
         }
+    };
+    
+    const validateForm = () => {
+        return userData.email && 
+               userData.password && 
+               userData.username && 
+               userData.password.length >= 6;
     };
 
     return (

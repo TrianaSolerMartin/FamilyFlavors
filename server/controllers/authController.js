@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs'; 
+import { Op } from 'sequelize';
 import User from '../models/userModel.js';
 
 export const login = async (req, res) => {
