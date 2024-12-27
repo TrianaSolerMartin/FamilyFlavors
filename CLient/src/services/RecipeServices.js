@@ -1,9 +1,5 @@
 import apiClient, { uploadToCloudinary } from '../api.config';
 
-// Constants
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
-const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
-
 export const createRecipe = async (recipeData) => {
     try {
         // First validate recipe data
@@ -82,22 +78,23 @@ const validateIngredients = (ingredients) => {
 
 export const getAllRecipes = async (params = {}) => {
     try {
-        const response = await apiClient.get('/recipes', { 
-            params: {
-                category: params.category || 'all',
-                sortBy: params.sortBy || 'newest',
-                search: params.search?.trim() || '',
-                page: params.page || 1,
-                limit: params.limit || 8
-            }
+        const { page = 1, limit = 8, search = '', sortBy = 'newest', category = 'all' } = params;
+        
+        const queryParams = new URLSearchParams({
+            page: String(page),
+            limit: String(limit),
+            search,
+            sortBy,
+            category
         });
+
+        const response = await apiClient.get(`/recipes?${queryParams}`);
         return response.data;
     } catch (error) {
         console.error('Error al obtener recetas:', error);
-        throw new Error('Error al obtener las recetas');
+        throw new Error('Error al obtener recetas');
     }
 };
-
 export const updateRecipe = async (id, recipeData) => {
     try {
         validateRecipe(recipeData);
