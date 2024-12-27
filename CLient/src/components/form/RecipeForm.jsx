@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createRecipe } from "../../services/RecipeServices";
-import "./NewRecipeForm.css";
 import imageCompression from "browser-image-compression";
+import "./NewRecipeForm.css";
 
-// Move constants to top
+// Constants
 const MAX_PREP_TIME = 999;
+const MAX_IMAGE_SIZE = 1; // in MB
+const COMPRESSION_OPTIONS = {
+  maxSizeMB: MAX_IMAGE_SIZE,
+  maxWidthOrHeight: 1024,
+  useWebWorker: true
+};
 
 const RecipeForm = () => {
   const navigate = useNavigate();
@@ -24,7 +30,7 @@ const RecipeForm = () => {
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState("");
   const [error, setError] = useState("");
-  const [uploadProgress, setUploadProgress] = useState(0);
+//   const [uploadProgress, setUploadProgress] = useState(0);
 
 const handleChange = (e) => {
     const { name, value } = e.target;
@@ -75,49 +81,6 @@ const handleChange = (e) => {
     }
   };
 
-  const compressImage = async (file) => {
-    const options = {
-      maxSizeMB: 1,
-      maxWidthOrHeight: 1024,
-      useWebWorker: true,
-    };
-    const compressedFile = await imageCompression(file, options);
-    return compressedFile;
-  };
-
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-  
-    try {
-      // Validate file size
-      if (file.size > 5000000) {
-        setError("La imagen no debe superar los 5MB");
-        return;
-      }
-  
-      // Compress image
-      const compressedFile = await compressImage(file);
-      
-      // Set file object directly
-      setFormData(prev => ({
-        ...prev,
-        image: compressedFile 
-      }));
-  
-      // Show preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(compressedFile);
-  
-    } catch (error) {
-      console.error('Error processing image:', error);
-      setError("Error al procesar la imagen");
-    }
-  }; 
-
   const sanitizeInput = (str) => {
     return str.replace(/[<>]/g, "").trim();
   };
@@ -143,47 +106,82 @@ const handleChange = (e) => {
     return null;
   };
 
-  const handleSubmit = async (e) => {
+// Update handleSubmit
+const handleSubmit = async (e) => {
     e.preventDefault();
     const validationError = validateForm();
-  
+
     if (validationError) {
-      setError(validationError);
-      return;
+        setError(validationError);
+        return;
     }
-  
+
     setLoading(true);
     setError("");
-  
+
     try {
-      const recipeData = {
-        title: sanitizeInput(formData.title),
-        description: sanitizeInput(formData.description),
-        prepTime: Number(formData.prepTime),
-        image: formData.image, 
-        isFavorite: Boolean(formData.isFavorite),
-        ingredients: ingredients
-          .filter((ing) => ing.name && ing.quantity)
-          .map((ing) => ({
-            name: sanitizeInput(ing.name),
-            quantity: sanitizeInput(ing.quantity),
-          })),
-        instructions: steps
-          .filter((step) => step.description)
-          .map((step) => sanitizeInput(step.description))
-          .join("\n"),
-      };
-  
-      await createRecipe(recipeData);
-      navigate("/recipes");
+        console.log('Form Data before submit:', formData);
+        
+        const recipeData = {
+            title: sanitizeInput(formData.title),
+            description: sanitizeInput(formData.description),
+            prepTime: Number(formData.prepTime),
+            image: formData.image, // This should be the compressed File object
+            isFavorite: Boolean(formData.isFavorite),
+            ingredients: ingredients
+                .filter(ing => ing.name && ing.quantity)
+                .map(ing => ({
+                    name: sanitizeInput(ing.name),
+                    quantity: sanitizeInput(ing.quantity)
+                }))
+        };
+
+        console.log('Recipe Data being sent:', recipeData);
+        await createRecipe(recipeData);
+        navigate("/recipes");
     } catch (error) {
-      setError(error.message || "Error al crear receta");
-      console.error("Error al crear receta:", error);
+        setError(error.message || "Error al crear receta");
+        console.error("Error al crear receta:", error);
     } finally {
-      setLoading(false);
+        setLoading(false);
+    }
+};
+
+// Update handleImageChange
+const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        try {
+            const compressedFile = await compressImage(file);
+            console.log('Original file:', file);
+            console.log('Compressed file:', compressedFile);
+            
+            // Ensure the compressed file maintains the File properties
+            const processedFile = new File([compressedFile], file.name, {
+                type: file.type,
+                lastModified: file.lastModified,
+            });
+            
+            setFormData(prev => ({
+                ...prev,
+                image: processedFile
+            }));
+        } catch (error) {
+            console.error('Error processing image:', error);
+            setError("Error al procesar la imagen");
+        }
+    }
+};
+
+const compressImage = async (file) => {
+    try {
+      return await imageCompression(file, COMPRESSION_OPTIONS);
+    } catch (error) {
+      console.error("Error compressing image:", error);
+      throw new Error("Error al procesar la imagen");
     }
   };
-
+  
   return (
 
     <div className="modal-overlay">

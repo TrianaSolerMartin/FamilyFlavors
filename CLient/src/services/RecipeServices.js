@@ -1,8 +1,40 @@
-import apiClient from '../api.config';
+import apiClient, { uploadToCloudinary } from '../api.config';
 
 // Constants
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+
+export const createRecipe = async (recipeData) => {
+    try {
+        // First validate recipe data
+        validateRecipe(recipeData);
+
+        // Handle image upload separately
+        let imageUrl = null;
+        if (recipeData.image instanceof File) {
+            console.log('Uploading image to Cloudinary...');
+            imageUrl = await uploadToCloudinary(recipeData.image);
+            console.log('Image uploaded:', imageUrl);
+        }
+
+        // Prepare data with image URL
+        const finalData = {
+            title: recipeData.title,
+            description: recipeData.description,
+            prepTime: parseInt(recipeData.prepTime),
+            image: imageUrl, // Use the Cloudinary URL
+            isFavorite: Boolean(recipeData.isFavorite),
+            ingredients: validateIngredients(recipeData.ingredients)
+        };
+
+        console.log('Sending to API:', finalData);
+        const response = await apiClient.post('/recipes', finalData);
+        return response.data;
+    } catch (error) {
+        console.error('Error creating recipe:', error);
+        throw new Error(error.response?.data?.message || error.message || 'Error al crear receta');
+    }
+};
 
 // Validation Functions
 const validateRecipe = (recipe) => {
@@ -47,74 +79,6 @@ const validateIngredients = (ingredients) => {
     return validatedIngredients;
 };
 
-const validateImage = (file) => {
-    if (!file) return null;
-    
-    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
-        throw new Error('Formato de imagen no soportado');
-    }
-    
-    if (file.size > MAX_IMAGE_SIZE) {
-        throw new Error('La imagen no debe superar los 5MB');
-    }
-    
-    return true;
-};
-
-// Cloudinary Upload Function
-const uploadToCloudinary = async (file) => {
-    try {
-        validateImage(file);
-        
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
-
-        const response = await fetch(
-            `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
-            {
-                method: 'POST',
-                body: formData
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error('Error al subir la imagen');
-        }
-
-        const data = await response.json();
-        return data.secure_url;
-    } catch (error) {
-        console.error('Error en Cloudinary:', error);
-        throw new Error('Error al subir la imagen a Cloudinary');
-    }
-};
-
-// API Functions
-export const createRecipe = async (recipeData) => {
-    try {
-        validateRecipe(recipeData);
-        
-        let imageUrl = null;
-        if (recipeData.image instanceof File) {
-            imageUrl = await uploadToCloudinary(recipeData.image);
-        }
-
-        const finalData = {
-            ...recipeData,
-            image: imageUrl || recipeData.image,
-            prepTime: parseInt(recipeData.prepTime),
-            ingredients: validateIngredients(recipeData.ingredients),
-            isFavorite: Boolean(recipeData.isFavorite)
-        };
-
-        const response = await apiClient.post('/recipes', finalData);
-        return response.data;
-    } catch (error) {
-        console.error('Error al crear receta:', error);
-        throw new Error(error.response?.data?.message || error.message || 'Error al crear receta');
-    }
-};
 
 export const getAllRecipes = async (params = {}) => {
     try {

@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+// Constants
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
+// API Client Configuration
 const apiClient = axios.create({
     baseURL: 'http://localhost:5000/api',
     withCredentials: true,
@@ -11,35 +14,58 @@ const apiClient = axios.create({
     }
 });
 
-// Request interceptor
+// Image Validation Utility
+const validateImage = (file) => {
+    if (!file || !(file instanceof File)) {
+        throw new Error('Archivo inválido');
+    }
+    if (file.size > MAX_FILE_SIZE) {
+        throw new Error(`El archivo no debe superar ${MAX_FILE_SIZE / 1024 / 1024}MB`);
+    }
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+        throw new Error('Formato de archivo no permitido');
+    }
+    return true;
+};
+
+// Cloudinary Upload Function
+export const uploadToCloudinary = async (file) => {
+    try {
+        validateImage(file);
+        
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
+
+        const response = await axios.post(
+            `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
+            formData
+        );
+
+        if (!response.data?.secure_url) {
+            throw new Error('Error al obtener URL de imagen');
+        }
+
+        return response.data.secure_url;
+    } catch (error) {
+        console.error('Error en Cloudinary:', error);
+        throw new Error('Error al subir imagen a Cloudinary');
+    }
+};
+
+// Request Interceptor
 apiClient.interceptors.request.use(
-    (config) => {
-        // Auth token
+    async (config) => {
         const token = localStorage.getItem('token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
-
-        // Validate recipe data
-        if (config.method === 'post' && config.url === '/recipes') {
-            const data = typeof config.data === 'string' ? JSON.parse(config.data) : config.data;
-            
-            // Transform numeric fields
-            data.prepTime = Math.max(1, Number(data.prepTime));
-            
-            config.data = JSON.stringify(data);
-        }
-        
-        console.log('Request Config:', config);
         return config;
     },
-    (error) => {
-        console.error('Request Error:', error);
-        return Promise.reject(error);
-    }
+    (error) => Promise.reject(error)
 );
 
-// Response interceptor
+// Response Interceptor
 apiClient.interceptors.response.use(
     (response) => response,
     (error) => {
@@ -63,24 +89,7 @@ apiClient.interceptors.response.use(
     }
 );
 
-export const uploadToCloudinary = async (file) => {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
-
-    try {
-        const response = await axios.post(
-            `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
-            formData
-        );
-        return response.data.secure_url;
-    } catch (error) {
-        console.error('Error uploading to Cloudinary:', error);
-        throw new Error('Error al subir imagen');
-    }
-};
-
-// File upload helper
+// File Upload Helper
 export const uploadFile = async (file, onProgress) => {
     if (file.size > MAX_FILE_SIZE) {
         throw new Error(`El archivo no debe superar ${MAX_FILE_SIZE / 1024 / 1024}MB`);
