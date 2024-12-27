@@ -142,3 +142,16 @@ export const getRecipeById = async (id) => {
         throw new Error('Error al obtener la receta');
     }
 };
+export const toggleFavorite = async (recipeId) => {
+    try {
+        // Update path to match backend route
+        const response = await apiClient.put(`/recipes/${recipeId}/favorite`);
+        if (!response.data) {
+            throw new Error('No data received');
+        }
+        return response.data;
+    } catch (error) {
+        console.error('Toggle favorite error:', error);
+        throw new Error('Error al actualizar favorito');
+    }
+};

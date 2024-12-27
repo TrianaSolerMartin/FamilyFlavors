@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllRecipes } from '../../services/RecipeServices';
+import { getAllRecipes, toggleFavorite } from '../../services/RecipeServices';
 import FilterBar from '../../components/filterBar/filterBar';
 import RecipeGrid from '../../components/recipeGrid/recipeGrid';
 import QuickViewModal from '../../components/quickViewModal/quickViewModal';
 import Pagination from '../../utils/pagination/pagination';
 import LoadingSpinner from '../../utils/loadingSpinner/loadingSpinner';
 import debounce from '../../utils/debounce';
+import { shareRecipe } from '../../utils/shareRecipe';
 import './Home.css';
 
 const Home = () => {
@@ -81,6 +82,30 @@ const Home = () => {
         navigate(`/recipe/${recipeId}`);
     };
 
+    const handleShare = async (recipe) => {
+        const result = await shareRecipe(recipe, 'whatsapp');
+        if (!result) {
+            console.error('Failed to share recipe');
+        }
+    };
+
+    const handleToggleFavorite = async (recipeId) => {
+        try {
+            // Optimistic update
+            setRecipes(prev => prev.map(recipe => 
+                recipe.id === recipeId 
+                    ? { ...recipe, isFavorite: !recipe.isFavorite }
+                    : recipe
+            ));
+            
+            await toggleFavorite(recipeId);
+        } catch (error) {
+            console.error('Error toggling favorite:', error);
+            // Revert on error
+            await fetchRecipes();
+        }
+    };
+
     return (
         <div className="home-container">
             <header className="home-header">
@@ -118,6 +143,8 @@ const Home = () => {
                         recipes={recipes}
                         onRecipeClick={handleRecipeClick}
                         onQuickView={handleQuickView}
+                        onFavorite={handleToggleFavorite}
+                        onShare={handleShare}
                     />
                     
                     <Pagination 

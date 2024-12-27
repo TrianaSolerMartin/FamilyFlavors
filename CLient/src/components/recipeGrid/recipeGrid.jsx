@@ -16,7 +16,7 @@ const RecipeGrid = ({ recipes, onFavorite, onShare, onQuickView }) => {
             {recipes.map(recipe => (
                 <div key={recipe.id} className="recipe-card">
                     <div className="recipe-image-container">
-                        <img src={recipe.image} alt={recipe.title} />
+                        <img src={recipe.image || '/default-recipe.jpg'} alt={recipe.title} />
                         <div className="recipe-actions">
                             <button 
                                 onClick={() => onFavorite(recipe.id)}
@@ -27,9 +27,9 @@ const RecipeGrid = ({ recipes, onFavorite, onShare, onQuickView }) => {
                             <button onClick={() => onShare(recipe)} className="action-btn">
                                 <i className="fas fa-share-alt"></i>
                             </button>
-                            <button onClick={() => onQuickView(recipe)} className="action-btn">
-                                <i className="fas fa-eye"></i>
-                            </button>
+                            <button onClick={() => onShare(recipe)} className="action-btn">
+        <i className="fas fa-share-alt"></i>
+    </button>
                         </div>
                     </div>
                     <div className="recipe-content">
@@ -37,7 +37,6 @@ const RecipeGrid = ({ recipes, onFavorite, onShare, onQuickView }) => {
                         <p>{recipe.description}</p>
                         <div className="recipe-meta">
                             <span><i className="far fa-clock"></i> {recipe.cookTime} min</span>
-                            <span><i className="fas fa-utensils"></i> {recipe.difficulty}</span>
                         </div>
                     </div>
                 </div>
