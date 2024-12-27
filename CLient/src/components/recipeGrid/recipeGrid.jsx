@@ -25,11 +25,11 @@ const RecipeGrid = ({ recipes, onFavorite, onShare, onQuickView }) => {
                                 <i className={`fas fa-heart ${recipe.isFavorite ? 'active' : ''}`}></i>
                             </button>
                             <button onClick={() => onShare(recipe)} className="action-btn">
-                                <i className="fas fa-share-alt"></i>
-                            </button>
-                            <button onClick={() => onShare(recipe)} className="action-btn">
         <i className="fas fa-share-alt"></i>
     </button>
+                            <button onClick={() => onQuickView(recipe)} className="action-btn">
+                                <i className="fas fa-eye"></i>
+                            </button>
                         </div>
                     </div>
                     <div className="recipe-content">
