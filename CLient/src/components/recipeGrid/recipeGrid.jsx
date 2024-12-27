@@ -36,7 +36,7 @@ const RecipeGrid = ({ recipes, onFavorite, onShare, onQuickView }) => {
                         <h3>{recipe.title}</h3>
                         <p>{recipe.description}</p>
                         <div className="recipe-meta">
-                            <span><i className="far fa-clock"></i> {recipe.cookTime} min</span>
+                            <span><i className="far fa-clock"></i> {recipe.prepTime} min</span>
                         </div>
                     </div>
                 </div>
