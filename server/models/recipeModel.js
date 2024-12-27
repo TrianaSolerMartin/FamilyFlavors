@@ -51,10 +51,6 @@ Recipe.init({
         type: DataTypes.BOOLEAN,
         defaultValue: false
     },
-    servings: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
     userId: {
         type: DataTypes.INTEGER,
         references: {
