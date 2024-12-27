@@ -15,7 +15,7 @@ const RecipeForm = () => {
     title: "",
     description: "",
     prepTime: "1", 
-    image: "",
+    image: null,
     isFavorite: false,
   });
 
@@ -88,27 +88,35 @@ const handleChange = (e) => {
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
-    if (file.size > 5000000) {
-      setError("La imagen no debe superar los 5MB");
-      return;
-    }
-
+  
     try {
+      // Validate file size
+      if (file.size > 5000000) {
+        setError("La imagen no debe superar los 5MB");
+        return;
+      }
+  
+      // Compress image
       const compressedFile = await compressImage(file);
+      
+      // Set file object directly
+      setFormData(prev => ({
+        ...prev,
+        image: compressedFile 
+      }));
+  
+      // Show preview
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
-        setFormData((prev) => ({
-          ...prev,
-          image: reader.result,
-        }));
       };
       reader.readAsDataURL(compressedFile);
-    } catch {
+  
+    } catch (error) {
+      console.error('Error processing image:', error);
       setError("Error al procesar la imagen");
     }
-  };
+  }; 
 
   const sanitizeInput = (str) => {
     return str.replace(/[<>]/g, "").trim();
@@ -151,8 +159,8 @@ const handleChange = (e) => {
       const recipeData = {
         title: sanitizeInput(formData.title),
         description: sanitizeInput(formData.description),
-        prepTime: Number(formData.prepTime), 
-        image: formData.image || "",
+        prepTime: Number(formData.prepTime),
+        image: formData.image, 
         isFavorite: Boolean(formData.isFavorite),
         ingredients: ingredients
           .filter((ing) => ing.name && ing.quantity)
@@ -166,7 +174,6 @@ const handleChange = (e) => {
           .join("\n"),
       };
   
-      console.log('Sending recipe data:', recipeData);
       await createRecipe(recipeData);
       navigate("/recipes");
     } catch (error) {
@@ -176,182 +183,6 @@ const handleChange = (e) => {
       setLoading(false);
     }
   };
-
-
-// const RecipeForm = () => {
-//   // State management
-//   const [formData, setFormData] = useState({
-//     title: "",
-//     description: "",
-//     prepTime: "",
-//     servings: "",
-//     image: "",
-//     isFavorite: false,
-//   });
-//   const [ingredients, setIngredients] = useState([{ name: "", quantity: "" }]);
-//   const [steps, setSteps] = useState([{ description: "" }]);
-//   const [loading, setLoading] = useState(false);
-//   const [imagePreview, setImagePreview] = useState("");
-//   const [error, setError] = useState("");
-//   const [uploadProgress, setUploadProgress] = useState(0);
-//   const navigate = useNavigate();
-
-//   // Event handlers
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData(prev => ({
-//         ...prev,
-//         [name]: (name === 'servings' || name === 'prepTime') 
-//             ? Math.max(1, parseInt(value) || 1)
-//             : value
-//     }));
-// };
-
-//   const handleIngredientChange = (index, field, value) => {
-//     const updatedIngredients = [...ingredients];
-//     updatedIngredients[index][field] = value;
-//     setIngredients(updatedIngredients);
-//   };
-
-//   const handleStepChange = (index, value) => {
-//     const updatedSteps = [...steps];
-//     updatedSteps[index].description = value;
-//     setSteps(updatedSteps);
-//   };
-
-//   const addIngredient = () => {
-//     setIngredients([...ingredients, { name: "", quantity: "" }]);
-//   };
-
-//   const removeIngredient = (index) => {
-//     if (ingredients.length > 1) {
-//       setIngredients(ingredients.filter((_, i) => i !== index));
-//     }
-//   };
-
-//   const addStep = () => {
-//     setSteps([...steps, { description: "" }]);
-//   };
-
-//   const removeStep = (index) => {
-//     if (steps.length > 1) {
-//       setSteps(steps.filter((_, i) => i !== index));
-//     }
-//   };
-
-//   const compressImage = async (file) => {
-//     const options = {
-//       maxSizeMB: 1,
-//       maxWidthOrHeight: 1024,
-//       useWebWorker: true,
-//     };
-//     const compressedFile = await imageCompression(file, options);
-//     return compressedFile;
-//   };
-
-//   const handleImageChange = async (e) => {
-//     const file = e.target.files[0];
-//     if (!file) return;
-
-//     // Límite de 5MB
-//     if (file.size > 5000000) {
-//       setError("La imagen no debe superar los 5MB");
-//       return;
-//     }
-
-//     try {
-//       const compressedFile = await compressImage(file);
-//       const reader = new FileReader();
-//       reader.onloadend = () => {
-//         setImagePreview(reader.result);
-//         setFormData((prev) => ({
-//           ...prev,
-//           image: reader.result,
-//         }));
-//       };
-//       reader.readAsDataURL(compressedFile);
-//     } catch {
-//       setError("Error al procesar la imagen");
-//     }
-//   };
-
-//   const MAX_PREP_TIME = 999;
-//   const MAX_SERVINGS = 100;
-
-//   const sanitizeInput = (str) => {
-//     return str.replace(/[<>]/g, "").trim();
-//   };
-
-//   const validateForm = () => {
-//     // Required fields validation
-//     if (!formData.title) return "El título es requerido";
-//     if (!formData.description) return "La descripción es requerida";
-
-//     // Numeric validation
-//     const prepTime = Number(formData.prepTime);
-//     const servings = Number(formData.servings);
-
-//     if (isNaN(prepTime) || prepTime <= 0 || prepTime > MAX_PREP_TIME) {
-//       return `El tiempo de preparación debe ser entre 1 y ${MAX_PREP_TIME}`;
-//     }
-
-//     if (isNaN(servings) || servings <= 0 || servings > MAX_SERVINGS) {
-//       return `Las porciones deben ser entre 1 y ${MAX_SERVINGS}`;
-//     }
-
-//     // Content validation
-//     if (!ingredients.some((ing) => ing.name && ing.quantity)) {
-//       return "Agregue al menos un ingrediente";
-//     }
-
-//     if (!steps.some((step) => step.description)) {
-//       return "Agregue al menos un paso";
-//     }
-
-//     return null;
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     const validationError = validateForm();
-
-//     if (validationError) {
-//       setError(validationError);
-//       return;
-//     }
-
-//     setLoading(true);
-//     setError("");
-
-//     try {
-//       const recipeData = {
-//         title: sanitizeInput(formData.title),
-//         description: sanitizeInput(formData.description),
-//         prepTime: Number(formData.prepTime),
-//         servings: Number(formData.servings),
-//         image: formData.image || "",
-//         isFavorite: Boolean(formData.isFavorite),
-//         ingredients: ingredients
-//           .filter((ing) => ing.name && ing.quantity)
-//           .map((ing) => ({
-//             name: sanitizeInput(ing.name),
-//             quantity: sanitizeInput(ing.quantity),
-//           })),
-//         instructions: steps
-//           .filter((step) => step.description)
-//           .map((step) => sanitizeInput(step.description))
-//           .join("\n"),
-//       };
-
-//       await createRecipe(recipeData);
-//       navigate("/recipes");
-//     } catch (error) {
-//       setError(error.message || "Error al crear receta");
-//       console.error("Error al crear receta:", error);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
 
   return (
 
@@ -399,30 +230,37 @@ const handleChange = (e) => {
 />
               </div>
             </div>
-
             <div className="form-group">
-              <label htmlFor="image">Imagen</label>
-              <input
-                type="file"
-                id="image"
-                name="image"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-              {uploadProgress > 0 && (
-                <div className="upload-progress">
-                  <div
-                    className="upload-progress-bar"
-                    style={{ width: `${uploadProgress}%` }}
-                  />
-                </div>
-              )}
-              {imagePreview && (
-                <div className="image-preview">
-                  <img src={imagePreview} alt="Vista previa" />
-                </div>
-              )}
-            </div>
+  <label htmlFor="image">Imagen</label>
+  <input
+    type="file"
+    id="image"
+    name="image"
+    accept="image/*"
+    onChange={handleImageChange}
+  />
+  {loading && formData.image && (
+    <div className="upload-progress">
+      <div className="upload-progress-bar" />
+      <span>Subiendo imagen...</span>
+    </div>
+  )}
+  {imagePreview && (
+    <div className="image-preview">
+      <img src={imagePreview} alt="Vista previa" />
+      <button 
+        type="button" 
+        className="remove-image"
+        onClick={() => {
+          setFormData(prev => ({...prev, image: null}));
+          setImagePreview("");
+        }}
+      >
+        Eliminar imagen
+      </button>
+    </div>
+  )}
+</div>
           </div>
 
           <div className="form-section">

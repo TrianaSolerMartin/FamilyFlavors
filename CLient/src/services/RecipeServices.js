@@ -1,7 +1,11 @@
 import apiClient from '../api.config';
 
+// Constants
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+
+// Validation Functions
 const validateRecipe = (recipe) => {
-    // Required fields validation with strict type checking
     const required = ['title', 'description', 'prepTime', 'ingredients'];
     const missing = required.filter(field => {
         const value = recipe[field];
@@ -15,21 +19,24 @@ const validateRecipe = (recipe) => {
         throw new Error(`Faltan campos requeridos: ${missing.join(', ')}`);
     }
 
-    // Strict number validation
     const prepTime = Number(recipe.prepTime);
-
     if (isNaN(prepTime) || prepTime <= 0) {
         throw new Error('El tiempo de preparación debe ser mayor a 0');
     }
 
-    // Ingredients validation
-    if (!Array.isArray(recipe.ingredients) || recipe.ingredients.length === 0) {
-        throw new Error('Debe incluir al menos un ingrediente');
+    validateIngredients(recipe.ingredients);
+    
+    return true;
+};
+
+const validateIngredients = (ingredients) => {
+    if (!Array.isArray(ingredients) || ingredients.length === 0) {
+        throw new Error('La receta debe tener al menos un ingrediente');
     }
 
-    const validatedIngredients = recipe.ingredients.map((ing, index) => {
+    const validatedIngredients = ingredients.map(ing => {
         if (!ing.name?.trim() || !ing.quantity?.trim()) {
-            throw new Error(`Ingrediente ${index + 1} requiere nombre y cantidad`);
+            throw new Error('Todos los ingredientes deben tener nombre y cantidad');
         }
         return {
             name: ing.name.trim(),
@@ -37,92 +44,118 @@ const validateRecipe = (recipe) => {
         };
     });
 
-    // Return validated data with proper types
-    return {
-        ...recipe,
-        prepTime: parseInt(prepTime),
-        ingredients: validatedIngredients,
-        isFavorite: Boolean(recipe.isFavorite),
-        image: recipe.image || null
-    };
+    return validatedIngredients;
 };
-const validateRecipe = (recipe) => {
-    // Required fields validation with strict type checking
-    const required = ['title', 'description', 'prepTime', 'ingredients'];
-    const missing = required.filter(field => {
-        const value = recipe[field];
-        if (field === 'prepTime') {
-            return value === undefined || value === null || value === '' || isNaN(Number(value));
-        }
-        return value === undefined || value === null || value === '';
-    });
+
+const validateImage = (file) => {
+    if (!file) return null;
     
-    if (missing.length) {
-        throw new Error(`Faltan campos requeridos: ${missing.join(', ')}`);
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+        throw new Error('Formato de imagen no soportado');
     }
-
-    // Strict number validation
-    const prepTime = Number(recipe.prepTime);
-    if (isNaN(prepTime) || prepTime <= 0) {
-        throw new Error('El tiempo de preparación debe ser mayor a 0');
+    
+    if (file.size > MAX_IMAGE_SIZE) {
+        throw new Error('La imagen no debe superar los 5MB');
     }
-
-    // Ingredients validation 
-    if (!Array.isArray(recipe.ingredients) || recipe.ingredients.length === 0) {
-        throw new Error('La receta debe tener al menos un ingrediente');
-    }
-
-    // Validate each ingredient
-    recipe.ingredients.forEach((ing, index) => {
-        if (!ing.name?.trim() || !ing.quantity?.trim()) {
-            throw new Error(`Ingrediente ${index + 1} requiere nombre y cantidad`);
-        }
-    });
-
+    
     return true;
 };
 
-export const createRecipe = async (recipeData) => {
+// Cloudinary Upload Function
+const uploadToCloudinary = async (file) => {
     try {
-        const validatedRecipe = validateRecipe(recipeData);
-        const response = await apiClient.post('/recipes', validatedRecipe);
+        validateImage(file);
         
-        if (!response.data.success) {
-            throw new Error(response.data.error || 'Error al crear receta');
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
+
+        const response = await fetch(
+            `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
+            {
+                method: 'POST',
+                body: formData
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error('Error al subir la imagen');
         }
 
-        return response.data;
+        const data = await response.json();
+        return data.secure_url;
     } catch (error) {
-        console.error('API Error:', error);
-        throw new Error(error.response?.data?.error || 'Error al crear receta');
+        console.error('Error en Cloudinary:', error);
+        throw new Error('Error al subir la imagen a Cloudinary');
     }
 };
-export const getAllRecipes = async (params) => {
+
+// API Functions
+export const createRecipe = async (recipeData) => {
+    try {
+        validateRecipe(recipeData);
+        
+        let imageUrl = null;
+        if (recipeData.image instanceof File) {
+            imageUrl = await uploadToCloudinary(recipeData.image);
+        }
+
+        const finalData = {
+            ...recipeData,
+            image: imageUrl || recipeData.image,
+            prepTime: parseInt(recipeData.prepTime),
+            ingredients: validateIngredients(recipeData.ingredients),
+            isFavorite: Boolean(recipeData.isFavorite)
+        };
+
+        const response = await apiClient.post('/recipes', finalData);
+        return response.data;
+    } catch (error) {
+        console.error('Error al crear receta:', error);
+        throw new Error(error.response?.data?.message || error.message || 'Error al crear receta');
+    }
+};
+
+export const getAllRecipes = async (params = {}) => {
     try {
         const response = await apiClient.get('/recipes', { 
             params: {
-                category: params?.category || 'all',
-                sortBy: params?.sortBy || 'newest',
-                search: params?.search?.trim() || '',
-                page: params?.page || 1,
-                limit: params?.limit || 8
+                category: params.category || 'all',
+                sortBy: params.sortBy || 'newest',
+                search: params.search?.trim() || '',
+                page: params.page || 1,
+                limit: params.limit || 8
             }
         });
         return response.data;
     } catch (error) {
         console.error('Error al obtener recetas:', error);
-        throw error;
+        throw new Error('Error al obtener las recetas');
     }
 };
 
 export const updateRecipe = async (id, recipeData) => {
     try {
         validateRecipe(recipeData);
-        const response = await apiClient.put(`/recipes/${id}`, recipeData);
+        
+        let imageUrl = null;
+        if (recipeData.image instanceof File) {
+            imageUrl = await uploadToCloudinary(recipeData.image);
+        }
+
+        const finalData = {
+            ...recipeData,
+            image: imageUrl || recipeData.image,
+            prepTime: parseInt(recipeData.prepTime),
+            ingredients: validateIngredients(recipeData.ingredients),
+            isFavorite: Boolean(recipeData.isFavorite)
+        };
+
+        const response = await apiClient.put(`/recipes/${id}`, finalData);
         return response.data;
     } catch (error) {
         console.error('Error al actualizar receta:', error);
-        throw error;
+        throw new Error(error.response?.data?.message || error.message || 'Error al actualizar receta');
     }
 };
 
@@ -132,6 +165,16 @@ export const deleteRecipe = async (id) => {
         return response.data;
     } catch (error) {
         console.error('Error al eliminar receta:', error);
-        throw error;
+        throw new Error('Error al eliminar la receta');
+    }
+};
+
+export const getRecipeById = async (id) => {
+    try {
+        const response = await apiClient.get(`/recipes/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener receta:', error);
+        throw new Error('Error al obtener la receta');
     }
 };
